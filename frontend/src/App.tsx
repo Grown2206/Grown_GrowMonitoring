@@ -16,6 +16,9 @@ import { Harvests } from './pages/Harvests';
 import { Analytics } from './pages/Analytics';
 import { Settings } from './pages/Settings';
 import { Simulation } from './pages/Simulation';
+import { VPDCalculator } from './pages/VPDCalculator';
+import { PhotoGallery } from './pages/PhotoGallery';
+import { Notifications } from './pages/Notifications';
 import { CircularProgress, Box } from '@mui/material';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -121,6 +124,30 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <Simulation />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/vpd"
+        element={
+          <PrivateRoute>
+            <VPDCalculator />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/gallery"
+        element={
+          <PrivateRoute>
+            <PhotoGallery />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/notifications"
+        element={
+          <PrivateRoute>
+            <Notifications />
           </PrivateRoute>
         }
       />

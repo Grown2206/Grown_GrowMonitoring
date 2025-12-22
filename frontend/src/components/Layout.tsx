@@ -31,6 +31,9 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
+import CalculateIcon from '@mui/icons-material/Calculate';
+import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const drawerWidth = 240;
 
@@ -45,6 +48,9 @@ const menuItems = [
   { text: 'Automatisierung', icon: <AutoModeIcon />, path: '/automation' },
   { text: 'Analytics', icon: <BarChartIcon />, path: '/analytics' },
   { text: 'ESP32 Simulation', icon: <DeveloperBoardIcon />, path: '/simulation' },
+  { text: 'VPD Rechner', icon: <CalculateIcon />, path: '/vpd' },
+  { text: 'Foto-Galerie', icon: <PhotoLibraryIcon />, path: '/gallery' },
+  { text: 'Benachrichtigungen', icon: <NotificationsIcon />, path: '/notifications' },
   { text: 'Einstellungen', icon: <SettingsIcon />, path: '/settings' },
 ];
 

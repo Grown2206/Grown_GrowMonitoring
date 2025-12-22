@@ -176,10 +176,10 @@ export function Sensors() {
                 <TableCell>
                   {sensor.minValue} - {sensor.maxValue}
                 </TableCell>
-                <TableCell>{sensor.calibrationOffset.toFixed(2)}</TableCell>
+                <TableCell>{(sensor.calibrationOffset ?? 0).toFixed(2)}</TableCell>
                 <TableCell>{sensor.location || '-'}</TableCell>
                 <TableCell>
-                  {sensor.lastReading !== undefined ? `${sensor.lastReading.toFixed(1)} ${sensor.unit}` : '-'}
+                  {sensor.lastReading != null ? `${sensor.lastReading.toFixed(1)} ${sensor.unit}` : '-'}
                 </TableCell>
                 <TableCell>
                   <Chip label={sensor.isActive ? 'Aktiv' : 'Inaktiv'} color={sensor.isActive ? 'success' : 'default'} size="small" />
