@@ -30,6 +30,7 @@ import AutoModeIcon from '@mui/icons-material/AutoMode';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 
 const drawerWidth = 240;
 
@@ -43,6 +44,7 @@ const menuItems = [
   { text: 'Ernten', icon: <LocalFlorist />, path: '/harvests' },
   { text: 'Automatisierung', icon: <AutoModeIcon />, path: '/automation' },
   { text: 'Analytics', icon: <BarChartIcon />, path: '/analytics' },
+  { text: 'ESP32 Simulation', icon: <DeveloperBoardIcon />, path: '/simulation' },
   { text: 'Einstellungen', icon: <SettingsIcon />, path: '/settings' },
 ];
 

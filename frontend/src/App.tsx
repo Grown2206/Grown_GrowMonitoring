@@ -15,6 +15,7 @@ import { Schedules } from './pages/Schedules';
 import { Harvests } from './pages/Harvests';
 import { Analytics } from './pages/Analytics';
 import { Settings } from './pages/Settings';
+import { Simulation } from './pages/Simulation';
 import { CircularProgress, Box } from '@mui/material';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -112,6 +113,14 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <Settings />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/simulation"
+        element={
+          <PrivateRoute>
+            <Simulation />
           </PrivateRoute>
         }
       />
