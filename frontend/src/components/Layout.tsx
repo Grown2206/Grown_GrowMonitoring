@@ -15,15 +15,21 @@ import {
 } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useThemeMode } from '../contexts/ThemeContext';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import LocalFlorist from '@mui/icons-material/LocalFlorist';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SensorsIcon from '@mui/icons-material/Sensors';
 import AutoModeIcon from '@mui/icons-material/AutoMode';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 const drawerWidth = 240;
 
@@ -32,6 +38,9 @@ const menuItems = [
   { text: 'Pflanzen', icon: <LocalFloristIcon />, path: '/plants' },
   { text: 'Sensoren', icon: <SensorsIcon />, path: '/sensors' },
   { text: 'Bewässerung', icon: <WaterDropIcon />, path: '/irrigation' },
+  { text: 'Relays', icon: <PowerSettingsNewIcon />, path: '/relays' },
+  { text: 'Zeitpläne', icon: <ScheduleIcon />, path: '/schedules' },
+  { text: 'Ernten', icon: <LocalFlorist />, path: '/harvests' },
   { text: 'Automatisierung', icon: <AutoModeIcon />, path: '/automation' },
   { text: 'Analytics', icon: <BarChartIcon />, path: '/analytics' },
   { text: 'Einstellungen', icon: <SettingsIcon />, path: '/settings' },
@@ -42,6 +51,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+  const { mode, toggleMode } = useThemeMode();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -97,6 +107,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
             Grow Monitoring System
           </Typography>
+          <IconButton onClick={toggleMode} color="inherit" sx={{ mr: 2 }}>
+            {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
           <Typography variant="body2">{user?.username}</Typography>
         </Toolbar>
       </AppBar>

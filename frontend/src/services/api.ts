@@ -143,4 +143,20 @@ export const settingsAPI = {
   updateUser: (id: number, data: any) => api.patch(`/settings/users/${id}`, data),
 };
 
+// Schedules
+export const schedulesAPI = {
+  getAll: () => api.get('/schedules'),
+  create: (data: any) => api.post('/schedules', data),
+  update: (id: number, data: any) => api.put(`/schedules/${id}`, data),
+  delete: (id: number) => api.delete(`/schedules/${id}`),
+};
+
+// Harvests
+export const harvestsAPI = {
+  getAll: () => api.get('/harvests'),
+  create: (data: any) => api.post('/harvests', data),
+  update: (id: number, data: any) => api.put(`/harvests/${id}`, data),
+  delete: (id: number) => api.delete(`/harvests/${id}`),
+};
+
 export default api;

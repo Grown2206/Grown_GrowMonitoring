@@ -1,28 +1,21 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { ToastProvider } from './contexts/ToastContext';
 import { Layout } from './components/Layout';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import { Plants } from './pages/Plants';
 import { Irrigation } from './pages/Irrigation';
+import { Relays } from './pages/Relays';
 import { Sensors } from './pages/Sensors';
 import { Automation } from './pages/Automation';
+import { Schedules } from './pages/Schedules';
+import { Harvests } from './pages/Harvests';
 import { Analytics } from './pages/Analytics';
 import { Settings } from './pages/Settings';
 import { CircularProgress, Box } from '@mui/material';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#4caf50',
-    },
-    secondary: {
-      main: '#ff9800',
-    },
-  },
-});
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -67,6 +60,14 @@ function AppRoutes() {
         }
       />
       <Route
+        path="/relays"
+        element={
+          <PrivateRoute>
+            <Relays />
+          </PrivateRoute>
+        }
+      />
+      <Route
         path="/sensors"
         element={
           <PrivateRoute>
@@ -79,6 +80,22 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <Automation />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/schedules"
+        element={
+          <PrivateRoute>
+            <Schedules />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/harvests"
+        element={
+          <PrivateRoute>
+            <Harvests />
           </PrivateRoute>
         }
       />
@@ -104,13 +121,15 @@ function AppRoutes() {
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <AuthProvider>
-          <AppRoutes />
-        </AuthProvider>
-      </BrowserRouter>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <AppRoutes />
+          </AuthProvider>
+        </ToastProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 

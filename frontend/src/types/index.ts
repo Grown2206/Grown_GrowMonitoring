@@ -158,3 +158,29 @@ export interface SystemSetting {
   category: string;
   description?: string;
 }
+
+export interface Schedule {
+  id: number;
+  name: string;
+  type: 'light' | 'watering' | 'feeding' | 'ventilation' | 'custom';
+  relayId?: number;
+  startTime: string;
+  endTime: string;
+  daysOfWeek: string;
+  enabled: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface Harvest {
+  id: number;
+  plantId: number;
+  harvestDate: string;
+  wetWeight?: number;
+  dryWeight?: number;
+  quality: 'excellent' | 'good' | 'average' | 'poor';
+  notes?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  plant?: Plant;
+}

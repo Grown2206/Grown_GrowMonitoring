@@ -25,6 +25,8 @@ import sensorsManagementRoutes from './routes/sensors-management.routes';
 import automationRoutes from './routes/automation.routes';
 import activityRoutes from './routes/activity.routes';
 import settingsRoutes from './routes/settings.routes';
+import schedulesRoutes from './routes/schedules.routes';
+import harvestsRoutes from './routes/harvests.routes';
 
 // Load environment variables
 dotenv.config();
@@ -66,6 +68,8 @@ app.use('/api/sensors-management', sensorsManagementRoutes);
 app.use('/api/automation', automationRoutes);
 app.use('/api/activity', activityRoutes);
 app.use('/api/settings', settingsRoutes);
+app.use('/api/schedules', schedulesRoutes);
+app.use('/api/harvests', harvestsRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

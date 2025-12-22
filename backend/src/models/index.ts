@@ -13,6 +13,9 @@ import { Sensor } from './Sensor';
 import { AutomationRule } from './AutomationRule';
 import { ActivityLog } from './ActivityLog';
 import { SystemSetting } from './SystemSetting';
+import { Schedule } from './Schedule';
+import { Harvest } from './Harvest';
+import { PlantPhoto } from './PlantPhoto';
 
 // Define associations
 User.hasMany(ApiKey, { foreignKey: 'userId', as: 'apiKeys' });
@@ -33,6 +36,12 @@ CalendarEvent.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
 User.hasMany(ActivityLog, { foreignKey: 'userId', as: 'activityLogs' });
 ActivityLog.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
+Plant.hasMany(Harvest, { foreignKey: 'plantId', as: 'harvests' });
+Harvest.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
+
+Plant.hasMany(PlantPhoto, { foreignKey: 'plantId', as: 'photos' });
+PlantPhoto.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
+
 export {
   User,
   ApiKey,
@@ -49,4 +58,7 @@ export {
   AutomationRule,
   ActivityLog,
   SystemSetting,
+  Schedule,
+  Harvest,
+  PlantPhoto,
 };
