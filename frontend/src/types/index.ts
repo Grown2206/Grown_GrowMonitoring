@@ -13,7 +13,7 @@ export interface Plant {
   plantedDate?: string;
   harvestDate?: string;
   sensorId: number;
-  notes?: string;
+  description?: string;
   isActive: boolean;
   strain?: Strain;
   irrigationConfig?: IrrigationConfig;

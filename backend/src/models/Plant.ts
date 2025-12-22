@@ -9,13 +9,13 @@ interface PlantAttributes {
   plantedDate?: Date;
   harvestDate?: Date;
   sensorId: number;
-  notes?: string;
+  description?: string;
   isActive: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-interface PlantCreationAttributes extends Optional<PlantAttributes, 'id' | 'strainId' | 'plantedDate' | 'harvestDate' | 'notes' | 'isActive' | 'phase'> {}
+interface PlantCreationAttributes extends Optional<PlantAttributes, 'id' | 'strainId' | 'plantedDate' | 'harvestDate' | 'description' | 'isActive' | 'phase'> {}
 
 export class Plant extends Model<PlantAttributes, PlantCreationAttributes> implements PlantAttributes {
   public id!: number;
@@ -25,7 +25,7 @@ export class Plant extends Model<PlantAttributes, PlantCreationAttributes> imple
   public plantedDate?: Date;
   public harvestDate?: Date;
   public sensorId!: number;
-  public notes?: string;
+  public description?: string;
   public isActive!: boolean;
 
   public readonly createdAt!: Date;
@@ -69,7 +69,7 @@ Plant.init(
       allowNull: false,
       unique: true,
     },
-    notes: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
