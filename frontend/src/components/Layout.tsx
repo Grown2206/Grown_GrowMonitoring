@@ -34,6 +34,7 @@ import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import MemoryIcon from '@mui/icons-material/Memory';
 
 const drawerWidth = 240;
 
@@ -49,6 +50,7 @@ const menuItems = [
   { text: 'Analytics', icon: <BarChartIcon />, path: '/analytics' },
   { text: 'ESP32 Simulation', icon: <DeveloperBoardIcon />, path: '/simulation' },
   { text: 'VPD Rechner', icon: <CalculateIcon />, path: '/vpd' },
+  { text: 'GPIO Pins', icon: <MemoryIcon />, path: '/gpio' },
   { text: 'Foto-Galerie', icon: <PhotoLibraryIcon />, path: '/gallery' },
   { text: 'Benachrichtigungen', icon: <NotificationsIcon />, path: '/notifications' },
   { text: 'Einstellungen', icon: <SettingsIcon />, path: '/settings' },

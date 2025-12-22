@@ -19,6 +19,7 @@ import { Simulation } from './pages/Simulation';
 import { VPDCalculator } from './pages/VPDCalculator';
 import { PhotoGallery } from './pages/PhotoGallery';
 import { Notifications } from './pages/Notifications';
+import { GPIOManager } from './pages/GPIOManager';
 import { CircularProgress, Box } from '@mui/material';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -148,6 +149,14 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <Notifications />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/gpio"
+        element={
+          <PrivateRoute>
+            <GPIOManager />
           </PrivateRoute>
         }
       />

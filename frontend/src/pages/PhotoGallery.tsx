@@ -58,6 +58,8 @@ export function PhotoGallery() {
     imageUrl: '',
     takenAt: new Date().toISOString().split('T')[0],
   });
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
   const { success, error: showError } = useToast();
 
   // Demo photos
@@ -129,12 +131,57 @@ export function PhotoGallery() {
 
   const filteredPhotos = selectedPlant === 'all' ? photos : photos.filter((p) => p.plantId === selectedPlant);
 
-  function handleAddPhoto() {
-    // In a real app, upload to server
+  function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result as string);
+        setFormData({ ...formData, imageUrl: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function handleCameraCapture() {
+    // Trigger file input with camera
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.capture = 'environment'; // Use rear camera
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        setSelectedFile(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewUrl(reader.result as string);
+          setFormData({ ...formData, imageUrl: reader.result as string });
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    input.click();
+  }
+
+  async function handleAddPhoto() {
+    if (!formData.imageUrl && !selectedFile) {
+      showError('Bitte wählen Sie ein Bild aus');
+      return;
+    }
+
+    // In a real app, upload to server with FormData
+    // const formDataToSend = new FormData();
+    // if (selectedFile) formDataToSend.append('photo', selectedFile);
+    // formDataToSend.append('plantId', formData.plantId);
+    // formDataToSend.append('title', formData.title);
+    // await api.post('/photos', formDataToSend);
+
     const newPhoto: Photo = {
       id: photos.length + 1,
       plantId: parseInt(formData.plantId),
-      imageUrl: formData.imageUrl,
+      imageUrl: formData.imageUrl || previewUrl,
       title: formData.title,
       description: formData.description,
       takenAt: formData.takenAt,
@@ -160,6 +207,8 @@ export function PhotoGallery() {
       imageUrl: '',
       takenAt: new Date().toISOString().split('T')[0],
     });
+    setSelectedFile(null);
+    setPreviewUrl('');
   }
 
   const photosByPlant = plants.map((plant) => ({
@@ -358,14 +407,58 @@ export function PhotoGallery() {
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             margin="normal"
           />
+
+          {/* Camera/File Upload */}
+          <Box mt={2} mb={2}>
+            <Typography variant="subtitle2" gutterBottom>
+              Foto auswählen
+            </Typography>
+            <Box display="flex" gap={2}>
+              <Button
+                variant="outlined"
+                startIcon={<CameraIcon />}
+                onClick={handleCameraCapture}
+                fullWidth
+              >
+                Kamera
+              </Button>
+              <Button
+                variant="outlined"
+                component="label"
+                startIcon={<AddIcon />}
+                fullWidth
+              >
+                Datei wählen
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={handleFileSelect}
+                />
+              </Button>
+            </Box>
+            {previewUrl && (
+              <Box mt={2}>
+                <img
+                  src={previewUrl}
+                  alt="Vorschau"
+                  style={{ width: '100%', borderRadius: 8, maxHeight: 300, objectFit: 'cover' }}
+                />
+              </Box>
+            )}
+          </Box>
+
+          <Divider sx={{ my: 2 }}>ODER</Divider>
+
           <TextField
             fullWidth
             label="Bild-URL"
             value={formData.imageUrl}
             onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
             margin="normal"
-            helperText="URL zum Bild (in echter App: Datei-Upload)"
+            helperText="Direkt URL eingeben (z.B. von Unsplash)"
           />
+
           <TextField
             fullWidth
             label="Beschreibung"
@@ -390,7 +483,7 @@ export function PhotoGallery() {
           <Button
             onClick={handleAddPhoto}
             variant="contained"
-            disabled={!formData.plantId || !formData.title || !formData.imageUrl}
+            disabled={!formData.plantId || !formData.title || (!formData.imageUrl && !previewUrl)}
           >
             Hinzufügen
           </Button>
