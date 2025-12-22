@@ -21,6 +21,7 @@ import {
   alpha,
   Tabs,
   Tab,
+  Divider,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -29,7 +30,7 @@ import {
   ZoomIn as ZoomIcon,
   PhotoCamera as CameraIcon,
   FilterVintage as FlowerIcon,
-  Eco as LeafIcon,
+  Grass as LeafIcon,
 } from '@mui/icons-material';
 import { plantsAPI } from '../services/api';
 import { Plant } from '../types';
