@@ -3,6 +3,8 @@ export interface User {
   username: string;
   email: string;
   role: 'admin' | 'user';
+  isActive: boolean;
+  createdAt?: string;
 }
 
 export interface Plant {
