@@ -25,8 +25,8 @@ export async function initDatabase() {
     await sequelize.authenticate();
     console.log('✓ Database connection established');
 
-    // Sync all models
-    await sequelize.sync({ alter: true });
+    // Sync all models (use force: true only for fresh install)
+    await sequelize.sync({ force: false });
     console.log('✓ Database models synchronized');
 
     return true;

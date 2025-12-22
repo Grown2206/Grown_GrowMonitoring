@@ -123,10 +123,10 @@ async function createDefaultAdmin() {
       await User.create({
         username: 'admin',
         email: 'admin@growmonitoring.local',
-        password: 'Admin123!',
+        password: 'admin123',
         role: 'admin',
       });
-      console.log('✓ Default admin user created (admin / Admin123!)');
+      console.log('✓ Default admin user created (admin / admin123)');
     }
   } catch (error) {
     console.error('Failed to create default admin:', error);
