@@ -21,13 +21,19 @@ import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SensorsIcon from '@mui/icons-material/Sensors';
+import AutoModeIcon from '@mui/icons-material/AutoMode';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 const drawerWidth = 240;
 
 const menuItems = [
   { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
   { text: 'Pflanzen', icon: <LocalFloristIcon />, path: '/plants' },
+  { text: 'Sensoren', icon: <SensorsIcon />, path: '/sensors' },
   { text: 'Bewässerung', icon: <WaterDropIcon />, path: '/irrigation' },
+  { text: 'Automatisierung', icon: <AutoModeIcon />, path: '/automation' },
+  { text: 'Analytics', icon: <BarChartIcon />, path: '/analytics' },
   { text: 'Einstellungen', icon: <SettingsIcon />, path: '/settings' },
 ];
 

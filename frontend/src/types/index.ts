@@ -102,3 +102,57 @@ export interface CalendarEvent {
   eventType: 'feeding' | 'watering' | 'pruning' | 'harvest' | 'other';
   completed: boolean;
 }
+
+export interface SensorManagement {
+  id: number;
+  sensorId: number;
+  name: string;
+  type: 'moisture' | 'temperature' | 'humidity' | 'ph' | 'ec' | 'light' | 'water_level';
+  unit: string;
+  minValue: number;
+  maxValue: number;
+  calibrationOffset: number;
+  isActive: boolean;
+  location?: string;
+  lastReading?: number;
+  lastReadingAt?: string;
+}
+
+export interface AutomationRule {
+  id: number;
+  name: string;
+  description?: string;
+  enabled: boolean;
+  triggerType: 'time' | 'sensor' | 'manual';
+  triggerConfig: string;
+  actionType: 'relay' | 'pump' | 'notification';
+  actionConfig: string;
+  conditions?: string;
+  lastTriggered?: string;
+  triggerCount: number;
+}
+
+export interface ActivityLog {
+  id: number;
+  userId?: number;
+  action: string;
+  entity: string;
+  entityId?: number;
+  details?: string;
+  ipAddress?: string;
+  userAgent?: string;
+  timestamp: string;
+  user?: {
+    id: number;
+    username: string;
+  };
+}
+
+export interface SystemSetting {
+  id: number;
+  key: string;
+  value: string;
+  type: 'string' | 'number' | 'boolean' | 'json';
+  category: string;
+  description?: string;
+}

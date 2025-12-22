@@ -21,6 +21,10 @@ import alertRoutes from './routes/alerts.routes';
 import noteRoutes from './routes/notes.routes';
 import eventRoutes from './routes/events.routes';
 import exportRoutes from './routes/export.routes';
+import sensorsManagementRoutes from './routes/sensors-management.routes';
+import automationRoutes from './routes/automation.routes';
+import activityRoutes from './routes/activity.routes';
+import settingsRoutes from './routes/settings.routes';
 
 // Load environment variables
 dotenv.config();
@@ -58,6 +62,10 @@ app.use('/api/alerts', alertRoutes);
 app.use('/api/notes', noteRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/export', exportRoutes);
+app.use('/api/sensors-management', sensorsManagementRoutes);
+app.use('/api/automation', automationRoutes);
+app.use('/api/activity', activityRoutes);
+app.use('/api/settings', settingsRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

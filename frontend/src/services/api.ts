@@ -107,4 +107,40 @@ export const exportAPI = {
   fullBackup: () => api.get('/export/full-backup'),
 };
 
+// Sensors Management
+export const sensorsManagementAPI = {
+  getAll: () => api.get('/sensors-management'),
+  getOne: (id: number) => api.get(`/sensors-management/${id}`),
+  create: (data: any) => api.post('/sensors-management', data),
+  update: (id: number, data: any) => api.put(`/sensors-management/${id}`, data),
+  calibrate: (id: number, offset: number) => api.post(`/sensors-management/${id}/calibrate`, { offset }),
+  delete: (id: number) => api.delete(`/sensors-management/${id}`),
+};
+
+// Automation
+export const automationAPI = {
+  getAll: () => api.get('/automation'),
+  getOne: (id: number) => api.get(`/automation/${id}`),
+  create: (data: any) => api.post('/automation', data),
+  update: (id: number, data: any) => api.put(`/automation/${id}`, data),
+  trigger: (id: number) => api.post(`/automation/${id}/trigger`),
+  delete: (id: number) => api.delete(`/automation/${id}`),
+};
+
+// Activity Logs
+export const activityAPI = {
+  getAll: (params?: any) => api.get('/activity', { params }),
+  getStats: () => api.get('/activity/stats'),
+};
+
+// Settings
+export const settingsAPI = {
+  getAll: (category?: string) => api.get('/settings', { params: { category } }),
+  getByKey: (key: string) => api.get(`/settings/${key}`),
+  save: (data: any) => api.post('/settings', data),
+  delete: (key: string) => api.delete(`/settings/${key}`),
+  getAllUsers: () => api.get('/settings/users/all'),
+  updateUser: (id: number, data: any) => api.patch(`/settings/users/${id}`, data),
+};
+
 export default api;

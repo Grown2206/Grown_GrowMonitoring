@@ -9,6 +9,10 @@ import { IrrigationLog } from './IrrigationLog';
 import { Alert } from './Alert';
 import { Note } from './Note';
 import { CalendarEvent } from './CalendarEvent';
+import { Sensor } from './Sensor';
+import { AutomationRule } from './AutomationRule';
+import { ActivityLog } from './ActivityLog';
+import { SystemSetting } from './SystemSetting';
 
 // Define associations
 User.hasMany(ApiKey, { foreignKey: 'userId', as: 'apiKeys' });
@@ -26,6 +30,9 @@ Note.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
 Plant.hasMany(CalendarEvent, { foreignKey: 'plantId', as: 'events' });
 CalendarEvent.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
 
+User.hasMany(ActivityLog, { foreignKey: 'userId', as: 'activityLogs' });
+ActivityLog.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
 export {
   User,
   ApiKey,
@@ -38,4 +45,8 @@ export {
   Alert,
   Note,
   CalendarEvent,
+  Sensor,
+  AutomationRule,
+  ActivityLog,
+  SystemSetting,
 };

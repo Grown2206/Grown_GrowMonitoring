@@ -7,6 +7,10 @@ import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import { Plants } from './pages/Plants';
 import { Irrigation } from './pages/Irrigation';
+import { Sensors } from './pages/Sensors';
+import { Automation } from './pages/Automation';
+import { Analytics } from './pages/Analytics';
+import { Settings } from './pages/Settings';
 import { CircularProgress, Box } from '@mui/material';
 
 const theme = createTheme({
@@ -63,13 +67,34 @@ function AppRoutes() {
         }
       />
       <Route
+        path="/sensors"
+        element={
+          <PrivateRoute>
+            <Sensors />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/automation"
+        element={
+          <PrivateRoute>
+            <Automation />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/analytics"
+        element={
+          <PrivateRoute>
+            <Analytics />
+          </PrivateRoute>
+        }
+      />
+      <Route
         path="/settings"
         element={
           <PrivateRoute>
-            <Box>
-              <h2>Einstellungen</h2>
-              <p>Hier können Sie Alerts, Relais und weitere Einstellungen konfigurieren.</p>
-            </Box>
+            <Settings />
           </PrivateRoute>
         }
       />
