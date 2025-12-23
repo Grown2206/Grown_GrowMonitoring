@@ -3,28 +3,27 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 23. Dezember 2024
-**Version:** 1.3.0
-**Fortschritt gesamt:** 24/140 Features (17.1%)
+**Version:** 1.4.0
+**Fortschritt gesamt:** 25/140 Features (17.9%)
 
 ---
 
 ## 🎯 Aktuelle Sprint-Ziele (Woche 1-2)
 
 ### Sprint 1: Core Enhancements ✅ ABGESCHLOSSEN
-- [ ] Multi-Device Sensor Management (verschoben auf Sprint 3)
 - [x] Extended Dashboard Widgets ✅
 - [x] Advanced Data Export ✅
 - [x] Real-time Performance Optimization ✅
 - [x] Enhanced Error Handling ✅
 
-### Sprint 2: Advanced Analytics 🔄 IN ARBEIT
+### Sprint 2: Advanced Analytics ✅ ABGESCHLOSSEN
 - [x] Advanced Analytics Dashboard ✅
 - [x] Erweiterte Alarmierung (Telegram/Discord) ✅
-- [ ] Multi-Device Sensor Management
+- [x] Multi-Device Sensor Management ✅
 
 ---
 
-## ✅ ABGESCHLOSSEN (24 Features)
+## ✅ ABGESCHLOSSEN (25 Features)
 
 ### Phase 0: MVP & Foundation ✅ KOMPLETT
 - [x] Basic Backend (Node.js, Express, SQLite)
@@ -54,8 +53,9 @@
 - [x] Real-time Performance Optimization (Code Splitting, Memoization)
 - [x] Advanced Analytics Dashboard (Korrelationen, Scatter Plots, Heatmaps)
 - [x] Enhanced Alert System (Telegram/Discord, erweiterte Bedingungen)
+- [x] Multi-Device Sensor Management (Device Model, Device-Verwaltung UI)
 
-**Status:** 18/18 MVP Features ✅ | 6/24 Enhancement Features (25%)
+**Status:** 18/18 MVP Features ✅ | 7/24 Enhancement Features (29.2%)
 
 ---
 
@@ -123,21 +123,37 @@
   - [x] Cooldown-Mechanismus gegen Alert-Spam
   - [x] Routing und Navigation Integration
 
+- [x] **Multi-Device Sensor Management** ✅ FERTIG (23.12.2024)
+  - [x] Device Model (ESP32, ESP8266, Raspberry Pi)
+  - [x] Sensor und Relay mit deviceId erweitert
+  - [x] Device-Sensor und Device-Relay Assoziationen
+  - [x] Device CRUD API (create, read, update, delete)
+  - [x] Device Heartbeat-Endpoint für Status-Updates
+  - [x] Device Statistics Endpoint
+  - [x] DeviceManagement UI mit Tabellen-Ansicht
+  - [x] DeviceDialog für Add/Edit
+  - [x] Device Status-Indikatoren (online/offline/error)
+  - [x] Last Seen Timestamp mit relativer Zeit
+  - [x] Sensor/Relay Anzahl pro Device
+  - [x] Routing und Navigation Integration
+
 ---
 
 ## 📋 ROADMAP - DETAILLIERTER STATUS
 
 ---
 
-## 🔌 Hardware & IoT (0/12 - 0%)
+## 🔌 Hardware & IoT (1/12 - 8.3%)
 
 ### Priorität: HOCH
-- [ ] **Multi-ESP32 Support** 🎯 NÄCHSTES
-  - [ ] Device Discovery Protocol
-  - [ ] Master/Slave Configuration
-  - [ ] Mesh Network Support
-  - [ ] Auto-Registration
-  - **Aufwand:** 40h | **Sprint:** 2-3
+- [x] **Multi-Device Support** ✅ TEILWEISE FERTIG (23.12.2024)
+  - [x] Device Model und Verwaltung
+  - [x] Multi-Device Sensor/Relay Zuordnung
+  - [ ] Device Discovery Protocol - geplant für Sprint 3
+  - [ ] Master/Slave Configuration - geplant für Sprint 3
+  - [ ] Mesh Network Support - geplant für Sprint 4
+  - [ ] Auto-Registration - geplant für Sprint 3
+  - **Aufwand:** 40h | **Sprint:** 2-3 | **Tatsächlich:** ~8h
 
 - [ ] **Erweiterte Sensor-Unterstützung** 🎯 NÄCHSTES
   - [ ] CO2-Sensoren (MH-Z19, SCD30)
