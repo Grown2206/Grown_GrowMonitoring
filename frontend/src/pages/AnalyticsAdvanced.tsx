@@ -24,7 +24,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import GridOnIcon from '@mui/icons-material/GridOn';
 
 interface TabPanelProps {
-  children?: React.Node;
+  children?: React.ReactNode;
   index: number;
   value: number;
 }
