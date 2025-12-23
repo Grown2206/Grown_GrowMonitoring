@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Grid, Paper, Typography, Card, CardContent, MenuItem, TextField, Button } from '@mui/material';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { sensorsAPI, plantsAPI, irrigationAPI } from '../services/api';
-import { SensorData, Plant } from '../types';
+import { sensorsAPI, plantsAPI, irrigationAPI, relaysAPI } from '../services/api';
+import { SensorData, Plant, Relay } from '../types';
+import { ExportDialog, ExportFormat } from '../components/ExportDialog';
+import { ExportService } from '../services/exportService';
+import DownloadIcon from '@mui/icons-material/Download';
+import { useToast } from '../contexts/ToastContext';
 
 export function Analytics() {
   const [sensorHistory, setSensorHistory] = useState<SensorData[]>([]);
   const [plants, setPlants] = useState<Plant[]>([]);
+  const [relays, setRelays] = useState<Relay[]>([]);
   const [selectedSensor, setSelectedSensor] = useState<number | ''>('');
   const [timeRange, setTimeRange] = useState(24);
+  const [exportDialogOpen, setExportDialogOpen] = useState(false);
+  const { showToast } = useToast();
 
   useEffect(() => {
     loadData();
@@ -16,12 +23,59 @@ export function Analytics() {
 
   async function loadData() {
     try {
-      const [sensorRes, plantsRes] = await Promise.all([sensorsAPI.getHistory(selectedSensor || undefined, timeRange), plantsAPI.getAll()]);
+      const [sensorRes, plantsRes, relaysRes] = await Promise.all([
+        sensorsAPI.getHistory(selectedSensor || undefined, timeRange),
+        plantsAPI.getAll(),
+        relaysAPI.getAll(),
+      ]);
 
       setSensorHistory(sensorRes.data);
       setPlants(plantsRes.data);
+      setRelays(relaysRes.data);
     } catch (error) {
       console.error('Failed to load analytics:', error);
+    }
+  }
+
+  function handleExport(format: ExportFormat, dateRange?: { start: Date; end: Date }) {
+    try {
+      let filteredData = sensorHistory;
+
+      // Apply date range filter if provided
+      if (dateRange) {
+        filteredData = sensorHistory.filter((d) => {
+          const timestamp = new Date(d.timestamp);
+          return timestamp >= dateRange.start && timestamp <= dateRange.end;
+        });
+      }
+
+      switch (format) {
+        case 'csv':
+          ExportService.exportSensorDataToCSV(filteredData, `sensor-data-${Date.now()}.csv`);
+          break;
+        case 'excel':
+          ExportService.exportComprehensiveReport(
+            filteredData,
+            plants,
+            relays,
+            `grow-report-${Date.now()}.xlsx`
+          );
+          break;
+        case 'json':
+          ExportService.exportSensorDataToJSON(filteredData, `sensor-data-${Date.now()}.json`);
+          break;
+        case 'pdf':
+          ExportService.exportAnalyticsReport(filteredData, plants, {
+            title: 'Grow Monitoring Analytics Bericht',
+            dateRange,
+          });
+          break;
+      }
+
+      showToast(`Export als ${format.toUpperCase()} erfolgreich!`, 'success');
+    } catch (error) {
+      console.error('Export failed:', error);
+      showToast('Export fehlgeschlagen', 'error');
     }
   }
 
@@ -54,6 +108,13 @@ export function Analytics() {
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4">Analytics & Statistiken</Typography>
         <Box display="flex" gap={2}>
+          <Button
+            variant="contained"
+            startIcon={<DownloadIcon />}
+            onClick={() => setExportDialogOpen(true)}
+          >
+            Export
+          </Button>
           <TextField
             select
             size="small"
@@ -85,6 +146,15 @@ export function Analytics() {
           </TextField>
         </Box>
       </Box>
+
+      {/* Export Dialog */}
+      <ExportDialog
+        open={exportDialogOpen}
+        onClose={() => setExportDialogOpen(false)}
+        onExport={handleExport}
+        dataType="analytics"
+        totalRecords={sensorHistory.length}
+      />
 
       {/* Stats Cards */}
       <Grid container spacing={3} mb={3}>
