@@ -4,22 +4,27 @@
 
 **Letzte Aktualisierung:** 23. Dezember 2024
 **Version:** 1.2.0
-**Fortschritt gesamt:** 22/140 Features (15.7%)
+**Fortschritt gesamt:** 23/140 Features (16.4%)
 
 ---
 
 ## 🎯 Aktuelle Sprint-Ziele (Woche 1-2)
 
 ### Sprint 1: Core Enhancements ✅ ABGESCHLOSSEN
-- [ ] Multi-Device Sensor Management (verschoben auf Sprint 2)
+- [ ] Multi-Device Sensor Management (verschoben auf Sprint 3)
 - [x] Extended Dashboard Widgets ✅
 - [x] Advanced Data Export ✅
 - [x] Real-time Performance Optimization ✅
 - [x] Enhanced Error Handling ✅
 
+### Sprint 2: Advanced Analytics 🔄 IN ARBEIT
+- [x] Advanced Analytics Dashboard ✅
+- [ ] Erweiterte Alarmierung (Telegram/Discord)
+- [ ] Multi-Device Sensor Management
+
 ---
 
-## ✅ ABGESCHLOSSEN (22 Features)
+## ✅ ABGESCHLOSSEN (23 Features)
 
 ### Phase 0: MVP & Foundation ✅ KOMPLETT
 - [x] Basic Backend (Node.js, Express, SQLite)
@@ -47,8 +52,9 @@
 - [x] Advanced Data Export (CSV, Excel, JSON, PDF)
 - [x] Enhanced Error Handling (Error Boundaries, Retry Logic)
 - [x] Real-time Performance Optimization (Code Splitting, Memoization)
+- [x] Advanced Analytics Dashboard (Korrelationen, Scatter Plots, Heatmaps)
 
-**Status:** 18/18 MVP Features ✅ | 4/24 Enhancement Features (16.7%)
+**Status:** 18/18 MVP Features ✅ | 5/24 Enhancement Features (20.8%)
 
 ---
 
@@ -92,6 +98,19 @@
   - [x] Message Buffering und Batching
   - [x] Performance Monitoring Utilities
   - [x] FPS Monitor für Performance-Tracking
+
+### Sprint 2 - In Arbeit 🔄
+
+- [x] **Advanced Analytics Dashboard** ✅ FERTIG (23.12.2024)
+  - [x] Statistische Utility-Funktionen (Pearson, Quartile, etc.)
+  - [x] Korrelations-Matrix mit Heatmap
+  - [x] Scatter-Plot mit Korrelationskoeffizient
+  - [x] Box-Plot für statistische Verteilung
+  - [x] Histogramm mit einstellbaren Bins
+  - [x] Zeit-Heatmap für Tag/Stunden-Muster
+  - [x] 4 Analyse-Tabs (Korrelationen, Scatter, Verteilungen, Heatmaps)
+  - [x] Zeitraum-Selektor (24h, 7d, 30d)
+  - [x] Interpretationshilfen für alle Charts
 
 ---
 
@@ -197,7 +216,7 @@
 
 ---
 
-## 📈 Datenanalyse & Reporting (1/11 - 9%)
+## 📈 Datenanalyse & Reporting (2/11 - 18%)
 
 ### Priorität: HOCH
 - [x] **Advanced Data Export** ✅ FERTIG (23.12.2024)
@@ -207,12 +226,12 @@
   - [x] PDF mit Statistiken
   - **Aufwand:** 25h | **Sprint:** 1 | **Tatsächlich:** ~4h
 
-- [ ] **Advanced Analytics Dashboard** 🎯 SPRINT 2
-  - [ ] Korrelations-Analysen
-  - [ ] Heatmaps
-  - [ ] Scatter-Plots
-  - [ ] Box-Plots & Histogramme
-  - **Aufwand:** 40h | **Sprint:** 2-3
+- [x] **Advanced Analytics Dashboard** ✅ FERTIG (23.12.2024)
+  - [x] Korrelations-Analysen
+  - [x] Heatmaps
+  - [x] Scatter-Plots
+  - [x] Box-Plots & Histogramme
+  - **Aufwand:** 40h | **Sprint:** 2 | **Tatsächlich:** ~6h
 
 - [ ] **Vergleichs-Analysen** 🎯 SPRINT 3
   - [ ] Grow-Zyklen vergleichen
