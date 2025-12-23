@@ -16,6 +16,7 @@ import { SystemSetting } from './SystemSetting';
 import { Schedule } from './Schedule';
 import { Harvest } from './Harvest';
 import { PlantPhoto } from './PlantPhoto';
+import { Device } from './Device';
 
 // Define associations
 User.hasMany(ApiKey, { foreignKey: 'userId', as: 'apiKeys' });
@@ -42,6 +43,12 @@ Harvest.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
 Plant.hasMany(PlantPhoto, { foreignKey: 'plantId', as: 'photos' });
 PlantPhoto.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
 
+Device.hasMany(Sensor, { foreignKey: 'deviceId', as: 'sensors' });
+Sensor.belongsTo(Device, { foreignKey: 'deviceId', as: 'device' });
+
+Device.hasMany(Relay, { foreignKey: 'deviceId', as: 'relays' });
+Relay.belongsTo(Device, { foreignKey: 'deviceId', as: 'device' });
+
 export {
   User,
   ApiKey,
@@ -61,4 +68,5 @@ export {
   Schedule,
   Harvest,
   PlantPhoto,
+  Device,
 };

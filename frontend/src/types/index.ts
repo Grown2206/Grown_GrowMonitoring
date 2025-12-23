@@ -44,9 +44,45 @@ export interface SensorData {
   timestamp: string;
 }
 
+export interface Device {
+  id: number;
+  deviceId: string;
+  name: string;
+  type: 'esp32' | 'esp8266' | 'raspberry_pi' | 'other';
+  ipAddress?: string;
+  macAddress?: string;
+  firmwareVersion?: string;
+  status: 'online' | 'offline' | 'error';
+  lastSeen?: string;
+  location?: string;
+  description?: string;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  sensors?: Sensor[];
+  relays?: Relay[];
+}
+
+export interface Sensor {
+  id: number;
+  sensorId: number;
+  deviceId?: number;
+  name: string;
+  type: 'moisture' | 'temperature' | 'humidity' | 'ph' | 'ec' | 'light' | 'water_level';
+  unit: string;
+  minValue: number;
+  maxValue: number;
+  calibrationOffset: number;
+  isActive: boolean;
+  location?: string;
+  lastReading?: number;
+  lastReadingAt?: string;
+}
+
 export interface Relay {
   id: number;
   relayId: number;
+  deviceId?: number;
   name: string;
   type: 'light' | 'fan' | 'pump' | 'heater' | 'humidifier' | 'other';
   status: boolean;

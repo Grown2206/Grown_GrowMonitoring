@@ -4,6 +4,7 @@ import { sequelize } from '../database/config';
 interface SensorAttributes {
   id: number;
   sensorId: number;
+  deviceId?: number; // Foreign key to Device
   name: string;
   type: 'moisture' | 'temperature' | 'humidity' | 'ph' | 'ec' | 'light' | 'water_level';
   unit: string;
@@ -18,11 +19,12 @@ interface SensorAttributes {
   updatedAt?: Date;
 }
 
-interface SensorCreationAttributes extends Optional<SensorAttributes, 'id' | 'calibrationOffset' | 'isActive' | 'location' | 'lastReading' | 'lastReadingAt'> {}
+interface SensorCreationAttributes extends Optional<SensorAttributes, 'id' | 'deviceId' | 'calibrationOffset' | 'isActive' | 'location' | 'lastReading' | 'lastReadingAt'> {}
 
 export class Sensor extends Model<SensorAttributes, SensorCreationAttributes> implements SensorAttributes {
   public id!: number;
   public sensorId!: number;
+  public deviceId?: number;
   public name!: string;
   public type!: 'moisture' | 'temperature' | 'humidity' | 'ph' | 'ec' | 'light' | 'water_level';
   public unit!: string;
@@ -49,6 +51,16 @@ Sensor.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
+    },
+    deviceId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'devices',
+        key: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL',
     },
     name: {
       type: DataTypes.STRING,

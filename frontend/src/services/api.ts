@@ -121,6 +121,17 @@ export const sensorsManagementAPI = {
   delete: (id: number) => api.delete(`/sensors-management/${id}`),
 };
 
+// Devices
+export const devicesAPI = {
+  getAll: () => api.get('/devices'),
+  getOne: (id: number) => api.get(`/devices/${id}`),
+  create: (data: any) => api.post('/devices', data),
+  update: (id: number, data: any) => api.put(`/devices/${id}`, data),
+  delete: (id: number) => api.delete(`/devices/${id}`),
+  heartbeat: (id: number, data: any) => api.post(`/devices/${id}/heartbeat`, data),
+  getStats: (id: number) => api.get(`/devices/${id}/stats`),
+};
+
 // Automation
 export const automationAPI = {
   getAll: () => api.get('/automation'),

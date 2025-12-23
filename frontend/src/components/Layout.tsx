@@ -37,6 +37,7 @@ import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 import MemoryIcon from '@mui/icons-material/Memory';
+import DevicesIcon from '@mui/icons-material/Devices';
 
 const drawerWidth = 240;
 
@@ -54,6 +55,7 @@ const menuItems = [
   { text: 'ESP32 Simulation', icon: <DeveloperBoardIcon />, path: '/simulation' },
   { text: 'VPD Rechner', icon: <CalculateIcon />, path: '/vpd' },
   { text: 'GPIO Pins', icon: <MemoryIcon />, path: '/gpio' },
+  { text: 'Geräte', icon: <DevicesIcon />, path: '/devices' },
   { text: 'Foto-Galerie', icon: <PhotoLibraryIcon />, path: '/gallery' },
   { text: 'Benachrichtigungen', icon: <NotificationsIcon />, path: '/notifications' },
   { text: 'Alarmierung', icon: <NotificationImportantIcon />, path: '/alerts' },

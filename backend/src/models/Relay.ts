@@ -4,6 +4,7 @@ import { sequelize } from '../database/config';
 interface RelayAttributes {
   id: number;
   relayId: number;
+  deviceId?: number; // Foreign key to Device
   name: string;
   type: 'light' | 'fan' | 'pump' | 'heater' | 'humidifier' | 'other';
   status: boolean;
@@ -12,11 +13,12 @@ interface RelayAttributes {
   updatedAt?: Date;
 }
 
-interface RelayCreationAttributes extends Optional<RelayAttributes, 'id' | 'status' | 'lastChanged'> {}
+interface RelayCreationAttributes extends Optional<RelayAttributes, 'id' | 'deviceId' | 'status' | 'lastChanged'> {}
 
 export class Relay extends Model<RelayAttributes, RelayCreationAttributes> implements RelayAttributes {
   public id!: number;
   public relayId!: number;
+  public deviceId?: number;
   public name!: string;
   public type!: 'light' | 'fan' | 'pump' | 'heater' | 'humidifier' | 'other';
   public status!: boolean;
@@ -37,6 +39,16 @@ Relay.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
+    },
+    deviceId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'devices',
+        key: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL',
     },
     name: {
       type: DataTypes.STRING,

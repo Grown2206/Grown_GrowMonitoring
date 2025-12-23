@@ -29,6 +29,7 @@ const PhotoGallery = lazy(() => import('./pages/PhotoGallery').then(m => ({ defa
 const Notifications = lazy(() => import('./pages/Notifications').then(m => ({ default: m.Notifications })));
 const AlertManagement = lazy(() => import('./pages/AlertManagement').then(m => ({ default: m.AlertManagement })));
 const GPIOManager = lazy(() => import('./pages/GPIOManager').then(m => ({ default: m.GPIOManager })));
+const DeviceManagement = lazy(() => import('./pages/DeviceManagement').then(m => ({ default: m.DeviceManagement })));
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -195,6 +196,14 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <AlertManagement />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/devices"
+        element={
+          <PrivateRoute>
+            <DeviceManagement />
           </PrivateRoute>
         }
       />
