@@ -6,6 +6,7 @@ import { ToastProvider } from './contexts/ToastContext';
 import { Layout } from './components/Layout';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
+import { DashboardEnhanced } from './pages/DashboardEnhanced';
 import { Plants } from './pages/Plants';
 import { Irrigation } from './pages/Irrigation';
 import { Relays } from './pages/Relays';
@@ -42,6 +43,14 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route
         path="/"
+        element={
+          <PrivateRoute>
+            <DashboardEnhanced />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/dashboard-classic"
         element={
           <PrivateRoute>
             <Dashboard />

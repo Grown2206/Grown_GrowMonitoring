@@ -25,12 +25,22 @@ echo ========================================
 echo [1/2] Installiere Backend Dependencies...
 echo ========================================
 cd backend
-call npm install
-if %ERRORLEVEL% NEQ 0 (
-    echo [ERROR] Backend Installation fehlgeschlagen!
+if not exist "package.json" (
+    echo [ERROR] package.json nicht gefunden!
     cd ..
     pause
     exit /b 1
+)
+call npm install --legacy-peer-deps
+if %ERRORLEVEL% NEQ 0 (
+    echo [ERROR] Backend Installation fehlgeschlagen!
+    echo Versuche alternative Methode...
+    call npm install --force
+    if %ERRORLEVEL% NEQ 0 (
+        cd ..
+        pause
+        exit /b 1
+    )
 )
 cd ..
 echo [OK] Backend Dependencies installiert!
@@ -41,12 +51,22 @@ echo ========================================
 echo [2/2] Installiere Frontend Dependencies...
 echo ========================================
 cd frontend
-call npm install
-if %ERRORLEVEL% NEQ 0 (
-    echo [ERROR] Frontend Installation fehlgeschlagen!
+if not exist "package.json" (
+    echo [ERROR] package.json nicht gefunden!
     cd ..
     pause
     exit /b 1
+)
+call npm install --legacy-peer-deps
+if %ERRORLEVEL% NEQ 0 (
+    echo [ERROR] Frontend Installation fehlgeschlagen!
+    echo Versuche alternative Methode...
+    call npm install --force
+    if %ERRORLEVEL% NEQ 0 (
+        cd ..
+        pause
+        exit /b 1
+    )
 )
 cd ..
 echo [OK] Frontend Dependencies installiert!
