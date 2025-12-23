@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 23. Dezember 2024
-**Version:** 1.2.0
-**Fortschritt gesamt:** 23/140 Features (16.4%)
+**Version:** 1.3.0
+**Fortschritt gesamt:** 24/140 Features (17.1%)
 
 ---
 
@@ -19,12 +19,12 @@
 
 ### Sprint 2: Advanced Analytics 🔄 IN ARBEIT
 - [x] Advanced Analytics Dashboard ✅
-- [ ] Erweiterte Alarmierung (Telegram/Discord)
+- [x] Erweiterte Alarmierung (Telegram/Discord) ✅
 - [ ] Multi-Device Sensor Management
 
 ---
 
-## ✅ ABGESCHLOSSEN (23 Features)
+## ✅ ABGESCHLOSSEN (24 Features)
 
 ### Phase 0: MVP & Foundation ✅ KOMPLETT
 - [x] Basic Backend (Node.js, Express, SQLite)
@@ -53,8 +53,9 @@
 - [x] Enhanced Error Handling (Error Boundaries, Retry Logic)
 - [x] Real-time Performance Optimization (Code Splitting, Memoization)
 - [x] Advanced Analytics Dashboard (Korrelationen, Scatter Plots, Heatmaps)
+- [x] Enhanced Alert System (Telegram/Discord, erweiterte Bedingungen)
 
-**Status:** 18/18 MVP Features ✅ | 5/24 Enhancement Features (20.8%)
+**Status:** 18/18 MVP Features ✅ | 6/24 Enhancement Features (25%)
 
 ---
 
@@ -112,6 +113,16 @@
   - [x] Zeitraum-Selektor (24h, 7d, 30d)
   - [x] Interpretationshilfen für alle Charts
 
+- [x] **Enhanced Alert System** ✅ FERTIG (23.12.2024)
+  - [x] Telegram Integration (Bot Token, Chat ID)
+  - [x] Discord Webhooks mit Rich Embeds
+  - [x] Erweiterte Bedingungen (Temperature, Humidity High/Low)
+  - [x] AlertService für alle Benachrichtigungskanäle
+  - [x] Typ-spezifische Konfigurationsdialoge
+  - [x] AlertManagement CRUD-Oberfläche
+  - [x] Cooldown-Mechanismus gegen Alert-Spam
+  - [x] Routing und Navigation Integration
+
 ---
 
 ## 📋 ROADMAP - DETAILLIERTER STATUS
@@ -158,7 +169,7 @@
 
 ---
 
-## 📊 Sensoren & Monitoring (1/10 - 10%)
+## 📊 Sensoren & Monitoring (2/10 - 20%)
 
 ### Priorität: HOCH
 - [x] **Echtzeit-Dashboard Enhancement** ✅ FERTIG (23.12.2024)
@@ -168,12 +179,13 @@
   - [x] Fullscreen Kiosk-Modus
   - **Aufwand:** 35h | **Sprint:** 1 | **Tatsächlich:** ~6h
 
-- [ ] **Erweiterte Alarmierung** 🎯 SPRINT 2
-  - [ ] Stufenweise Alerts (Warning → Critical)
-  - [ ] Telegram Integration
-  - [ ] Discord Webhooks
-  - [ ] SMS Alerts (Twilio)
-  - **Aufwand:** 40h | **Sprint:** 2-3
+- [x] **Erweiterte Alarmierung** ✅ FERTIG (23.12.2024)
+  - [x] Telegram Integration (Bot Token, Chat ID)
+  - [x] Discord Webhooks mit Rich Embeds
+  - [x] Erweiterte Bedingungen (Temperature, Humidity)
+  - [ ] SMS Alerts (Twilio) - geplant für Sprint 4
+  - [ ] Stufenweise Alerts (Warning → Critical) - geplant für Sprint 4
+  - **Aufwand:** 40h | **Sprint:** 2 | **Tatsächlich:** ~5h
 
 - [ ] **Sensor-Kalibrierung** - 30h
 - [ ] **Sensor-Fusion** - 35h
@@ -183,7 +195,7 @@
 - [ ] **Sensor-Gruppen** - 20h
 - [ ] **Benchmark-System** - 30h
 
-**Gesamt Sensoren & Monitoring:** 0/10 (215h geschätzt)
+**Gesamt Sensoren & Monitoring:** 2/10 (170h verbleibend)
 
 ---
 
@@ -246,7 +258,7 @@
 - [ ] **Ertrags-Prognosen** - 40h
 - [ ] **Anomalie-Detection** - 45h
 
-**Gesamt Analytics & Reporting:** 1/11 (225h verbleibend)
+**Gesamt Analytics & Reporting:** 2/11 (185h verbleibend)
 
 ---
 
