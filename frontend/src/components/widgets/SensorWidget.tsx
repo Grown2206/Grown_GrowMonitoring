@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Box, Typography, LinearProgress } from '@mui/material';
 import { SensorData } from '../../types';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
@@ -11,8 +11,8 @@ interface SensorWidgetProps {
   latestData?: SensorData;
 }
 
-export function SensorWidget({ type, latestData }: SensorWidgetProps) {
-  const getWidgetContent = () => {
+export const SensorWidget = React.memo(function SensorWidget({ type, latestData }: SensorWidgetProps) {
+  const getWidgetContent = useMemo(() => {
     switch (type) {
       case 'moisture':
         return {
@@ -47,9 +47,9 @@ export function SensorWidget({ type, latestData }: SensorWidgetProps) {
           color: 'success',
         };
     }
-  };
+  }, [type]);
 
-  const content = getWidgetContent();
+  const content = getWidgetContent;
   const value = content.value ?? 0;
 
   return (
@@ -77,4 +77,4 @@ export function SensorWidget({ type, latestData }: SensorWidgetProps) {
       </Box>
     </Box>
   );
-}
+});

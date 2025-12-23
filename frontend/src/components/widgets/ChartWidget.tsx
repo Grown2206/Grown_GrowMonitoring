@@ -13,7 +13,7 @@ interface ChartWidgetProps {
   height?: number;
 }
 
-export function ChartWidget({ data, lines, xAxisKey = 'time', height = 250 }: ChartWidgetProps) {
+export const ChartWidget = React.memo(function ChartWidget({ data, lines, xAxisKey = 'time', height = 250 }: ChartWidgetProps) {
   return (
     <Box height="100%" display="flex" flexDirection="column">
       {data.length === 0 ? (
@@ -53,4 +53,4 @@ export function ChartWidget({ data, lines, xAxisKey = 'time', height = 250 }: Ch
       )}
     </Box>
   );
-}
+});

@@ -1,28 +1,32 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Layout } from './components/Layout';
-import { Login } from './pages/Login';
-import { Dashboard } from './pages/Dashboard';
-import { DashboardEnhanced } from './pages/DashboardEnhanced';
-import { Plants } from './pages/Plants';
-import { Irrigation } from './pages/Irrigation';
-import { Relays } from './pages/Relays';
-import { Sensors } from './pages/Sensors';
-import { Automation } from './pages/Automation';
-import { Schedules } from './pages/Schedules';
-import { Harvests } from './pages/Harvests';
-import { Analytics } from './pages/Analytics';
-import { Settings } from './pages/Settings';
-import { Simulation } from './pages/Simulation';
-import { VPDCalculator } from './pages/VPDCalculator';
-import { PhotoGallery } from './pages/PhotoGallery';
-import { Notifications } from './pages/Notifications';
-import { GPIOManager } from './pages/GPIOManager';
 import { CircularProgress, Box } from '@mui/material';
+
+// Eager load critical pages
+import { Login } from './pages/Login';
+import { DashboardEnhanced } from './pages/DashboardEnhanced';
+
+// Lazy load other pages for code splitting
+const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
+const Plants = lazy(() => import('./pages/Plants').then(m => ({ default: m.Plants })));
+const Irrigation = lazy(() => import('./pages/Irrigation').then(m => ({ default: m.Irrigation })));
+const Relays = lazy(() => import('./pages/Relays').then(m => ({ default: m.Relays })));
+const Sensors = lazy(() => import('./pages/Sensors').then(m => ({ default: m.Sensors })));
+const Automation = lazy(() => import('./pages/Automation').then(m => ({ default: m.Automation })));
+const Schedules = lazy(() => import('./pages/Schedules').then(m => ({ default: m.Schedules })));
+const Harvests = lazy(() => import('./pages/Harvests').then(m => ({ default: m.Harvests })));
+const Analytics = lazy(() => import('./pages/Analytics').then(m => ({ default: m.Analytics })));
+const Settings = lazy(() => import('./pages/Settings').then(m => ({ default: m.Settings })));
+const Simulation = lazy(() => import('./pages/Simulation').then(m => ({ default: m.Simulation })));
+const VPDCalculator = lazy(() => import('./pages/VPDCalculator').then(m => ({ default: m.VPDCalculator })));
+const PhotoGallery = lazy(() => import('./pages/PhotoGallery').then(m => ({ default: m.PhotoGallery })));
+const Notifications = lazy(() => import('./pages/Notifications').then(m => ({ default: m.Notifications })));
+const GPIOManager = lazy(() => import('./pages/GPIOManager').then(m => ({ default: m.GPIOManager })));
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -35,7 +39,21 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
     );
   }
 
-  return user ? <Layout>{children}</Layout> : <Navigate to="/login" />;
+  return user ? (
+    <Layout>
+      <Suspense
+        fallback={
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+            <CircularProgress />
+          </Box>
+        }
+      >
+        {children}
+      </Suspense>
+    </Layout>
+  ) : (
+    <Navigate to="/login" />
+  );
 }
 
 function AppRoutes() {
