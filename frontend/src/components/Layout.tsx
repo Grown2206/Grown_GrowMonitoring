@@ -28,6 +28,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import SensorsIcon from '@mui/icons-material/Sensors';
 import AutoModeIcon from '@mui/icons-material/AutoMode';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
@@ -48,6 +49,7 @@ const menuItems = [
   { text: 'Ernten', icon: <LocalFlorist />, path: '/harvests' },
   { text: 'Automatisierung', icon: <AutoModeIcon />, path: '/automation' },
   { text: 'Analytics', icon: <BarChartIcon />, path: '/analytics' },
+  { text: 'Erweiterte Analysen', icon: <TrendingUpIcon />, path: '/analytics-advanced' },
   { text: 'ESP32 Simulation', icon: <DeveloperBoardIcon />, path: '/simulation' },
   { text: 'VPD Rechner', icon: <CalculateIcon />, path: '/vpd' },
   { text: 'GPIO Pins', icon: <MemoryIcon />, path: '/gpio' },

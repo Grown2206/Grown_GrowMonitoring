@@ -21,6 +21,7 @@ const Automation = lazy(() => import('./pages/Automation').then(m => ({ default:
 const Schedules = lazy(() => import('./pages/Schedules').then(m => ({ default: m.Schedules })));
 const Harvests = lazy(() => import('./pages/Harvests').then(m => ({ default: m.Harvests })));
 const Analytics = lazy(() => import('./pages/Analytics').then(m => ({ default: m.Analytics })));
+const AnalyticsAdvanced = lazy(() => import('./pages/AnalyticsAdvanced').then(m => ({ default: m.AnalyticsAdvanced })));
 const Settings = lazy(() => import('./pages/Settings').then(m => ({ default: m.Settings })));
 const Simulation = lazy(() => import('./pages/Simulation').then(m => ({ default: m.Simulation })));
 const VPDCalculator = lazy(() => import('./pages/VPDCalculator').then(m => ({ default: m.VPDCalculator })));
@@ -137,6 +138,14 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <Analytics />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/analytics-advanced"
+        element={
+          <PrivateRoute>
+            <AnalyticsAdvanced />
           </PrivateRoute>
         }
       />
