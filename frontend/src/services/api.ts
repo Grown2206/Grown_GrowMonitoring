@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setupApiInterceptors } from './apiInterceptor';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
@@ -17,6 +18,9 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// Setup error handling and retry logic
+setupApiInterceptors(api);
 
 // Auth
 export const authAPI = {
