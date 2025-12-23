@@ -139,6 +139,11 @@ export function Sensors() {
     ec: 'EC-Wert',
     light: 'Lichtstärke',
     water_level: 'Wasserstand',
+    co2: 'CO₂',
+    par: 'PAR/PPFD',
+    tds: 'TDS (Gesamtsalze)',
+    voc: 'VOC (Luftqualität)',
+    pm25: 'Feinstaub PM2.5',
   };
 
   return (

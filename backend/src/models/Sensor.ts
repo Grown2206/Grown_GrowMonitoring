@@ -6,7 +6,7 @@ interface SensorAttributes {
   sensorId: number;
   deviceId?: number; // Foreign key to Device
   name: string;
-  type: 'moisture' | 'temperature' | 'humidity' | 'ph' | 'ec' | 'light' | 'water_level';
+  type: 'moisture' | 'temperature' | 'humidity' | 'ph' | 'ec' | 'light' | 'water_level' | 'co2' | 'par' | 'tds' | 'voc' | 'pm25';
   unit: string;
   minValue: number;
   maxValue: number;
@@ -26,7 +26,7 @@ export class Sensor extends Model<SensorAttributes, SensorCreationAttributes> im
   public sensorId!: number;
   public deviceId?: number;
   public name!: string;
-  public type!: 'moisture' | 'temperature' | 'humidity' | 'ph' | 'ec' | 'light' | 'water_level';
+  public type!: 'moisture' | 'temperature' | 'humidity' | 'ph' | 'ec' | 'light' | 'water_level' | 'co2' | 'par' | 'tds' | 'voc' | 'pm25';
   public unit!: string;
   public minValue!: number;
   public maxValue!: number;
@@ -67,7 +67,7 @@ Sensor.init(
       allowNull: false,
     },
     type: {
-      type: DataTypes.ENUM('moisture', 'temperature', 'humidity', 'ph', 'ec', 'light', 'water_level'),
+      type: DataTypes.ENUM('moisture', 'temperature', 'humidity', 'ph', 'ec', 'light', 'water_level', 'co2', 'par', 'tds', 'voc', 'pm25'),
       allowNull: false,
     },
     unit: {

@@ -41,6 +41,14 @@ export interface SensorData {
   nutrientLevel?: number;
   temperature?: number;
   humidity?: number;
+  co2?: number;
+  par?: number;
+  ph?: number;
+  ec?: number;
+  tds?: number;
+  voc?: number;
+  pm25?: number;
+  light?: number;
   timestamp: string;
 }
 
@@ -68,7 +76,7 @@ export interface Sensor {
   sensorId: number;
   deviceId?: number;
   name: string;
-  type: 'moisture' | 'temperature' | 'humidity' | 'ph' | 'ec' | 'light' | 'water_level';
+  type: 'moisture' | 'temperature' | 'humidity' | 'ph' | 'ec' | 'light' | 'water_level' | 'co2' | 'par' | 'tds' | 'voc' | 'pm25';
   unit: string;
   minValue: number;
   maxValue: number;
