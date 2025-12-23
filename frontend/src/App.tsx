@@ -27,6 +27,7 @@ const Simulation = lazy(() => import('./pages/Simulation').then(m => ({ default:
 const VPDCalculator = lazy(() => import('./pages/VPDCalculator').then(m => ({ default: m.VPDCalculator })));
 const PhotoGallery = lazy(() => import('./pages/PhotoGallery').then(m => ({ default: m.PhotoGallery })));
 const Notifications = lazy(() => import('./pages/Notifications').then(m => ({ default: m.Notifications })));
+const AlertManagement = lazy(() => import('./pages/AlertManagement').then(m => ({ default: m.AlertManagement })));
 const GPIOManager = lazy(() => import('./pages/GPIOManager').then(m => ({ default: m.GPIOManager })));
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -186,6 +187,14 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <Notifications />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/alerts"
+        element={
+          <PrivateRoute>
+            <AlertManagement />
           </PrivateRoute>
         }
       />

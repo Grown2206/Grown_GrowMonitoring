@@ -35,6 +35,7 @@ import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 import MemoryIcon from '@mui/icons-material/Memory';
 
 const drawerWidth = 240;
@@ -55,6 +56,7 @@ const menuItems = [
   { text: 'GPIO Pins', icon: <MemoryIcon />, path: '/gpio' },
   { text: 'Foto-Galerie', icon: <PhotoLibraryIcon />, path: '/gallery' },
   { text: 'Benachrichtigungen', icon: <NotificationsIcon />, path: '/notifications' },
+  { text: 'Alarmierung', icon: <NotificationImportantIcon />, path: '/alerts' },
   { text: 'Einstellungen', icon: <SettingsIcon />, path: '/settings' },
 ];
 

@@ -77,14 +77,17 @@ export interface IrrigationLog {
 export interface Alert {
   id: number;
   name: string;
-  type: 'email' | 'webhook';
-  condition: 'tank_low' | 'nutrient_low' | 'nutrient_high' | 'moisture_low' | 'moisture_high';
+  type: 'email' | 'webhook' | 'telegram' | 'discord';
+  condition: 'tank_low' | 'nutrient_low' | 'nutrient_high' | 'moisture_low' | 'moisture_high' | 'temperature_high' | 'temperature_low' | 'humidity_high' | 'humidity_low';
   threshold: number;
   enabled: boolean;
   cooldownMinutes: number;
   lastTriggered?: string;
   recipientEmail?: string;
   webhookUrl?: string;
+  telegramChatId?: string;
+  telegramBotToken?: string;
+  discordWebhookUrl?: string;
 }
 
 export interface Note {
