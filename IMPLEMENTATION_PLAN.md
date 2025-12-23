@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 23. Dezember 2024
-**Version:** 1.4.0
-**Fortschritt gesamt:** 25/140 Features (17.9%)
+**Version:** 1.5.0
+**Fortschritt gesamt:** 26/140 Features (18.6%)
 
 ---
 
@@ -21,9 +21,12 @@
 - [x] Erweiterte Alarmierung (Telegram/Discord) ✅
 - [x] Multi-Device Sensor Management ✅
 
+### Sprint 3: Enhanced IoT 🔄 IN ARBEIT
+- [x] Extended Sensor Support (CO2, PAR, TDS, VOC, PM2.5) ✅
+
 ---
 
-## ✅ ABGESCHLOSSEN (25 Features)
+## ✅ ABGESCHLOSSEN (26 Features)
 
 ### Phase 0: MVP & Foundation ✅ KOMPLETT
 - [x] Basic Backend (Node.js, Express, SQLite)
@@ -54,8 +57,9 @@
 - [x] Advanced Analytics Dashboard (Korrelationen, Scatter Plots, Heatmaps)
 - [x] Enhanced Alert System (Telegram/Discord, erweiterte Bedingungen)
 - [x] Multi-Device Sensor Management (Device Model, Device-Verwaltung UI)
+- [x] Extended Sensor Support (CO2, PAR, TDS, VOC, PM2.5)
 
-**Status:** 18/18 MVP Features ✅ | 7/24 Enhancement Features (29.2%)
+**Status:** 18/18 MVP Features ✅ | 8/24 Enhancement Features (33.3%)
 
 ---
 
@@ -137,31 +141,45 @@
   - [x] Sensor/Relay Anzahl pro Device
   - [x] Routing und Navigation Integration
 
+### Sprint 3 - In Arbeit 🔄
+
+- [x] **Extended Sensor Support** ✅ FERTIG (23.12.2024)
+  - [x] Sensor Model erweitert (CO2, PAR, TDS, VOC, PM2.5)
+  - [x] SensorData Model mit neuen Feldern
+  - [x] Sensor Management UI mit allen neuen Typen
+  - [x] SensorConfig Utility erstellt
+  - [x] Default-Werte und Einheiten für alle Sensor-Typen
+  - [x] Optimale Bereiche definiert
+  - [x] Icons und Farben für Visualisierung
+  - [x] Frontend und Backend TypeScript Interfaces synchronisiert
+
 ---
 
 ## 📋 ROADMAP - DETAILLIERTER STATUS
 
 ---
 
-## 🔌 Hardware & IoT (1/12 - 8.3%)
+## 🔌 Hardware & IoT (2/12 - 16.7%)
 
 ### Priorität: HOCH
 - [x] **Multi-Device Support** ✅ TEILWEISE FERTIG (23.12.2024)
   - [x] Device Model und Verwaltung
   - [x] Multi-Device Sensor/Relay Zuordnung
-  - [ ] Device Discovery Protocol - geplant für Sprint 3
-  - [ ] Master/Slave Configuration - geplant für Sprint 3
-  - [ ] Mesh Network Support - geplant für Sprint 4
-  - [ ] Auto-Registration - geplant für Sprint 3
+  - [ ] Device Discovery Protocol - geplant für Sprint 4
+  - [ ] Master/Slave Configuration - geplant für Sprint 4
+  - [ ] Mesh Network Support - geplant für Sprint 5
+  - [ ] Auto-Registration - geplant für Sprint 4
   - **Aufwand:** 40h | **Sprint:** 2-3 | **Tatsächlich:** ~8h
 
-- [ ] **Erweiterte Sensor-Unterstützung** 🎯 NÄCHSTES
-  - [ ] CO2-Sensoren (MH-Z19, SCD30)
-  - [ ] PAR/PPFD Licht-Sensoren
-  - [ ] pH/EC/TDS Sensoren
-  - [ ] N-P-K Boden-Sensoren
-  - [ ] VOC/PM2.5 Luftqualität
-  - **Aufwand:** 50h | **Sprint:** 2-4
+- [x] **Erweiterte Sensor-Unterstützung** ✅ TEILWEISE FERTIG (23.12.2024)
+  - [x] CO2-Sensoren (Software-Support)
+  - [x] PAR/PPFD Licht-Sensoren (Software-Support)
+  - [x] TDS Sensoren (Software-Support)
+  - [x] VOC Luftqualität (Software-Support)
+  - [x] PM2.5 Feinstaub (Software-Support)
+  - [ ] Hardware-Integration & Treiber - geplant für Sprint 4
+  - [ ] N-P-K Boden-Sensoren - geplant für Sprint 5
+  - **Aufwand:** 50h | **Sprint:** 3-4 | **Tatsächlich:** ~3h (Software-Teil)
 
 - [ ] **Kamera-Integration**
   - [ ] ESP32-CAM Support
