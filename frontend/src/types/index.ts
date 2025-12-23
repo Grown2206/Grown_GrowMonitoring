@@ -11,9 +11,11 @@ export interface Plant {
   id: number;
   name: string;
   strainId?: number;
+  strainName?: string;
   phase: 'germination' | 'seedling' | 'vegetative' | 'flowering' | 'harvested';
   plantedDate?: string;
   harvestDate?: string;
+  expectedHarvestDate?: string;
   sensorId: number;
   description?: string;
   isActive: boolean;

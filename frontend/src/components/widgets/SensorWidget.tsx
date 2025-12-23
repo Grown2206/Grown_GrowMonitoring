@@ -47,7 +47,7 @@ export const SensorWidget = React.memo(function SensorWidget({ type, latestData 
           color: 'success',
         };
     }
-  }, [type]);
+  }, [type, latestData?.moistureLevel, latestData?.temperature, latestData?.humidity, latestData?.tankLevel]);
 
   const content = getWidgetContent;
   const value = content.value ?? 0;

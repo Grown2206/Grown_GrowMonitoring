@@ -122,17 +122,17 @@ export class ExportService {
       'Sorte',
       'Phase',
       'Gepflanzt am',
-      'Erwartete Ernte',
+      'Erntedatum',
       'Sensor ID',
       'Status',
     ];
 
     const rows = plants.map((p) => [
       p.name,
-      p.strainName || '-',
+      p.strain?.name || '-',
       p.phase,
-      new Date(p.plantedDate).toLocaleDateString('de-DE'),
-      p.expectedHarvestDate ? new Date(p.expectedHarvestDate).toLocaleDateString('de-DE') : '-',
+      p.plantedDate ? new Date(p.plantedDate).toLocaleDateString('de-DE') : '-',
+      p.harvestDate ? new Date(p.harvestDate).toLocaleDateString('de-DE') : '-',
       p.sensorId?.toString() || '-',
       p.isActive ? 'Aktiv' : 'Inaktiv',
     ]);
@@ -149,11 +149,13 @@ export class ExportService {
     const worksheet = XLSX.utils.json_to_sheet(
       plants.map((p) => ({
         Name: p.name,
-        Sorte: p.strainName || '-',
+        Sorte: p.strain?.name || '-',
         Phase: p.phase,
-        'Gepflanzt am': new Date(p.plantedDate).toLocaleDateString('de-DE'),
-        'Erwartete Ernte': p.expectedHarvestDate
-          ? new Date(p.expectedHarvestDate).toLocaleDateString('de-DE')
+        'Gepflanzt am': p.plantedDate
+          ? new Date(p.plantedDate).toLocaleDateString('de-DE')
+          : '-',
+        Erntedatum: p.harvestDate
+          ? new Date(p.harvestDate).toLocaleDateString('de-DE')
           : '-',
         'Sensor ID': p.sensorId?.toString() || '-',
         Status: p.isActive ? 'Aktiv' : 'Inaktiv',
@@ -192,9 +194,11 @@ export class ExportService {
     const plantsSheet = XLSX.utils.json_to_sheet(
       plants.map((p) => ({
         Name: p.name,
-        Sorte: p.strainName || '-',
+        Sorte: p.strain?.name || '-',
         Phase: p.phase,
-        'Gepflanzt am': new Date(p.plantedDate).toLocaleDateString('de-DE'),
+        'Gepflanzt am': p.plantedDate
+          ? new Date(p.plantedDate).toLocaleDateString('de-DE')
+          : '-',
         Status: p.isActive ? 'Aktiv' : 'Inaktiv',
       }))
     );
@@ -273,9 +277,9 @@ export class ExportService {
     // Plants Table
     const plantsTableData = activePlants.slice(0, 15).map((p) => [
       p.name,
-      p.strainName || '-',
+      p.strain?.name || '-',
       p.phase,
-      new Date(p.plantedDate).toLocaleDateString('de-DE'),
+      p.plantedDate ? new Date(p.plantedDate).toLocaleDateString('de-DE') : '-',
     ]);
 
     autoTable(doc, {

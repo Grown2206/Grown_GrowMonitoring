@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
-  Button,
   IconButton,
   Toolbar,
   Typography,
-  Menu,
-  MenuItem,
   FormControlLabel,
   Switch,
-  Paper,
   Tooltip,
 } from '@mui/material';
-import GridLayout, { Layout } from 'react-grid-layout';
+import GridLayout from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import { SensorData, Plant, Relay } from '../types';
@@ -25,10 +21,19 @@ import { PlantStatusWidget } from '../components/widgets/PlantStatusWidget';
 import { RelayStatusWidget } from '../components/widgets/RelayStatusWidget';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import SettingsIcon from '@mui/icons-material/Settings';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import SaveIcon from '@mui/icons-material/Save';
+import SettingsIcon from '@mui/icons-material/Settings';
+
+type LayoutItem = {
+  i: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  minW?: number;
+  minH?: number;
+};
 
 interface WidgetConfig {
   id: string;
@@ -37,7 +42,7 @@ interface WidgetConfig {
   config?: any;
 }
 
-const DEFAULT_LAYOUT: Layout[] = [
+const DEFAULT_LAYOUT: LayoutItem[] = [
   { i: 'moisture', x: 0, y: 0, w: 3, h: 2, minW: 2, minH: 2 },
   { i: 'temperature', x: 3, y: 0, w: 3, h: 2, minW: 2, minH: 2 },
   { i: 'humidity', x: 6, y: 0, w: 3, h: 2, minW: 2, minH: 2 },
@@ -62,7 +67,7 @@ export function DashboardEnhanced() {
   const [plants, setPlants] = useState<Plant[]>([]);
   const [relays, setRelays] = useState<Relay[]>([]);
   const [chartData, setChartData] = useState<any[]>([]);
-  const [layout, setLayout] = useState<Layout[]>(() => {
+  const [layout, setLayout] = useState<LayoutItem[]>(() => {
     const saved = localStorage.getItem('dashboardLayout');
     return saved ? JSON.parse(saved) : DEFAULT_LAYOUT;
   });
@@ -72,7 +77,6 @@ export function DashboardEnhanced() {
   });
   const [isEditMode, setIsEditMode] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [addMenuAnchor, setAddMenuAnchor] = useState<null | HTMLElement>(null);
 
   useWebSocketConnection();
 
@@ -131,8 +135,8 @@ export function DashboardEnhanced() {
     }
   }
 
-  function handleLayoutChange(newLayout: Layout[]) {
-    setLayout(newLayout);
+  function handleLayoutChange(newLayout: any) {
+    setLayout(Array.from(newLayout as LayoutItem[]));
   }
 
   function saveLayout() {
@@ -252,19 +256,21 @@ export function DashboardEnhanced() {
           overflow: 'auto',
         }}
       >
-        <GridLayout
-          className="layout"
-          layout={layout}
-          cols={12}
-          rowHeight={60}
-          width={1200}
-          onLayoutChange={handleLayoutChange}
-          isDraggable={isEditMode}
-          isResizable={isEditMode}
-          draggableHandle=".drag-handle"
-          compactType="vertical"
-        >
-          {widgets.map((widget) => (
+        {React.createElement(
+          GridLayout as any,
+          {
+            className: "layout",
+            layout: layout,
+            cols: 12,
+            rowHeight: 60,
+            width: 1200,
+            onLayoutChange: handleLayoutChange,
+            isDraggable: isEditMode,
+            isResizable: isEditMode,
+            draggableHandle: ".drag-handle",
+            compactType: "vertical"
+          },
+          widgets.map((widget) => (
             <div key={widget.id}>
               <DashboardWidget
                 id={widget.id}
@@ -274,8 +280,8 @@ export function DashboardEnhanced() {
                 {renderWidget(widget)}
               </DashboardWidget>
             </div>
-          ))}
-        </GridLayout>
+          ))
+        )}
       </Box>
 
       {/* Fullscreen Exit Button */}
