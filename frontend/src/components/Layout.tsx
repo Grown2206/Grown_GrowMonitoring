@@ -40,6 +40,7 @@ import MemoryIcon from '@mui/icons-material/Memory';
 import DevicesIcon from '@mui/icons-material/Devices';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 const drawerWidth = 240;
 
@@ -51,6 +52,7 @@ const menuItems = [
   { text: 'Relays', icon: <PowerSettingsNewIcon />, path: '/relays' },
   { text: 'Zeitpläne', icon: <ScheduleIcon />, path: '/schedules' },
   { text: 'Ernten', icon: <LocalFlorist />, path: '/harvests' },
+  { text: 'Grow-Journal', icon: <MenuBookIcon />, path: '/journal' },
   { text: 'Automatisierung', icon: <AutoModeIcon />, path: '/automation' },
   { text: 'Analytics', icon: <BarChartIcon />, path: '/analytics' },
   { text: 'Erweiterte Analysen', icon: <TrendingUpIcon />, path: '/analytics-advanced' },

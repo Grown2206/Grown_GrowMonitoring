@@ -1,25 +1,19 @@
 import React from 'react';
 import {
-  Timeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineOppositeContent,
-} from '@mui/lab';
-import {
+  Box,
   Card,
   CardContent,
   Typography,
   Chip,
-  Box,
+  Avatar,
+  Divider,
 } from '@mui/material';
 import {
   Note as NoteIcon,
   Event as EventIcon,
   EmojiEvents as MilestoneIcon,
   LocalFlorist as HarvestIcon,
+  CheckCircle,
 } from '@mui/icons-material';
 import { TimelineItem as TimelineItemType } from '../../types';
 import { format } from 'date-fns';
@@ -43,7 +37,7 @@ const getIcon = (type: string) => {
   }
 };
 
-const getColor = (type: string, importance?: number) => {
+const getColor = (type: string, importance?: number): any => {
   if (type === 'milestone' && importance) {
     if (importance >= 4) return 'error';
     if (importance >= 3) return 'warning';
@@ -60,7 +54,7 @@ const getColor = (type: string, importance?: number) => {
     case 'harvest':
       return 'success';
     default:
-      return 'grey';
+      return 'default';
   }
 };
 
@@ -74,36 +68,82 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ items }) => {
         minHeight={400}
       >
         <Typography variant="body1" color="text.secondary">
-          No timeline entries yet. Start adding notes, milestones, or events!
+          Noch keine Timeline-Einträge. Erstelle Notizen, Meilensteine oder Events!
         </Typography>
       </Box>
     );
   }
 
   return (
-    <Timeline>
+    <Box sx={{ position: 'relative' }}>
+      {/* Timeline line */}
+      <Box
+        sx={{
+          position: 'absolute',
+          left: 60,
+          top: 0,
+          bottom: 0,
+          width: 2,
+          bgcolor: 'divider',
+          display: { xs: 'none', sm: 'block' },
+        }}
+      />
+
       {items.map((item, index) => (
-        <TimelineItem key={item.id}>
-          <TimelineOppositeContent color="text.secondary" sx={{ flex: 0.2 }}>
-            <Typography variant="caption">
-              {format(new Date(item.date), 'MMM dd, yyyy')}
+        <Box
+          key={item.id}
+          sx={{
+            display: 'flex',
+            mb: 3,
+            position: 'relative',
+          }}
+        >
+          {/* Date on the left */}
+          <Box
+            sx={{
+              width: 120,
+              flexShrink: 0,
+              textAlign: 'right',
+              pr: 2,
+              display: { xs: 'none', sm: 'block' },
+            }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              {format(new Date(item.date), 'dd.MM.yyyy')}
             </Typography>
-            <Typography variant="caption" display="block">
+            <Typography variant="caption" color="text.secondary">
               {format(new Date(item.date), 'HH:mm')}
             </Typography>
-          </TimelineOppositeContent>
+          </Box>
 
-          <TimelineSeparator>
-            <TimelineDot color={getColor(item.type, item.importance)}>
+          {/* Icon */}
+          <Box
+            sx={{
+              width: 48,
+              height: 48,
+              flexShrink: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1,
+            }}
+          >
+            <Avatar
+              sx={{
+                bgcolor: `${getColor(item.type, item.importance)}.main`,
+                width: 40,
+                height: 40,
+              }}
+            >
               {getIcon(item.type)}
-            </TimelineDot>
-            {index < items.length - 1 && <TimelineConnector />}
-          </TimelineSeparator>
+            </Avatar>
+          </Box>
 
-          <TimelineContent sx={{ flex: 0.8 }}>
-            <Card variant="outlined" sx={{ mb: 2 }}>
+          {/* Content */}
+          <Box sx={{ flex: 1, ml: 2 }}>
+            <Card variant="outlined">
               <CardContent>
-                <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+                <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={1}>
                   <Typography variant="h6" component="div">
                     {item.title}
                   </Typography>
@@ -114,6 +154,13 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ items }) => {
                   />
                 </Box>
 
+                {/* Mobile: Show date */}
+                <Box sx={{ display: { xs: 'block', sm: 'none' }, mb: 1 }}>
+                  <Typography variant="caption" color="text.secondary">
+                    {format(new Date(item.date), 'dd.MM.yyyy HH:mm')}
+                  </Typography>
+                </Box>
+
                 {item.content && (
                   <Typography
                     variant="body2"
@@ -121,66 +168,57 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ items }) => {
                     dangerouslySetInnerHTML={{ __html: item.content }}
                     sx={{
                       mb: 1,
-                      '& p': { margin: 0 },
+                      '& p': { margin: 0, marginBottom: 1 },
                       '& img': { maxWidth: '100%', height: 'auto' },
+                      '& ul, & ol': { marginLeft: 2 },
                     }}
                   />
                 )}
 
-                {item.type === 'milestone' && item.importance && (
-                  <Box mt={1}>
+                {/* Type-specific info */}
+                <Box mt={1} display="flex" gap={1} flexWrap="wrap">
+                  {item.type === 'milestone' && item.importance && (
                     <Chip
-                      label={`Importance: ${item.importance}/5`}
+                      label={`Wichtigkeit: ${item.importance}/5`}
                       size="small"
                       variant="outlined"
                     />
-                  </Box>
-                )}
+                  )}
 
-                {item.type === 'harvest' && (
-                  <Box mt={1}>
-                    {item.wetWeight && (
-                      <Chip
-                        label={`Wet: ${item.wetWeight}g`}
-                        size="small"
-                        sx={{ mr: 1 }}
-                      />
-                    )}
-                    {item.dryWeight && (
-                      <Chip
-                        label={`Dry: ${item.dryWeight}g`}
-                        size="small"
-                        sx={{ mr: 1 }}
-                      />
-                    )}
-                    {item.quality && (
-                      <Chip
-                        label={item.quality}
-                        size="small"
-                        color="success"
-                      />
-                    )}
-                  </Box>
-                )}
+                  {item.type === 'harvest' && (
+                    <>
+                      {item.wetWeight && (
+                        <Chip label={`Nass: ${item.wetWeight}g`} size="small" />
+                      )}
+                      {item.dryWeight && (
+                        <Chip label={`Trocken: ${item.dryWeight}g`} size="small" />
+                      )}
+                      {item.quality && (
+                        <Chip label={item.quality} size="small" color="success" />
+                      )}
+                    </>
+                  )}
 
-                {item.type === 'event' && item.eventType && (
-                  <Box mt={1}>
-                    <Chip
-                      label={item.eventType}
-                      size="small"
-                      variant="outlined"
-                    />
-                    {item.completed && (
-                      <Chip
-                        label="Completed"
-                        size="small"
-                        color="success"
-                        sx={{ ml: 1 }}
-                      />
-                    )}
-                  </Box>
-                )}
+                  {item.type === 'event' && item.eventType && (
+                    <>
+                      <Chip label={item.eventType} size="small" variant="outlined" />
+                      {item.completed && (
+                        <Chip
+                          icon={<CheckCircle />}
+                          label="Erledigt"
+                          size="small"
+                          color="success"
+                        />
+                      )}
+                    </>
+                  )}
 
+                  {item.category && (
+                    <Chip label={item.category} size="small" variant="outlined" />
+                  )}
+                </Box>
+
+                {/* Images */}
                 {item.images && item.images.length > 0 && (
                   <Box mt={2} display="flex" gap={1} flexWrap="wrap">
                     {item.images.map((img, idx) => (
@@ -200,9 +238,9 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ items }) => {
                 )}
               </CardContent>
             </Card>
-          </TimelineContent>
-        </TimelineItem>
+          </Box>
+        </Box>
       ))}
-    </Timeline>
+    </Box>
   );
 };
