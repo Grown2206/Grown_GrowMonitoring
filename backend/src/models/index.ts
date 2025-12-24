@@ -18,6 +18,7 @@ import { Harvest } from './Harvest';
 import { PlantPhoto } from './PlantPhoto';
 import { Device } from './Device';
 import { ReportSchedule } from './ReportSchedule';
+import { Milestone } from './Milestone';
 
 // Define associations
 User.hasMany(ApiKey, { foreignKey: 'userId', as: 'apiKeys' });
@@ -43,6 +44,9 @@ Harvest.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
 
 Plant.hasMany(PlantPhoto, { foreignKey: 'plantId', as: 'photos' });
 PlantPhoto.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
+
+Plant.hasMany(Milestone, { foreignKey: 'plantId', as: 'milestones' });
+Milestone.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
 
 Device.hasMany(Sensor, { foreignKey: 'deviceId', as: 'sensors' });
 Sensor.belongsTo(Device, { foreignKey: 'deviceId', as: 'device' });
@@ -71,4 +75,5 @@ export {
   PlantPhoto,
   Device,
   ReportSchedule,
+  Milestone,
 };

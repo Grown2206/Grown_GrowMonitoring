@@ -31,6 +31,8 @@ import devicesRoutes from './routes/devices.routes';
 import comparisonRoutes from './routes/comparison.routes';
 import reportsRoutes from './routes/reports.routes';
 import devRoutes from './routes/dev.routes';
+import milestonesRoutes from './routes/milestones.routes';
+import journalRoutes from './routes/journal.routes';
 
 // Load environment variables
 dotenv.config();
@@ -78,6 +80,8 @@ app.use('/api/devices', devicesRoutes);
 app.use('/api/comparison', comparisonRoutes);
 app.use('/api/reports', reportsRoutes);
 app.use('/api/dev', devRoutes);
+app.use('/api/milestones', milestonesRoutes);
+app.use('/api/journal', journalRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

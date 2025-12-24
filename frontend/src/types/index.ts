@@ -144,6 +144,72 @@ export interface Note {
   updatedAt: string;
 }
 
+export type MilestoneType =
+  | 'germination'
+  | 'seedling'
+  | 'vegetative'
+  | 'flowering'
+  | 'harvest'
+  | 'topping'
+  | 'training'
+  | 'transplant'
+  | 'problem'
+  | 'achievement'
+  | 'custom';
+
+export interface Milestone {
+  id: number;
+  plantId: number;
+  type: MilestoneType;
+  title: string;
+  description?: string;
+  date: string;
+  images?: string[];
+  metadata?: any;
+  importance?: number;
+  createdAt: string;
+  updatedAt: string;
+  plant?: {
+    id: number;
+    name: string;
+    phase: string;
+  };
+}
+
+export interface TimelineItem {
+  id: string;
+  type: 'note' | 'event' | 'milestone' | 'harvest';
+  title: string;
+  content?: string;
+  date: string;
+  category?: string;
+  eventType?: string;
+  milestoneType?: string;
+  completed?: boolean;
+  importance?: number;
+  images?: string[];
+  wetWeight?: number;
+  dryWeight?: number;
+  quality?: string;
+  data: any;
+}
+
+export interface JournalSummary {
+  plant: {
+    id: number;
+    name: string;
+    phase: string;
+    plantedDate: string;
+  };
+  stats: {
+    notes: number;
+    events: number;
+    milestones: number;
+    harvests: number;
+    total: number;
+  };
+}
+
 export interface CalendarEvent {
   id: number;
   plantId?: number;

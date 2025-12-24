@@ -104,6 +104,22 @@ export const eventsAPI = {
   delete: (id: number) => api.delete(`/events/${id}`),
 };
 
+// Milestones
+export const milestonesAPI = {
+  getAll: (plantId?: number) => api.get('/milestones', { params: { plantId } }),
+  getOne: (id: number) => api.get(`/milestones/${id}`),
+  create: (data: any) => api.post('/milestones', data),
+  update: (id: number, data: any) => api.put(`/milestones/${id}`, data),
+  delete: (id: number) => api.delete(`/milestones/${id}`),
+};
+
+// Journal
+export const journalAPI = {
+  getTimeline: (plantId: number, startDate?: string, endDate?: string) =>
+    api.get(`/journal/timeline/${plantId}`, { params: { startDate, endDate } }),
+  getSummary: (plantId: number) => api.get(`/journal/summary/${plantId}`),
+};
+
 // Export
 export const exportAPI = {
   sensorData: (format: string, days: number) => api.get('/export/sensor-data', { params: { format, days } }),
