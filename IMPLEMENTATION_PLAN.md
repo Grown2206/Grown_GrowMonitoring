@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 24. Dezember 2024
-**Version:** 1.9.0
-**Fortschritt gesamt:** 30/140 Features (21.4%)
+**Version:** 2.0.0
+**Fortschritt gesamt:** 31/140 Features (22.1%)
 
 ---
 
@@ -29,8 +29,8 @@
 ### Sprint 4: PWA & Advanced Features 🔄 IN BEARBEITUNG
 - [x] PWA Verbesserungen (Offline-First, Background Sync) ✅
 - [x] Grow-Journal Enhancement (Rich Text, Timeline, Milestones) ✅
-- [ ] SMS Alerts (Twilio Integration)
-- [ ] Stufenweise Alerts (Warning → Critical)
+- [x] Stufenweise Alerts (Warning → Critical Escalation) ✅
+- [ ] SMS Alerts (Twilio Integration) - verschoben auf Sprint 5
 - [ ] Hardware-Integration & Treiber
 
 ---
@@ -71,8 +71,9 @@
 - [x] Automated Reports (E-Mail Reports mit Scheduler)
 - [x] PWA Verbesserungen (Offline-First Architecture, Background Sync)
 - [x] Grow-Journal Enhancement (Rich Text Editor, Timeline View, Milestones)
+- [x] Stufenweise Alerts (Warning/Critical Escalation, Alert History)
 
-**Status:** 18/18 MVP Features ✅ | 12/24 Enhancement Features (50.0%)
+**Status:** 18/18 MVP Features ✅ | 13/24 Enhancement Features (54.2%)
 
 ---
 
@@ -225,6 +226,21 @@
   - [x] Chronologische Timeline-Ansicht
   - [x] Summary Statistics pro Pflanze
   **Aufwand:** 40h | **Sprint:** 4 | **Tatsächlich:** ~5h
+
+- [x] **Stufenweise Alerts** ✅ FERTIG (24.12.2024)
+  - [x] Alert Model erweitert (severity, warningThreshold, criticalThreshold)
+  - [x] AlertHistory Model (Audit Trail aller Alerts)
+  - [x] AlertEscalationService (Escalation Logic)
+  - [x] Escalation: Warning → Wait X min → Critical
+  - [x] Immediate Critical bei criticalThreshold
+  - [x] Cooldown-Mechanismus (Anti-Spam)
+  - [x] Auto-Clear bei Normalisierung
+  - [x] Alert History Tracking
+  - [x] Acknowledgement System
+  - [x] Statistics API (unacknowledged, active warnings/critical)
+  - [x] Test Alert Endpoint
+  - [x] Frontend Types & API Client erweitert
+  **Aufwand:** 25h | **Sprint:** 4 | **Tatsächlich:** ~3h
 
 ---
 
