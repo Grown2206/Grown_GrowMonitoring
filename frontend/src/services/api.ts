@@ -195,4 +195,13 @@ export const reportsAPI = {
   toggle: (id: number) => api.patch(`/reports/${id}/toggle`),
 };
 
+// Development Tools (only available in development mode)
+export const devAPI = {
+  getStatus: () => api.get('/dev/status'),
+  seedQuick: () => api.post('/dev/seed/quick'),
+  seedFull: () => api.post('/dev/seed/full'),
+  seedCustom: (options: any) => api.post('/dev/seed/custom', options),
+  clearData: () => api.delete('/dev/seed'),
+};
+
 export default api;

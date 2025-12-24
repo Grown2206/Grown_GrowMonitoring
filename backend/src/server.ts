@@ -30,6 +30,7 @@ import harvestsRoutes from './routes/harvests.routes';
 import devicesRoutes from './routes/devices.routes';
 import comparisonRoutes from './routes/comparison.routes';
 import reportsRoutes from './routes/reports.routes';
+import devRoutes from './routes/dev.routes';
 
 // Load environment variables
 dotenv.config();
@@ -76,6 +77,7 @@ app.use('/api/harvests', harvestsRoutes);
 app.use('/api/devices', devicesRoutes);
 app.use('/api/comparison', comparisonRoutes);
 app.use('/api/reports', reportsRoutes);
+app.use('/api/dev', devRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

@@ -28,6 +28,7 @@ import { useAuth } from '../contexts/AuthContext';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import { exportAPI } from '../services/api';
+import { DeveloperTools } from '../components/DeveloperTools';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -51,6 +52,9 @@ export function Settings() {
   const [apiKeys, setApiKeys] = useState<any[]>([]);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [relays, setRelays] = useState<Relay[]>([]);
+
+  // Check if dev mode is enabled
+  const isDevMode = process.env.NODE_ENV === 'development' || process.env.REACT_APP_ENABLE_DEV_TOOLS === 'true';
 
   // Password change
   const [passwordData, setPasswordData] = useState({
@@ -170,6 +174,7 @@ export function Settings() {
           {user?.role === 'admin' && <Tab label="Benutzer" />}
           <Tab label="Aktivität" />
           <Tab label="Backup" />
+          {isDevMode && <Tab label="Developer Tools" />}
         </Tabs>
 
         {/* Profile Tab */}
@@ -427,6 +432,13 @@ export function Settings() {
             </Grid>
           </Grid>
         </TabPanel>
+
+        {/* Developer Tools Tab */}
+        {isDevMode && (
+          <TabPanel value={tab} index={user?.role === 'admin' ? 6 : 5}>
+            <DeveloperTools />
+          </TabPanel>
+        )}
       </Paper>
     </Box>
   );
