@@ -184,4 +184,15 @@ export const comparisonAPI = {
     api.post('/comparison/sensor-trends', { sensorIds, interval, startDate, endDate }),
 };
 
+// Reports
+export const reportsAPI = {
+  getAll: () => api.get('/reports'),
+  getOne: (id: number) => api.get(`/reports/${id}`),
+  create: (data: any) => api.post('/reports', data),
+  update: (id: number, data: any) => api.put(`/reports/${id}`, data),
+  delete: (id: number) => api.delete(`/reports/${id}`),
+  sendNow: (id: number) => api.post(`/reports/${id}/send-now`),
+  toggle: (id: number) => api.patch(`/reports/${id}/toggle`),
+};
+
 export default api;

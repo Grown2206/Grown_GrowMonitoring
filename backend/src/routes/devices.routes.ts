@@ -208,8 +208,8 @@ router.get('/:id/stats', async (req, res) => {
       name: device.name,
       status: device.status,
       lastSeen: device.lastSeen,
-      sensorCount: device.get('sensors')?.length || 0,
-      relayCount: device.get('relays')?.length || 0,
+      sensorCount: (device.get('sensors') as any[])?.length || 0,
+      relayCount: (device.get('relays') as any[])?.length || 0,
       uptime: device.lastSeen ? Date.now() - new Date(device.lastSeen).getTime() : null,
     };
 

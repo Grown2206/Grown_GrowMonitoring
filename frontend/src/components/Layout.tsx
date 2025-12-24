@@ -39,6 +39,7 @@ import NotificationImportantIcon from '@mui/icons-material/NotificationImportant
 import MemoryIcon from '@mui/icons-material/Memory';
 import DevicesIcon from '@mui/icons-material/Devices';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
 const drawerWidth = 240;
 
@@ -54,6 +55,7 @@ const menuItems = [
   { text: 'Analytics', icon: <BarChartIcon />, path: '/analytics' },
   { text: 'Erweiterte Analysen', icon: <TrendingUpIcon />, path: '/analytics-advanced' },
   { text: 'Vergleiche', icon: <CompareArrowsIcon />, path: '/comparison' },
+  { text: 'Reports', icon: <AssessmentIcon />, path: '/reports' },
   { text: 'ESP32 Simulation', icon: <DeveloperBoardIcon />, path: '/simulation' },
   { text: 'VPD Rechner', icon: <CalculateIcon />, path: '/vpd' },
   { text: 'GPIO Pins', icon: <MemoryIcon />, path: '/gpio' },

@@ -2,7 +2,7 @@ import { WebSocketServer, WebSocket } from 'ws';
 import { Server as HttpServer } from 'http';
 import { SensorData } from '../models/SensorData';
 import { Relay } from '../models/Relay';
-import { alertService } from '../services/AlertService';
+import { AlertService } from '../services/alertService';
 import { irrigationService } from '../services/IrrigationService';
 
 export class WebSocketManager {
@@ -98,7 +98,7 @@ export class WebSocketManager {
       });
 
       // Check alerts
-      await alertService.checkAndTriggerAlerts(data);
+      await AlertService.checkSensorAlerts(data);
 
       // Check automatic irrigation
       if (moistureLevel !== undefined) {

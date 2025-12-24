@@ -17,6 +17,7 @@ import { Schedule } from './Schedule';
 import { Harvest } from './Harvest';
 import { PlantPhoto } from './PlantPhoto';
 import { Device } from './Device';
+import { ReportSchedule } from './ReportSchedule';
 
 // Define associations
 User.hasMany(ApiKey, { foreignKey: 'userId', as: 'apiKeys' });
@@ -69,4 +70,5 @@ export {
   Harvest,
   PlantPhoto,
   Device,
+  ReportSchedule,
 };

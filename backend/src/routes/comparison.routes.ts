@@ -53,12 +53,12 @@ router.post('/plants', async (req, res) => {
             id: plant.id,
             name: plant.name,
             phase: plant.phase,
-            strainName: plant.strain?.name,
+            strainName: (plant as any).strain?.name,
             plantedDate: plant.plantedDate,
           },
           sensorData,
           statistics: stats,
-          harvests: plant.harvests,
+          harvests: (plant as any).harvests,
         };
       })
     );
@@ -95,13 +95,13 @@ router.get('/cycles', async (req, res) => {
             plant: {
               id: plant.id,
               name: plant.name,
-              strainName: plant.strain?.name,
+              strainName: (plant as any).strain?.name,
               plantedDate: plant.plantedDate,
               harvestDate: plant.harvestDate,
             },
             duration: null,
             statistics: {},
-            harvests: plant.harvests,
+            harvests: (plant as any).harvests,
           };
         }
 
@@ -122,13 +122,13 @@ router.get('/cycles', async (req, res) => {
           plant: {
             id: plant.id,
             name: plant.name,
-            strainName: plant.strain?.name,
+            strainName: (plant as any).strain?.name,
             plantedDate: plant.plantedDate,
             harvestDate: plant.harvestDate,
           },
           duration,
           statistics: stats,
-          harvests: plant.harvests,
+          harvests: (plant as any).harvests,
         };
       })
     );
