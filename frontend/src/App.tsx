@@ -5,6 +5,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Layout } from './components/Layout';
+import { OfflineIndicator } from './components/OfflineIndicator';
 import { CircularProgress, Box } from '@mui/material';
 
 // Eager load critical pages
@@ -245,6 +246,7 @@ function App() {
           <ToastProvider>
             <AuthProvider>
               <ErrorBoundary>
+                <OfflineIndicator />
                 <AppRoutes />
               </ErrorBoundary>
             </AuthProvider>
