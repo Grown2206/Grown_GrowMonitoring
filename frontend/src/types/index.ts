@@ -118,20 +118,54 @@ export interface IrrigationLog {
   timestamp: string;
 }
 
+export type AlertSeverity = 'warning' | 'critical';
+
 export interface Alert {
   id: number;
   name: string;
   type: 'email' | 'webhook' | 'telegram' | 'discord';
   condition: 'tank_low' | 'nutrient_low' | 'nutrient_high' | 'moisture_low' | 'moisture_high' | 'temperature_high' | 'temperature_low' | 'humidity_high' | 'humidity_low';
   threshold: number;
+  warningThreshold?: number;
+  criticalThreshold?: number;
   enabled: boolean;
+  useEscalation: boolean;
+  escalationMinutes: number;
   cooldownMinutes: number;
   lastTriggered?: string;
+  lastWarningAt?: string;
+  currentSeverity?: AlertSeverity;
   recipientEmail?: string;
   webhookUrl?: string;
   telegramChatId?: string;
   telegramBotToken?: string;
   discordWebhookUrl?: string;
+}
+
+export interface AlertHistory {
+  id: number;
+  alertId: number;
+  severity: AlertSeverity;
+  value: number;
+  threshold: number;
+  message: string;
+  condition: string;
+  acknowledged: boolean;
+  acknowledgedAt?: string;
+  acknowledgedBy?: string;
+  createdAt: string;
+  alert?: {
+    id: number;
+    name: string;
+    condition: string;
+  };
+}
+
+export interface AlertStats {
+  totalAlerts: number;
+  unacknowledgedCount: number;
+  activeWarnings: number;
+  activeCritical: number;
 }
 
 export interface Note {

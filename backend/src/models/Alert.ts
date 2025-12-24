@@ -1,15 +1,23 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../database/config';
 
+export type AlertSeverity = 'warning' | 'critical';
+
 interface AlertAttributes {
   id: number;
   name: string;
   type: 'email' | 'webhook' | 'telegram' | 'discord';
   condition: 'tank_low' | 'nutrient_low' | 'nutrient_high' | 'moisture_low' | 'moisture_high' | 'temperature_high' | 'temperature_low' | 'humidity_high' | 'humidity_low';
   threshold: number;
+  warningThreshold?: number;
+  criticalThreshold?: number;
   enabled: boolean;
+  useEscalation: boolean;
+  escalationMinutes: number;
   cooldownMinutes: number;
   lastTriggered?: Date;
+  lastWarningAt?: Date;
+  currentSeverity?: AlertSeverity;
   recipientEmail?: string;
   webhookUrl?: string;
   telegramChatId?: string;
@@ -19,7 +27,7 @@ interface AlertAttributes {
   updatedAt?: Date;
 }
 
-interface AlertCreationAttributes extends Optional<AlertAttributes, 'id' | 'enabled' | 'lastTriggered' | 'recipientEmail' | 'webhookUrl' | 'telegramChatId' | 'telegramBotToken' | 'discordWebhookUrl'> {}
+interface AlertCreationAttributes extends Optional<AlertAttributes, 'id' | 'enabled' | 'useEscalation' | 'warningThreshold' | 'criticalThreshold' | 'lastTriggered' | 'lastWarningAt' | 'currentSeverity' | 'recipientEmail' | 'webhookUrl' | 'telegramChatId' | 'telegramBotToken' | 'discordWebhookUrl'> {}
 
 export class Alert extends Model<AlertAttributes, AlertCreationAttributes> implements AlertAttributes {
   public id!: number;
@@ -27,9 +35,15 @@ export class Alert extends Model<AlertAttributes, AlertCreationAttributes> imple
   public type!: 'email' | 'webhook' | 'telegram' | 'discord';
   public condition!: 'tank_low' | 'nutrient_low' | 'nutrient_high' | 'moisture_low' | 'moisture_high' | 'temperature_high' | 'temperature_low' | 'humidity_high' | 'humidity_low';
   public threshold!: number;
+  public warningThreshold?: number;
+  public criticalThreshold?: number;
   public enabled!: boolean;
+  public useEscalation!: boolean;
+  public escalationMinutes!: number;
   public cooldownMinutes!: number;
   public lastTriggered?: Date;
+  public lastWarningAt?: Date;
+  public currentSeverity?: AlertSeverity;
   public recipientEmail?: string;
   public webhookUrl?: string;
   public telegramChatId?: string;
@@ -63,10 +77,28 @@ Alert.init(
       type: DataTypes.FLOAT,
       allowNull: false,
     },
+    warningThreshold: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    criticalThreshold: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
     enabled: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
       allowNull: false,
+    },
+    useEscalation: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+    },
+    escalationMinutes: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 15,
     },
     cooldownMinutes: {
       type: DataTypes.INTEGER,
@@ -75,6 +107,14 @@ Alert.init(
     },
     lastTriggered: {
       type: DataTypes.DATE,
+      allowNull: true,
+    },
+    lastWarningAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    currentSeverity: {
+      type: DataTypes.ENUM('warning', 'critical'),
       allowNull: true,
     },
     recipientEmail: {

@@ -85,6 +85,13 @@ export const alertsAPI = {
   create: (data: any) => api.post('/alerts', data),
   update: (id: number, data: any) => api.put(`/alerts/${id}`, data),
   delete: (id: number) => api.delete(`/alerts/${id}`),
+  getHistory: (alertId?: number, limit?: number) =>
+    api.get('/alerts/history', { params: { alertId, limit } }),
+  acknowledgeHistory: (id: number, acknowledgedBy?: string) =>
+    api.post(`/alerts/history/${id}/acknowledge`, { acknowledgedBy }),
+  getStats: () => api.get('/alerts/stats'),
+  testAlert: (id: number, value?: number) =>
+    api.post(`/alerts/${id}/test`, { value }),
 };
 
 // Notes

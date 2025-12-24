@@ -19,6 +19,7 @@ import { PlantPhoto } from './PlantPhoto';
 import { Device } from './Device';
 import { ReportSchedule } from './ReportSchedule';
 import { Milestone } from './Milestone';
+import { AlertHistory } from './AlertHistory';
 
 // Define associations
 User.hasMany(ApiKey, { foreignKey: 'userId', as: 'apiKeys' });
@@ -48,6 +49,9 @@ PlantPhoto.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
 Plant.hasMany(Milestone, { foreignKey: 'plantId', as: 'milestones' });
 Milestone.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
 
+Alert.hasMany(AlertHistory, { foreignKey: 'alertId', as: 'history' });
+AlertHistory.belongsTo(Alert, { foreignKey: 'alertId', as: 'alert' });
+
 Device.hasMany(Sensor, { foreignKey: 'deviceId', as: 'sensors' });
 Sensor.belongsTo(Device, { foreignKey: 'deviceId', as: 'device' });
 
@@ -76,4 +80,5 @@ export {
   Device,
   ReportSchedule,
   Milestone,
+  AlertHistory,
 };
