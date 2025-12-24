@@ -227,4 +227,13 @@ export const devAPI = {
   clearData: () => api.delete('/dev/seed'),
 };
 
+// SMS Service
+export const smsAPI = {
+  getStatus: () => api.get('/sms/status'),
+  getStats: () => api.get('/sms/stats'),
+  getHistory: (limit?: number) => api.get('/sms/history', { params: { limit } }),
+  updateSettings: (settings: any) => api.post('/sms/settings', settings),
+  sendTest: () => api.post('/sms/test'),
+};
+
 export default api;

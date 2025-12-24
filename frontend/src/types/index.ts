@@ -123,7 +123,7 @@ export type AlertSeverity = 'warning' | 'critical';
 export interface Alert {
   id: number;
   name: string;
-  type: 'email' | 'webhook' | 'telegram' | 'discord';
+  type: 'email' | 'webhook' | 'telegram' | 'discord' | 'sms';
   condition: 'tank_low' | 'nutrient_low' | 'nutrient_high' | 'moisture_low' | 'moisture_high' | 'temperature_high' | 'temperature_low' | 'humidity_high' | 'humidity_low';
   threshold: number;
   warningThreshold?: number;
@@ -332,4 +332,40 @@ export interface Harvest {
   createdAt?: string;
   updatedAt?: string;
   plant?: Plant;
+}
+
+// SMS Types
+export interface SMSSettings {
+  enabled: boolean;
+  accountSid: string;
+  authToken: string;
+  fromNumber: string;
+  toNumbers: string[];
+  minIntervalMinutes: number;
+  maxSMSPerDay: number;
+}
+
+export interface SMSStatus {
+  enabled: boolean;
+  configured: boolean;
+  recipientCount: number;
+  dailySMSCount: number;
+  maxSMSPerDay: number;
+}
+
+export interface SMSStats {
+  dailySMSCount: number;
+  maxSMSPerDay: number;
+  totalCostToday: number;
+  successRate: number;
+}
+
+export interface SMSHistoryEntry {
+  to: string;
+  message: string;
+  status: 'sent' | 'failed' | 'rate_limited';
+  cost?: number;
+  sid?: string;
+  error?: string;
+  timestamp: string;
 }

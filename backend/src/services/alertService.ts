@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Alert } from '../models/Alert';
+import { smsService } from './smsService';
 
 export interface AlertPayload {
   condition: string;
@@ -101,6 +102,29 @@ export class AlertService {
   }
 
   /**
+   * Send SMS alert
+   */
+  static async sendSMSAlert(alert: Alert, payload: AlertPayload, severity: 'low' | 'high' | 'critical' = 'high'): Promise<boolean> {
+    if (!smsService.isConfigured()) {
+      console.error('SMS service not configured');
+      return false;
+    }
+
+    const message = this.formatSMSMessage(alert, payload, severity);
+
+    try {
+      const success = await smsService.sendSMS(message, severity);
+      if (success) {
+        console.log(`SMS alert sent: ${alert.name}`);
+      }
+      return success;
+    } catch (error: any) {
+      console.error('Failed to send SMS alert:', error.message);
+      return false;
+    }
+  }
+
+  /**
    * Trigger alert based on type
    */
   static async triggerAlert(alert: Alert, payload: AlertPayload): Promise<boolean> {
@@ -129,6 +153,9 @@ export class AlertService {
         break;
       case 'webhook':
         success = await this.sendWebhookAlert(alert, payload);
+        break;
+      case 'sms':
+        success = await this.sendSMSAlert(alert, payload, 'high');
         break;
     }
 
@@ -204,6 +231,23 @@ export class AlertService {
         text: 'Grow Monitoring System',
       },
     };
+  }
+
+  /**
+   * Format SMS message (compact version, max 160 chars for single SMS)
+   */
+  private static formatSMSMessage(alert: Alert, payload: AlertPayload, severity: 'low' | 'high' | 'critical'): string {
+    const { condition, threshold, currentValue } = payload;
+
+    const emoji = severity === 'critical' ? '🚨' : '⚠️';
+    const severityText = severity === 'critical' ? 'KRITISCH' : 'Warnung';
+
+    // Compact format for SMS (keep under 160 chars)
+    let message = `${emoji} ${severityText}: ${alert.name}\n`;
+    message += `${this.getConditionText(condition)}\n`;
+    message += `Ist: ${currentValue.toFixed(1)} | Soll: ${threshold}`;
+
+    return message;
   }
 
   /**

@@ -33,6 +33,7 @@ import reportsRoutes from './routes/reports.routes';
 import devRoutes from './routes/dev.routes';
 import milestonesRoutes from './routes/milestones.routes';
 import journalRoutes from './routes/journal.routes';
+import smsRoutes from './routes/sms.routes';
 
 // Load environment variables
 dotenv.config();
@@ -82,6 +83,7 @@ app.use('/api/reports', reportsRoutes);
 app.use('/api/dev', devRoutes);
 app.use('/api/milestones', milestonesRoutes);
 app.use('/api/journal', journalRoutes);
+app.use('/api/sms', smsRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -109,6 +111,10 @@ async function start() {
 
     // Create default admin user if it doesn't exist
     await createDefaultAdmin();
+
+    // Initialize SMS service
+    const { smsService } = await import('./services/smsService');
+    await smsService.initialize();
 
     // Start server
     server.listen(PORT, () => {

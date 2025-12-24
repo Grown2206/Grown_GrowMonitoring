@@ -6,7 +6,7 @@ export type AlertSeverity = 'warning' | 'critical';
 interface AlertAttributes {
   id: number;
   name: string;
-  type: 'email' | 'webhook' | 'telegram' | 'discord';
+  type: 'email' | 'webhook' | 'telegram' | 'discord' | 'sms';
   condition: 'tank_low' | 'nutrient_low' | 'nutrient_high' | 'moisture_low' | 'moisture_high' | 'temperature_high' | 'temperature_low' | 'humidity_high' | 'humidity_low';
   threshold: number;
   warningThreshold?: number;
@@ -32,7 +32,7 @@ interface AlertCreationAttributes extends Optional<AlertAttributes, 'id' | 'enab
 export class Alert extends Model<AlertAttributes, AlertCreationAttributes> implements AlertAttributes {
   public id!: number;
   public name!: string;
-  public type!: 'email' | 'webhook' | 'telegram' | 'discord';
+  public type!: 'email' | 'webhook' | 'telegram' | 'discord' | 'sms';
   public condition!: 'tank_low' | 'nutrient_low' | 'nutrient_high' | 'moisture_low' | 'moisture_high' | 'temperature_high' | 'temperature_low' | 'humidity_high' | 'humidity_low';
   public threshold!: number;
   public warningThreshold?: number;

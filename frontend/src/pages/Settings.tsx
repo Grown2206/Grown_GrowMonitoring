@@ -22,8 +22,8 @@ import {
   FormControlLabel,
   Divider,
 } from '@mui/material';
-import { settingsAPI, authAPI, activityAPI, relaysAPI } from '../services/api';
-import { User, Relay, ActivityLog } from '../types';
+import { settingsAPI, authAPI, activityAPI, relaysAPI, smsAPI } from '../services/api';
+import { User, Relay, ActivityLog, SMSSettings, SMSStatus, SMSStats } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -53,6 +53,20 @@ export function Settings() {
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [relays, setRelays] = useState<Relay[]>([]);
 
+  // SMS Settings
+  const [smsSettings, setSmsSettings] = useState<SMSSettings>({
+    enabled: false,
+    accountSid: '',
+    authToken: '',
+    fromNumber: '',
+    toNumbers: [],
+    minIntervalMinutes: 15,
+    maxSMSPerDay: 20,
+  });
+  const [smsStatus, setSmsStatus] = useState<SMSStatus | null>(null);
+  const [smsStats, setSmsStats] = useState<SMSStats | null>(null);
+  const [phoneNumberInput, setPhoneNumberInput] = useState('');
+
   // Check if dev mode is enabled
   const isDevMode = process.env.NODE_ENV === 'development' || process.env.REACT_APP_ENABLE_DEV_TOOLS === 'true';
 
@@ -72,15 +86,19 @@ export function Settings() {
 
   async function loadData() {
     try {
-      const [apiKeysRes, activityRes, relaysRes] = await Promise.all([
+      const [apiKeysRes, activityRes, relaysRes, smsStatusRes, smsStatsRes] = await Promise.all([
         authAPI.getApiKeys(),
         activityAPI.getAll({ limit: 50 }),
         relaysAPI.getAll(),
+        smsAPI.getStatus(),
+        smsAPI.getStats(),
       ]);
 
       setApiKeys(apiKeysRes.data);
       setActivityLogs(activityRes.data);
       setRelays(relaysRes.data);
+      setSmsStatus(smsStatusRes.data);
+      setSmsStats(smsStatsRes.data);
 
       // Load users if admin
       if (user?.role === 'admin') {
@@ -160,6 +178,47 @@ export function Settings() {
     }
   }
 
+  async function handleSaveSMSSettings() {
+    try {
+      await smsAPI.updateSettings(smsSettings);
+      alert('SMS Einstellungen gespeichert!');
+      loadData();
+    } catch (error: any) {
+      alert('Fehler: ' + (error.response?.data?.error || error.message));
+    }
+  }
+
+  async function handleTestSMS() {
+    try {
+      const res = await smsAPI.sendTest();
+      if (res.data.success) {
+        alert('✓ ' + res.data.message);
+      } else {
+        alert('✗ ' + res.data.message);
+      }
+      loadData();
+    } catch (error: any) {
+      alert('Fehler: ' + (error.response?.data?.error || error.message));
+    }
+  }
+
+  function handleAddPhoneNumber() {
+    if (phoneNumberInput.trim()) {
+      setSmsSettings({
+        ...smsSettings,
+        toNumbers: [...smsSettings.toNumbers, phoneNumberInput.trim()],
+      });
+      setPhoneNumberInput('');
+    }
+  }
+
+  function handleRemovePhoneNumber(index: number) {
+    setSmsSettings({
+      ...smsSettings,
+      toNumbers: smsSettings.toNumbers.filter((_, i) => i !== index),
+    });
+  }
+
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
@@ -171,6 +230,7 @@ export function Settings() {
           <Tab label="Profil" />
           <Tab label="API-Keys" />
           <Tab label="Hardware" />
+          <Tab label="SMS / Benachrichtigungen" />
           {user?.role === 'admin' && <Tab label="Benutzer" />}
           <Tab label="Aktivität" />
           <Tab label="Backup" />
@@ -329,9 +389,181 @@ export function Settings() {
           </TableContainer>
         </TabPanel>
 
+        {/* SMS / Notifications Tab */}
+        <TabPanel value={tab} index={3}>
+          <Grid container spacing={3}>
+            {/* Status Card */}
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    SMS Status
+                  </Typography>
+                  {smsStatus && (
+                    <>
+                      <Box display="flex" alignItems="center" gap={1} mb={1}>
+                        <Typography variant="body2">Service:</Typography>
+                        <Chip
+                          label={smsStatus.enabled ? 'Aktiviert' : 'Deaktiviert'}
+                          color={smsStatus.enabled ? 'success' : 'default'}
+                          size="small"
+                        />
+                      </Box>
+                      <Box display="flex" alignItems="center" gap={1} mb={1}>
+                        <Typography variant="body2">Konfiguration:</Typography>
+                        <Chip
+                          label={smsStatus.configured ? 'Vollständig' : 'Unvollständig'}
+                          color={smsStatus.configured ? 'success' : 'warning'}
+                          size="small"
+                        />
+                      </Box>
+                      <Typography variant="body2">Empfänger: {smsStatus.recipientCount}</Typography>
+                      <Typography variant="body2">
+                        SMS heute: {smsStatus.dailySMSCount} / {smsStatus.maxSMSPerDay}
+                      </Typography>
+                    </>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Statistics Card */}
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    Statistiken (Heute)
+                  </Typography>
+                  {smsStats && (
+                    <>
+                      <Typography variant="body2">Gesendet: {smsStats.dailySMSCount}</Typography>
+                      <Typography variant="body2">Kosten: ${smsStats.totalCostToday.toFixed(4)}</Typography>
+                      <Typography variant="body2">Erfolgsrate: {smsStats.successRate}%</Typography>
+                    </>
+                  )}
+                  <Button variant="outlined" onClick={handleTestSMS} sx={{ mt: 2 }} fullWidth>
+                    Test-SMS senden
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Configuration Card */}
+            <Grid item xs={12}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    Twilio Konfiguration
+                  </Typography>
+
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={smsSettings.enabled}
+                        onChange={(e) => setSmsSettings({ ...smsSettings, enabled: e.target.checked })}
+                      />
+                    }
+                    label="SMS Service aktivieren"
+                  />
+
+                  <Grid container spacing={2} sx={{ mt: 2 }}>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        label="Twilio Account SID"
+                        value={smsSettings.accountSid}
+                        onChange={(e) => setSmsSettings({ ...smsSettings, accountSid: e.target.value })}
+                        placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        type="password"
+                        label="Twilio Auth Token"
+                        value={smsSettings.authToken}
+                        onChange={(e) => setSmsSettings({ ...smsSettings, authToken: e.target.value })}
+                        placeholder="********************************"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        label="Von Nummer"
+                        value={smsSettings.fromNumber}
+                        onChange={(e) => setSmsSettings({ ...smsSettings, fromNumber: e.target.value })}
+                        placeholder="+491234567890"
+                        helperText="Twilio Telefonnummer im Format +491234567890"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        type="number"
+                        label="Min. Intervall (Minuten)"
+                        value={smsSettings.minIntervalMinutes}
+                        onChange={(e) => setSmsSettings({ ...smsSettings, minIntervalMinutes: parseInt(e.target.value) })}
+                        helperText="Mindestabstand zwischen SMS"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        type="number"
+                        label="Max. SMS pro Tag"
+                        value={smsSettings.maxSMSPerDay}
+                        onChange={(e) => setSmsSettings({ ...smsSettings, maxSMSPerDay: parseInt(e.target.value) })}
+                        helperText="Tägliches SMS-Limit (Kostenkontrolle)"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Divider sx={{ my: 3 }} />
+
+                  <Typography variant="h6" gutterBottom>
+                    Empfänger-Nummern
+                  </Typography>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={10}>
+                      <TextField
+                        fullWidth
+                        label="Telefonnummer hinzufügen"
+                        value={phoneNumberInput}
+                        onChange={(e) => setPhoneNumberInput(e.target.value)}
+                        placeholder="+491234567890"
+                        helperText="Format: +491234567890"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={2}>
+                      <Button fullWidth variant="outlined" onClick={handleAddPhoneNumber} sx={{ height: '56px' }}>
+                        Hinzufügen
+                      </Button>
+                    </Grid>
+                  </Grid>
+
+                  <Box sx={{ mt: 2 }}>
+                    {smsSettings.toNumbers.map((number, index) => (
+                      <Chip
+                        key={index}
+                        label={number}
+                        onDelete={() => handleRemovePhoneNumber(index)}
+                        sx={{ m: 0.5 }}
+                      />
+                    ))}
+                  </Box>
+
+                  <Button variant="contained" onClick={handleSaveSMSSettings} sx={{ mt: 3 }}>
+                    Einstellungen speichern
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </TabPanel>
+
         {/* Users Tab (Admin only) */}
         {user?.role === 'admin' && (
-          <TabPanel value={tab} index={3}>
+          <TabPanel value={tab} index={4}>
             <Typography variant="h6" gutterBottom>
               Benutzerverwaltung
             </Typography>
@@ -369,7 +601,7 @@ export function Settings() {
         )}
 
         {/* Activity Tab */}
-        <TabPanel value={tab} index={user?.role === 'admin' ? 4 : 3}>
+        <TabPanel value={tab} index={user?.role === 'admin' ? 5 : 4}>
           <Typography variant="h6" gutterBottom>
             Aktivitäts-Log
           </Typography>
@@ -400,7 +632,7 @@ export function Settings() {
         </TabPanel>
 
         {/* Backup Tab */}
-        <TabPanel value={tab} index={user?.role === 'admin' ? 5 : 4}>
+        <TabPanel value={tab} index={user?.role === 'admin' ? 6 : 5}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <Card>
@@ -435,7 +667,7 @@ export function Settings() {
 
         {/* Developer Tools Tab */}
         {isDevMode && (
-          <TabPanel value={tab} index={user?.role === 'admin' ? 6 : 5}>
+          <TabPanel value={tab} index={user?.role === 'admin' ? 7 : 6}>
             <DeveloperTools />
           </TabPanel>
         )}

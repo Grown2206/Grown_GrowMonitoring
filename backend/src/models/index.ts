@@ -20,6 +20,7 @@ import { Device } from './Device';
 import { ReportSchedule } from './ReportSchedule';
 import { Milestone } from './Milestone';
 import { AlertHistory } from './AlertHistory';
+import { Settings } from './Settings';
 
 // Define associations
 User.hasMany(ApiKey, { foreignKey: 'userId', as: 'apiKeys' });
@@ -81,4 +82,5 @@ export {
   ReportSchedule,
   Milestone,
   AlertHistory,
+  Settings,
 };
