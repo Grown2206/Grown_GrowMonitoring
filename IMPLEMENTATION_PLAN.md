@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 23. Dezember 2024
-**Version:** 1.5.0
-**Fortschritt gesamt:** 26/140 Features (18.6%)
+**Version:** 1.6.0
+**Fortschritt gesamt:** 27/140 Features (19.3%)
 
 ---
 
@@ -21,12 +21,13 @@
 - [x] Erweiterte Alarmierung (Telegram/Discord) ✅
 - [x] Multi-Device Sensor Management ✅
 
-### Sprint 3: Enhanced IoT 🔄 IN ARBEIT
+### Sprint 3: Enhanced IoT & Analytics 🔄 IN ARBEIT
 - [x] Extended Sensor Support (CO2, PAR, TDS, VOC, PM2.5) ✅
+- [x] Comparison Analytics (Pflanzen, Zyklen, Strains) ✅
 
 ---
 
-## ✅ ABGESCHLOSSEN (26 Features)
+## ✅ ABGESCHLOSSEN (27 Features)
 
 ### Phase 0: MVP & Foundation ✅ KOMPLETT
 - [x] Basic Backend (Node.js, Express, SQLite)
@@ -58,8 +59,9 @@
 - [x] Enhanced Alert System (Telegram/Discord, erweiterte Bedingungen)
 - [x] Multi-Device Sensor Management (Device Model, Device-Verwaltung UI)
 - [x] Extended Sensor Support (CO2, PAR, TDS, VOC, PM2.5)
+- [x] Comparison Analytics (Pflanzen-, Zyklus-, Strain-Vergleiche)
 
-**Status:** 18/18 MVP Features ✅ | 8/24 Enhancement Features (33.3%)
+**Status:** 18/18 MVP Features ✅ | 9/24 Enhancement Features (37.5%)
 
 ---
 
@@ -152,6 +154,17 @@
   - [x] Optimale Bereiche definiert
   - [x] Icons und Farben für Visualisierung
   - [x] Frontend und Backend TypeScript Interfaces synchronisiert
+
+- [x] **Comparison Analytics** ✅ FERTIG (23.12.2024)
+  - [x] Backend Comparison API (4 Endpoints)
+  - [x] Plant Comparison: Multi-Pflanzen-Vergleich
+  - [x] Cycle Comparison: Abgeschlossene Grow-Zyklen vergleichen
+  - [x] Strain Comparison: Strain-Performance-Statistiken
+  - [x] Sensor Trends: Aggregierte Sensordaten (Stunden/Tag/Woche/Monat)
+  - [x] ComparisonAnalytics Frontend-Seite mit 3 Tabs
+  - [x] Recharts Visualisierungen (BarChart)
+  - [x] Statistik-Berechnung (Min, Max, Avg, Median)
+  - [x] Routing und Navigation Integration
 
 ---
 
@@ -262,7 +275,7 @@
 
 ---
 
-## 📈 Datenanalyse & Reporting (2/11 - 18%)
+## 📈 Datenanalyse & Reporting (3/11 - 27.3%)
 
 ### Priorität: HOCH
 - [x] **Advanced Data Export** ✅ FERTIG (23.12.2024)
@@ -279,11 +292,12 @@
   - [x] Box-Plots & Histogramme
   - **Aufwand:** 40h | **Sprint:** 2 | **Tatsächlich:** ~6h
 
-- [ ] **Vergleichs-Analysen** 🎯 SPRINT 3
-  - [ ] Grow-Zyklen vergleichen
-  - [ ] Strain-Vergleiche
-  - [ ] Vorher/Nachher
-  - **Aufwand:** 35h | **Sprint:** 3-4
+- [x] **Vergleichs-Analysen** ✅ FERTIG (23.12.2024)
+  - [x] Grow-Zyklen vergleichen
+  - [x] Strain-Performance-Vergleiche
+  - [x] Multi-Pflanzen-Vergleich
+  - [x] Aggregierte Sensor-Trends
+  - **Aufwand:** 35h | **Sprint:** 3 | **Tatsächlich:** ~6h
 
 - [ ] **Automatische Reports** - 30h
 
@@ -292,7 +306,7 @@
 - [ ] **Ertrags-Prognosen** - 40h
 - [ ] **Anomalie-Detection** - 45h
 
-**Gesamt Analytics & Reporting:** 2/11 (185h verbleibend)
+**Gesamt Analytics & Reporting:** 3/11 (150h verbleibend)
 
 ---
 
