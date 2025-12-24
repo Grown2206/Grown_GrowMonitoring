@@ -2,9 +2,9 @@
 
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
-**Letzte Aktualisierung:** 23. Dezember 2024
-**Version:** 1.6.0
-**Fortschritt gesamt:** 27/140 Features (19.3%)
+**Letzte Aktualisierung:** 24. Dezember 2024
+**Version:** 1.7.0
+**Fortschritt gesamt:** 28/140 Features (20.0%)
 
 ---
 
@@ -21,13 +21,14 @@
 - [x] Erweiterte Alarmierung (Telegram/Discord) ✅
 - [x] Multi-Device Sensor Management ✅
 
-### Sprint 3: Enhanced IoT & Analytics 🔄 IN ARBEIT
+### Sprint 3: Enhanced IoT & Analytics ✅ ABGESCHLOSSEN
 - [x] Extended Sensor Support (CO2, PAR, TDS, VOC, PM2.5) ✅
 - [x] Comparison Analytics (Pflanzen, Zyklen, Strains) ✅
+- [x] Automated Reports (E-Mail Reports mit Scheduler) ✅
 
 ---
 
-## ✅ ABGESCHLOSSEN (27 Features)
+## ✅ ABGESCHLOSSEN (28 Features)
 
 ### Phase 0: MVP & Foundation ✅ KOMPLETT
 - [x] Basic Backend (Node.js, Express, SQLite)
@@ -60,8 +61,9 @@
 - [x] Multi-Device Sensor Management (Device Model, Device-Verwaltung UI)
 - [x] Extended Sensor Support (CO2, PAR, TDS, VOC, PM2.5)
 - [x] Comparison Analytics (Pflanzen-, Zyklus-, Strain-Vergleiche)
+- [x] Automated Reports (E-Mail Reports mit Scheduler)
 
-**Status:** 18/18 MVP Features ✅ | 9/24 Enhancement Features (37.5%)
+**Status:** 18/18 MVP Features ✅ | 10/24 Enhancement Features (41.7%)
 
 ---
 
@@ -299,14 +301,20 @@
   - [x] Aggregierte Sensor-Trends
   - **Aufwand:** 35h | **Sprint:** 3 | **Tatsächlich:** ~6h
 
-- [ ] **Automatische Reports** - 30h
+- [x] **Automatische Reports** ✅ FERTIG (24.12.2024)
+  - [x] Report-Scheduler (täglich/wöchentlich/monatlich)
+  - [x] E-Mail Report Generation (HTML/PDF)
+  - [x] Konfigurierbarer Report-Inhalt
+  - [x] Nodemailer Integration
+  - [x] Report-Management UI
+  - **Aufwand:** 30h | **Sprint:** 3 | **Tatsächlich:** ~5h
 
 ### Priorität: MITTEL
 - [ ] **Kosten-Tracking** - 35h
 - [ ] **Ertrags-Prognosen** - 40h
 - [ ] **Anomalie-Detection** - 45h
 
-**Gesamt Analytics & Reporting:** 3/11 (150h verbleibend)
+**Gesamt Analytics & Reporting:** 4/11 (36.4%) (120h verbleibend)
 
 ---
 
