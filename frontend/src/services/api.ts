@@ -174,4 +174,14 @@ export const harvestsAPI = {
   delete: (id: number) => api.delete(`/harvests/${id}`),
 };
 
+// Comparison Analytics
+export const comparisonAPI = {
+  comparePlants: (plantIds: number[], startDate?: string, endDate?: string) =>
+    api.post('/comparison/plants', { plantIds, startDate, endDate }),
+  getCycles: (limit?: number) => api.get('/comparison/cycles', { params: { limit } }),
+  getStrains: () => api.get('/comparison/strains'),
+  getSensorTrends: (sensorIds: number[], interval: string, startDate?: string, endDate?: string) =>
+    api.post('/comparison/sensor-trends', { sensorIds, interval, startDate, endDate }),
+};
+
 export default api;

@@ -30,6 +30,7 @@ const Notifications = lazy(() => import('./pages/Notifications').then(m => ({ de
 const AlertManagement = lazy(() => import('./pages/AlertManagement').then(m => ({ default: m.AlertManagement })));
 const GPIOManager = lazy(() => import('./pages/GPIOManager').then(m => ({ default: m.GPIOManager })));
 const DeviceManagement = lazy(() => import('./pages/DeviceManagement').then(m => ({ default: m.DeviceManagement })));
+const ComparisonAnalytics = lazy(() => import('./pages/ComparisonAnalytics').then(m => ({ default: m.ComparisonAnalytics })));
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -148,6 +149,14 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <AnalyticsAdvanced />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/comparison"
+        element={
+          <PrivateRoute>
+            <ComparisonAnalytics />
           </PrivateRoute>
         }
       />
