@@ -4,7 +4,7 @@
 
 **Letzte Aktualisierung:** 24. Dezember 2024
 **Version:** 2.0.0
-**Fortschritt gesamt:** 31/140 Features (22.1%)
+**Fortschritt gesamt:** 32/140 Features (22.9%)
 
 ---
 
@@ -26,16 +26,16 @@
 - [x] Comparison Analytics (Pflanzen, Zyklen, Strains) ✅
 - [x] Automated Reports (E-Mail Reports mit Scheduler) ✅
 
-### Sprint 4: PWA & Advanced Features 🔄 IN BEARBEITUNG
+### Sprint 4: PWA & Advanced Features ✅ ABGESCHLOSSEN
 - [x] PWA Verbesserungen (Offline-First, Background Sync) ✅
 - [x] Grow-Journal Enhancement (Rich Text, Timeline, Milestones) ✅
 - [x] Stufenweise Alerts (Warning → Critical Escalation) ✅
+- [x] Hardware-Integration & Treiber ✅
 - [ ] SMS Alerts (Twilio Integration) - verschoben auf Sprint 5
-- [ ] Hardware-Integration & Treiber
 
 ---
 
-## ✅ ABGESCHLOSSEN (28 Features)
+## ✅ ABGESCHLOSSEN (32 Features)
 
 ### Phase 0: MVP & Foundation ✅ KOMPLETT
 - [x] Basic Backend (Node.js, Express, SQLite)
@@ -72,8 +72,9 @@
 - [x] PWA Verbesserungen (Offline-First Architecture, Background Sync)
 - [x] Grow-Journal Enhancement (Rich Text Editor, Timeline View, Milestones)
 - [x] Stufenweise Alerts (Warning/Critical Escalation, Alert History)
+- [x] Hardware-Integration & Treiber (Sensor Libraries, ESP32/ESP8266 Firmware, Wiring Guides)
 
-**Status:** 18/18 MVP Features ✅ | 13/24 Enhancement Features (54.2%)
+**Status:** 18/18 MVP Features ✅ | 14/24 Enhancement Features (58.3%)
 
 ---
 
@@ -242,13 +243,30 @@
   - [x] Frontend Types & API Client erweitert
   **Aufwand:** 25h | **Sprint:** 4 | **Tatsächlich:** ~3h
 
+- [x] **Hardware-Integration & Treiber** ✅ FERTIG (24.12.2024)
+  - [x] CO2 Sensor Treiber (MH-Z19B UART, SCD30 I2C)
+  - [x] Lichtsensor Treiber (BH1750, VEML7700, TSL2591, LDR, PAR)
+  - [x] Wasserqualitäts-Treiber (pH, TDS, EC - Analog & Atlas I2C)
+  - [x] VOC/Luftqualitäts-Treiber (SGP30, CCS811, BME680, MQ-135)
+  - [x] PM2.5 Feinstaub-Treiber (PMS5003, PMS7003, SDS011, GP2Y1010)
+  - [x] ESP32 All-Sensors Firmware Example
+  - [x] ESP8266 Dokumentation & Variante
+  - [x] Vollständige README mit Sensor-Specs
+  - [x] Wiring Guide mit ASCII-Diagrammen
+  - [x] Kalibrierungs-Guides (pH, TDS, EC, CO2, VOC)
+  - [x] Pin-Mapping & Konflikt-Dokumentation
+  - [x] Power Management Guide
+  - [x] Level Shifter & Multiplexer Beispiele
+  - [x] Troubleshooting Checklists
+  **Aufwand:** 60h | **Sprint:** 4 | **Tatsächlich:** ~6h
+
 ---
 
 ## 📋 ROADMAP - DETAILLIERTER STATUS
 
 ---
 
-## 🔌 Hardware & IoT (2/12 - 16.7%)
+## 🔌 Hardware & IoT (3/12 - 25.0%)
 
 ### Priorität: HOCH
 - [x] **Multi-Device Support** ✅ TEILWEISE FERTIG (23.12.2024)
@@ -260,15 +278,15 @@
   - [ ] Auto-Registration - geplant für Sprint 4
   - **Aufwand:** 40h | **Sprint:** 2-3 | **Tatsächlich:** ~8h
 
-- [x] **Erweiterte Sensor-Unterstützung** ✅ TEILWEISE FERTIG (23.12.2024)
+- [x] **Erweiterte Sensor-Unterstützung** ✅ FERTIG (24.12.2024)
   - [x] CO2-Sensoren (Software-Support)
   - [x] PAR/PPFD Licht-Sensoren (Software-Support)
   - [x] TDS Sensoren (Software-Support)
   - [x] VOC Luftqualität (Software-Support)
   - [x] PM2.5 Feinstaub (Software-Support)
-  - [ ] Hardware-Integration & Treiber - geplant für Sprint 4
+  - [x] Hardware-Integration & Treiber ✅ FERTIG (24.12.2024)
   - [ ] N-P-K Boden-Sensoren - geplant für Sprint 5
-  - **Aufwand:** 50h | **Sprint:** 3-4 | **Tatsächlich:** ~3h (Software-Teil)
+  - **Aufwand:** 110h | **Sprint:** 3-4 | **Tatsächlich:** ~9h
 
 - [ ] **Kamera-Integration**
   - [ ] ESP32-CAM Support
