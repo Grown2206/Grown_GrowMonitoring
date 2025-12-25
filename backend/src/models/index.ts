@@ -24,6 +24,7 @@ import { Settings } from './Settings';
 import CalibrationHistory from './CalibrationHistory';
 import SensorGroup from './SensorGroup';
 import VirtualSensor from './VirtualSensor';
+import { GrowRecipe } from './GrowRecipe';
 
 // Define associations
 User.hasMany(ApiKey, { foreignKey: 'userId', as: 'apiKeys' });
@@ -92,4 +93,5 @@ export {
   CalibrationHistory,
   SensorGroup,
   VirtualSensor,
+  GrowRecipe,
 };
