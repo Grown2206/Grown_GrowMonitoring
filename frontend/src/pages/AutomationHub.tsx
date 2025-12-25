@@ -9,6 +9,7 @@ import TuneIcon from '@mui/icons-material/Tune';
 const Automation = lazy(() => import('./Automation').then(m => ({ default: m.Automation })));
 const Schedules = lazy(() => import('./Schedules').then(m => ({ default: m.Schedules })));
 const GrowRecipeBrowser = lazy(() => import('./GrowRecipeBrowser').then(m => ({ default: m.GrowRecipeBrowser })));
+const PIDController = lazy(() => import('./PIDController').then(m => ({ default: m.PIDController })));
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -67,17 +68,7 @@ export function AutomationHub() {
           <GrowRecipeBrowser />
         </TabPanel>
         <TabPanel value={activeTab} index={3}>
-          <Box p={3}>
-            <Box sx={{ textAlign: 'center', py: 5 }}>
-              <TuneIcon sx={{ fontSize: 60, color: 'text.secondary', mb: 2 }} />
-              <Box sx={{ typography: 'h6', color: 'text.secondary' }}>
-                PID Controller Management
-              </Box>
-              <Box sx={{ typography: 'body2', color: 'text.secondary', mt: 1 }}>
-                Coming soon - Präzise Umgebungssteuerung
-              </Box>
-            </Box>
-          </Box>
+          <PIDController />
         </TabPanel>
       </Suspense>
     </Box>
