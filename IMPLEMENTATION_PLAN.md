@@ -2,9 +2,9 @@
 
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
-**Letzte Aktualisierung:** 24. Dezember 2024
-**Version:** 2.0.0
-**Fortschritt gesamt:** 32/140 Features (22.9%)
+**Letzte Aktualisierung:** 25. Dezember 2024
+**Version:** 2.8.0
+**Fortschritt gesamt:** 34/140 Features (24.3%)
 
 ---
 
@@ -310,7 +310,7 @@
 
 ---
 
-## 📊 Sensoren & Monitoring (2/10 - 20%)
+## 📊 Sensoren & Monitoring (4/10 - 40%)
 
 ### Priorität: HOCH
 - [x] **Echtzeit-Dashboard Enhancement** ✅ FERTIG (23.12.2024)
@@ -324,19 +324,31 @@
   - [x] Telegram Integration (Bot Token, Chat ID)
   - [x] Discord Webhooks mit Rich Embeds
   - [x] Erweiterte Bedingungen (Temperature, Humidity)
-  - [ ] SMS Alerts (Twilio) - geplant für Sprint 4
-  - [ ] Stufenweise Alerts (Warning → Critical) - geplant für Sprint 4
+  - [x] SMS Alerts (Twilio) - ✅ FERTIG Sprint 5
+  - [x] Stufenweise Alerts (Warning → Critical) - ✅ FERTIG Sprint 4
   - **Aufwand:** 40h | **Sprint:** 2 | **Tatsächlich:** ~5h
 
-- [ ] **Sensor-Kalibrierung** - 30h
+- [x] **Sensor-Kalibrierung** ✅ FERTIG (25.12.2024)
+  - [x] CalibrationHistory Model mit Audit Trail
+  - [x] Enhanced Calibration Dialog (6 Felder)
+  - [x] Calibration History Endpoint
+  - [x] Reference Value Tracking
+  - **Aufwand:** 30h | **Sprint:** 9 | **Tatsächlich:** ~3h
+
 - [ ] **Sensor-Fusion** - 35h
 
 ### Priorität: MITTEL
 - [ ] **Virtuelle Sensoren** - 25h
-- [ ] **Sensor-Gruppen** - 20h
+- [x] **Sensor-Gruppen** ✅ FERTIG (25.12.2024)
+  - [x] SensorGroup Model (JSON array storage)
+  - [x] Full CRUD API with statistics
+  - [x] Frontend Management Page
+  - [x] Color-coded Groups
+  - [x] Multi-select Sensor Assignment
+  - **Aufwand:** 20h | **Sprint:** 9 | **Tatsächlich:** ~2.5h
 - [ ] **Benchmark-System** - 30h
 
-**Gesamt Sensoren & Monitoring:** 2/10 (170h verbleibend)
+**Gesamt Sensoren & Monitoring:** 4/10 (120h verbleibend)
 
 ---
 
