@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.12.0 (Backend)
-**Fortschritt gesamt:** 38/140 Features (27.1%)
+**Version:** 2.13.0 (Backend)
+**Fortschritt gesamt:** 39/140 Features (27.9%)
 
 ---
 
@@ -310,7 +310,7 @@
 
 ---
 
-## 📊 Sensoren & Monitoring (7/10 - 70%)
+## 📊 Sensoren & Monitoring (8/10 - 80%)
 
 ### Priorität: HOCH
 - [x] **Echtzeit-Dashboard Enhancement** ✅ FERTIG (23.12.2024)
@@ -369,8 +369,19 @@
   - [x] A-F Grading System
   - [x] Full CRUD API with Examples
   - **Aufwand:** 30h | **Sprint:** 13 | **Tatsächlich:** ~3h
+- [x] **Sensor Health Monitoring** ✅ FERTIG (25.12.2024)
+  - [x] SensorHealthService (Real-time Health Tracking)
+  - [x] Health Score (0-100) with A-F Grading
+  - [x] Four Health States (Healthy, Warning, Critical, Offline)
+  - [x] Uptime Tracking with Gap Analysis
+  - [x] Data Availability Monitoring
+  - [x] Battery & Signal Strength Tracking
+  - [x] Fleet-wide Health Overview
+  - [x] Automated Issue Detection
+  - [x] Full CRUD API with Summary Endpoints
+  - **Aufwand:** 25h | **Sprint:** 14 | **Tatsächlich:** ~2.5h
 
-**Gesamt Sensoren & Monitoring:** 7/10 (30h verbleibend)
+**Gesamt Sensoren & Monitoring:** 8/10 (5h verbleibend)
 
 ---
 
