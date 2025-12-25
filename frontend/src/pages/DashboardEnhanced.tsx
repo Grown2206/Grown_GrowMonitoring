@@ -120,7 +120,7 @@ export function DashboardEnhanced() {
       ]);
 
       setSensorData(sensorRes.data);
-      setPlants(plantsRes.data);
+      setPlants(Array.isArray(plantsRes.data) ? plantsRes.data : []);
       setRelays(relaysRes.data);
 
       const chartPoints = historyRes.data.slice(-30).map((d: SensorData) => ({
