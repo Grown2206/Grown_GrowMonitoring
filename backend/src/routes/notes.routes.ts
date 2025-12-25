@@ -1,21 +1,40 @@
 import express from 'express';
 import { Note } from '../models/Note';
 import { authenticateToken } from '../middleware/auth';
+import { queryParser, applyParsedQuery, createPaginationResponse } from '../middleware/queryParser';
 
 const router = express.Router();
 
 router.use(authenticateToken);
 
-router.get('/', async (req, res) => {
-  try {
-    const { plantId } = req.query;
-    const where = plantId ? { plantId: parseInt(plantId as string) } : {};
-    const notes = await Note.findAll({ where, order: [['createdAt', 'DESC']] });
-    res.json(notes);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch notes' });
+router.get(
+  '/',
+  queryParser({
+    maxLimit: 100,
+    defaultLimit: 20,
+    allowedFilters: ['plantId', 'title', 'category', 'content'],
+    allowedSortFields: ['title', 'category', 'createdAt'],
+    allowedFields: ['id', 'plantId', 'title', 'content', 'category', 'createdAt', 'updatedAt'],
+  }),
+  async (req, res) => {
+    try {
+      const parsedQuery = (req as any).parsedQuery;
+
+      const notes = await Note.findAndCountAll(
+        applyParsedQuery(parsedQuery, {
+          order: parsedQuery.order.length > 0 ? parsedQuery.order : [['createdAt', 'DESC']],
+        })
+      );
+
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parsedQuery.limit;
+
+      res.json(createPaginationResponse(notes, page, limit));
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch notes' });
+    }
   }
-});
+);
 
 router.post('/', async (req, res) => {
   try {

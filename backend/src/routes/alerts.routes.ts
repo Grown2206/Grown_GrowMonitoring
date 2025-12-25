@@ -3,19 +3,40 @@ import { Alert } from '../models/Alert';
 import { AlertHistory } from '../models/AlertHistory';
 import { AlertEscalationService } from '../services/alertEscalationService';
 import { authenticateToken } from '../middleware/auth';
+import { queryParser, applyParsedQuery, createPaginationResponse } from '../middleware/queryParser';
 
 const router = express.Router();
 
 router.use(authenticateToken);
 
-router.get('/', async (req, res) => {
-  try {
-    const alerts = await Alert.findAll({ order: [['createdAt', 'DESC']] });
-    res.json(alerts);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch alerts' });
+router.get(
+  '/',
+  queryParser({
+    maxLimit: 100,
+    defaultLimit: 20,
+    allowedFilters: ['name', 'type', 'enabled', 'sensorId', 'condition'],
+    allowedSortFields: ['name', 'type', 'createdAt', 'enabled'],
+    allowedFields: ['id', 'name', 'type', 'sensorId', 'condition', 'threshold', 'enabled', 'config', 'escalationLevel', 'createdAt', 'updatedAt'],
+  }),
+  async (req, res) => {
+    try {
+      const parsedQuery = (req as any).parsedQuery;
+
+      const alerts = await Alert.findAndCountAll(
+        applyParsedQuery(parsedQuery, {
+          order: parsedQuery.order.length > 0 ? parsedQuery.order : [['createdAt', 'DESC']],
+        })
+      );
+
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parsedQuery.limit;
+
+      res.json(createPaginationResponse(alerts, page, limit));
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch alerts' });
+    }
   }
-});
+);
 
 router.post('/', async (req, res) => {
   try {
