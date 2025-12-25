@@ -4,12 +4,14 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import TuneIcon from '@mui/icons-material/Tune';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 
 // Lazy load tabs
 const Automation = lazy(() => import('./Automation').then(m => ({ default: m.Automation })));
 const Schedules = lazy(() => import('./Schedules').then(m => ({ default: m.Schedules })));
 const GrowRecipeBrowser = lazy(() => import('./GrowRecipeBrowser').then(m => ({ default: m.GrowRecipeBrowser })));
 const PIDController = lazy(() => import('./PIDController').then(m => ({ default: m.PIDController })));
+const AdvancedAutomation = lazy(() => import('./AdvancedAutomation').then(m => ({ default: m.AdvancedAutomation })));
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -48,6 +50,7 @@ export function AutomationHub() {
           <Tab icon={<ScheduleIcon />} label="Zeitpläne" iconPosition="start" />
           <Tab icon={<MenuBookIcon />} label="Grow Rezepte" iconPosition="start" />
           <Tab icon={<TuneIcon />} label="PID Controller" iconPosition="start" />
+          <Tab icon={<AccountTreeIcon />} label="Erweiterte Regeln" iconPosition="start" />
         </Tabs>
       </Box>
 
@@ -69,6 +72,9 @@ export function AutomationHub() {
         </TabPanel>
         <TabPanel value={activeTab} index={3}>
           <PIDController />
+        </TabPanel>
+        <TabPanel value={activeTab} index={4}>
+          <AdvancedAutomation />
         </TabPanel>
       </Suspense>
     </Box>

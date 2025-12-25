@@ -151,7 +151,7 @@ async function start() {
     // Start server
     server.listen(PORT, () => {
       console.log('═══════════════════════════════════════════════');
-      console.log('  🌱 Grow Monitoring System v2.24.0');
+      console.log('  🌱 Grow Monitoring System v2.25.0');
       console.log('═══════════════════════════════════════════════');
       console.log(`  Server: http://localhost:${PORT}`);
       console.log(`  WebSocket: ws://localhost:${PORT}/ws`);
