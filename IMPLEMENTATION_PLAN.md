@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.25.0 (Backend + Frontend)
-**Fortschritt gesamt:** 51/140 Features (36.4%)
+**Version:** 2.26.0 (Backend + Frontend)
+**Fortschritt gesamt:** 52/140 Features (37.1%)
 
 ---
 
@@ -683,11 +683,16 @@
 ## 🔗 Integration & Erweiterungen (0/9 - 0%)
 
 ### Priorität: HOCH
-- [ ] **API Erweiterungen** 🎯 SPRINT 5
+- [x] **API Erweiterungen** ✅ TEILWEISE FERTIG (25.12.2024)
   - [ ] GraphQL API
   - [ ] WebHooks
-  - [ ] Swagger Docs
-  - **Aufwand:** 40h | **Sprint:** 5-6
+  - [x] Swagger Docs ✅ FERTIG (25.12.2024)
+  - [x] OpenAPI 3.0 Configuration
+  - [x] Swagger UI Interface (/api-docs)
+  - [x] Complete Model Schemas
+  - [x] Auth Endpoint Documentation
+  - [x] Interactive API Testing
+  - **Aufwand:** 40h | **Sprint:** 5-6+27 | **Tatsächlich:** ~2h (Swagger)
 
 - [ ] **Smart Home Integration** 🎯 SPRINT 6
   - [ ] Home Assistant
