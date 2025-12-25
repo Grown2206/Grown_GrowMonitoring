@@ -26,6 +26,7 @@ import SensorGroup from './SensorGroup';
 import VirtualSensor from './VirtualSensor';
 import { GrowRecipe } from './GrowRecipe';
 import { CostEntry } from './CostEntry';
+import Bookmark from './Bookmark';
 
 // Define associations
 User.hasMany(ApiKey, { foreignKey: 'userId', as: 'apiKeys' });
@@ -67,6 +68,9 @@ Sensor.belongsTo(Device, { foreignKey: 'deviceId', as: 'device' });
 Device.hasMany(Relay, { foreignKey: 'deviceId', as: 'relays' });
 Relay.belongsTo(Device, { foreignKey: 'deviceId', as: 'device' });
 
+User.hasMany(Bookmark, { foreignKey: 'userId', as: 'bookmarks' });
+Bookmark.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
 export {
   User,
   ApiKey,
@@ -96,4 +100,5 @@ export {
   VirtualSensor,
   GrowRecipe,
   CostEntry,
+  Bookmark,
 };
