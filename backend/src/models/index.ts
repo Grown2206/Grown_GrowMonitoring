@@ -23,6 +23,7 @@ import { AlertHistory } from './AlertHistory';
 import { Settings } from './Settings';
 import CalibrationHistory from './CalibrationHistory';
 import SensorGroup from './SensorGroup';
+import VirtualSensor from './VirtualSensor';
 
 // Define associations
 User.hasMany(ApiKey, { foreignKey: 'userId', as: 'apiKeys' });
@@ -90,4 +91,5 @@ export {
   Settings,
   CalibrationHistory,
   SensorGroup,
+  VirtualSensor,
 };
