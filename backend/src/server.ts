@@ -39,6 +39,7 @@ import mqttRoutes from './routes/mqtt.routes';
 import batchRoutes from './routes/batch.routes';
 import sensorGroupsRoutes from './routes/sensorGroups.routes';
 import virtualSensorsRoutes from './routes/virtualSensors.routes';
+import sensorFusionRoutes from './routes/sensorFusion.routes';
 
 // Load environment variables
 dotenv.config();
@@ -94,6 +95,7 @@ app.use('/api/mqtt', mqttRoutes);
 app.use('/api/batch', batchRoutes);
 app.use('/api/sensor-groups', sensorGroupsRoutes);
 app.use('/api/virtual-sensors', virtualSensorsRoutes);
+app.use('/api/sensor-fusion', sensorFusionRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
