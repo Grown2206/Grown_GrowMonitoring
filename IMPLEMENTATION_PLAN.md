@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.34.0 (Backend + Frontend)
-**Fortschritt gesamt:** 60/140 Features (42.9%)
+**Version:** 2.35.0 (Backend + Frontend)
+**Fortschritt gesamt:** 61/140 Features (43.6%)
 
 ---
 
@@ -768,7 +768,7 @@
 
 ---
 
-## 🎯 Quick Wins (6/10 - 60%)
+## 🎯 Quick Wins (7/10 - 70%)
 
 **Geschätzt: 50h total**
 - [x] **Keyboard Shortcuts** ✅ FERTIG (25.12.2024)
@@ -809,7 +809,16 @@
   - [x] Access Counting & Statistics
   - **Aufwand:** 5h | **Sprint:** 30 | **Tatsächlich:** ~1.5h
 - [ ] Search Enhancements - 8h
-- [ ] Drag & Drop Upload - 6h
+- [x] **Drag & Drop Upload** ✅ FERTIG (25.12.2024)
+  - [x] useDragDrop Hook
+  - [x] DropZone Component
+  - [x] FileUploadArea Component with Previews
+  - [x] File Validation (type, size, count)
+  - [x] Image Preview Generation
+  - [x] Multiple File Support
+  - [x] Error Handling
+  - [x] formatFileSize, isImageFile Utilities
+  - **Aufwand:** 6h | **Sprint:** 36 | **Tatsächlich:** ~2h
 - [x] **Copy/Paste** ✅ FERTIG (25.12.2024)
   - [x] useCopyPaste Hook (LocalStorage clipboard)
   - [x] CopyPasteButtons Component
@@ -830,7 +839,7 @@
   - [x] Error Handling
   - **Aufwand:** 6h | **Sprint:** 35 | **Tatsächlich:** ~1.5h
 
-**Quick Wins Fortschritt:** 6/10 (60%)
+**Quick Wins Fortschritt:** 7/10 (70%)
 
 ---
 
