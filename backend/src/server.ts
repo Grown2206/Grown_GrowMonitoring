@@ -50,6 +50,8 @@ import pidControllerRoutes from './routes/pidController.routes';
 import costTrackingRoutes from './routes/costTracking.routes';
 import yieldPredictionRoutes from './routes/yieldPrediction.routes';
 import anomalyDetectionRoutes from './routes/anomalyDetection.routes';
+import { createApolloServer, graphqlHandler } from './graphql/server';
+import { authenticateToken } from './middleware/auth';
 
 // Load environment variables
 dotenv.config();
@@ -162,12 +164,19 @@ async function start() {
     const { mqttService } = await import('./services/mqttService');
     await mqttService.initialize();
 
+    // Initialize GraphQL server
+    const apolloServer = await createApolloServer(server);
+    app.post('/graphql', express.json(), authenticateToken, graphqlHandler(apolloServer));
+
+    console.log('✓ GraphQL server initialized');
+
     // Start server
     server.listen(PORT, () => {
       console.log('═══════════════════════════════════════════════');
-      console.log('  🌱 Grow Monitoring System v2.26.0');
+      console.log('  🌱 Grow Monitoring System v2.27.0');
       console.log('═══════════════════════════════════════════════');
       console.log(`  Server: http://localhost:${PORT}`);
+      console.log(`  GraphQL: http://localhost:${PORT}/graphql`);
       console.log(`  WebSocket: ws://localhost:${PORT}/ws`);
       console.log(`  Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log('═══════════════════════════════════════════════');
