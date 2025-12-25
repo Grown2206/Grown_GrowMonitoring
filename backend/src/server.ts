@@ -4,6 +4,8 @@ import helmet from 'helmet';
 import compression from 'compression';
 import dotenv from 'dotenv';
 import http from 'http';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger';
 import { initDatabase } from './database/config';
 import { wsManager } from './websocket/server';
 import { apiLimiter } from './middleware/rateLimiter';
@@ -73,6 +75,18 @@ app.use('/api', apiLimiter);
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// Swagger API Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'Grow Monitoring API Docs',
+}));
+
+// Swagger JSON endpoint
+app.get('/api-docs.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
 });
 
 // API Routes
@@ -151,7 +165,7 @@ async function start() {
     // Start server
     server.listen(PORT, () => {
       console.log('═══════════════════════════════════════════════');
-      console.log('  🌱 Grow Monitoring System v2.25.0');
+      console.log('  🌱 Grow Monitoring System v2.26.0');
       console.log('═══════════════════════════════════════════════');
       console.log(`  Server: http://localhost:${PORT}`);
       console.log(`  WebSocket: ws://localhost:${PORT}/ws`);
