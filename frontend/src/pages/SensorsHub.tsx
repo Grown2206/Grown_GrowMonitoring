@@ -12,6 +12,7 @@ const Sensors = lazy(() => import('./Sensors').then(m => ({ default: m.Sensors }
 const SensorGroups = lazy(() => import('./SensorGroups').then(m => ({ default: m.SensorGroups })));
 const VirtualSensors = lazy(() => import('./VirtualSensors').then(m => ({ default: m.VirtualSensors })));
 const SensorHealthMonitoring = lazy(() => import('./SensorHealthMonitoring').then(m => ({ default: m.SensorHealthMonitoring })));
+const SensorBenchmark = lazy(() => import('./SensorBenchmark').then(m => ({ default: m.SensorBenchmark })));
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -50,6 +51,7 @@ export function SensorsHub() {
           <Tab icon={<GroupWorkIcon />} label="Sensor Gruppen" iconPosition="start" />
           <Tab icon={<FunctionsIcon />} label="Virtuelle Sensoren" iconPosition="start" />
           <Tab icon={<HealthAndSafetyIcon />} label="Health Monitoring" iconPosition="start" />
+          <Tab icon={<AssessmentIcon />} label="Benchmarking" iconPosition="start" />
         </Tabs>
       </Box>
 
@@ -71,6 +73,9 @@ export function SensorsHub() {
         </TabPanel>
         <TabPanel value={activeTab} index={3}>
           <SensorHealthMonitoring />
+        </TabPanel>
+        <TabPanel value={activeTab} index={4}>
+          <SensorBenchmark />
         </TabPanel>
       </Suspense>
     </Box>
