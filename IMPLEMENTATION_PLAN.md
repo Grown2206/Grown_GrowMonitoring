@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.28.0 (Backend + Frontend)
-**Fortschritt gesamt:** 54/140 Features (38.6%)
+**Version:** 2.29.0 (Backend + Frontend)
+**Fortschritt gesamt:** 55/140 Features (39.3%)
 
 ---
 
@@ -768,19 +768,29 @@
 
 ---
 
-## 🎯 Quick Wins (0/10 - 0%)
+## 🎯 Quick Wins (1/10 - 10%)
 
 **Geschätzt: 50h total**
 - [ ] Keyboard Shortcuts - 5h
 - [ ] Bulk-Aktionen - 8h
 - [ ] Quick-Add Buttons - 4h
 - [ ] Favoriten/Bookmarks - 6h
-- [ ] Recent Items - 5h
+- [x] **Recent Items** ✅ FERTIG (25.12.2024)
+  - [x] RecentItem Model mit Auto-Cleanup
+  - [x] RecentItemsService (track, recent, most-accessed)
+  - [x] Full CRUD API (/api/recent-items)
+  - [x] RecentItems.tsx Sidebar Component
+  - [x] useRecentItems & useTrackItemView Hooks
+  - [x] 7 Item Types Support
+  - [x] Access Counting & Statistics
+  - **Aufwand:** 5h | **Sprint:** 30 | **Tatsächlich:** ~1.5h
 - [ ] Search Enhancements - 8h
 - [ ] Drag & Drop Upload - 6h
 - [ ] Copy/Paste - 4h
 - [ ] Undo/Redo - 8h
 - [ ] Auto-Save - 6h
+
+**Quick Wins Fortschritt:** 1/10 (10%)
 
 ---
 
