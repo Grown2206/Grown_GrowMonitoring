@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.14.0 (Backend)
-**Fortschritt gesamt:** 40/140 Features (28.6%)
+**Version:** 2.15.0 (Backend)
+**Fortschritt gesamt:** 41/140 Features (29.3%)
 
 ---
 
@@ -396,7 +396,7 @@
 
 ---
 
-## 🤖 Automation & KI (1/11 - 9%)
+## 🤖 Automation & KI (2/11 - 18.2%)
 
 ### Priorität: HOCH
 - [ ] **Machine Learning Integration** 🎯 SPRINT 5
@@ -415,7 +415,19 @@
   - [ ] Visual Rule Builder (Frontend) - Optional für später
   - **Aufwand:** 45h | **Sprint:** 11 | **Tatsächlich:** ~4h (Backend)
 
-- [ ] **Rezept-System** - 50h
+- [x] **Rezept-System** ✅ FERTIG (25.12.2024)
+  - [x] GrowRecipe Model (6 Strain Types, 4 Difficulty Levels)
+  - [x] Phase-based Grow Guidance (Seedling, Veg, Flower)
+  - [x] Environmental Parameter Templates
+  - [x] Lighting, Watering, Nutrient Schedules
+  - [x] Recipe Library with CRUD Operations
+  - [x] Auto-apply Recipes to Plants
+  - [x] 3 Default Recipes (Indica Beginner, Auto Fast, Sativa Advanced)
+  - [x] Recipe Validation & Rating System
+  - [x] Current Phase Calculator
+  - [x] Full CRUD API with Recommendations
+  - **Aufwand:** 50h | **Sprint:** 16 | **Tatsächlich:** ~4h
+
 - [ ] **PID-Regler** - 40h
 
 ### Priorität: MITTEL
@@ -423,7 +435,7 @@
 - [ ] **Seasonal Adjustments** - 30h
 - [ ] **Simulation & Testing** - 25h
 
-**Gesamt Automation & KI:** 1/11 (285h verbleibend, Frontend optional)
+**Gesamt Automation & KI:** 2/11 (235h verbleibend, Frontend optional)
 
 ---
 
