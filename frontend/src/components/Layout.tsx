@@ -28,19 +28,11 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import SensorsIcon from '@mui/icons-material/Sensors';
 import AutoModeIcon from '@mui/icons-material/AutoMode';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
-import CalculateIcon from '@mui/icons-material/Calculate';
-import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
-import MemoryIcon from '@mui/icons-material/Memory';
-import DevicesIcon from '@mui/icons-material/Devices';
-import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
+import BuildIcon from '@mui/icons-material/Build';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 
 const drawerWidth = 240;
 
@@ -48,23 +40,11 @@ const menuItems = [
   { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
   { text: 'Pflanzen', icon: <LocalFloristIcon />, path: '/plants' },
   { text: 'Sensoren', icon: <SensorsIcon />, path: '/sensors' },
-  { text: 'Bewässerung', icon: <WaterDropIcon />, path: '/irrigation' },
-  { text: 'Relays', icon: <PowerSettingsNewIcon />, path: '/relays' },
-  { text: 'Zeitpläne', icon: <ScheduleIcon />, path: '/schedules' },
-  { text: 'Ernten', icon: <LocalFlorist />, path: '/harvests' },
-  { text: 'Grow-Journal', icon: <MenuBookIcon />, path: '/journal' },
-  { text: 'Automatisierung', icon: <AutoModeIcon />, path: '/automation' },
+  { text: 'Steuerung', icon: <ToggleOnIcon />, path: '/control' },
+  { text: 'Automation', icon: <AutoModeIcon />, path: '/automation' },
   { text: 'Analytics', icon: <BarChartIcon />, path: '/analytics' },
-  { text: 'Erweiterte Analysen', icon: <TrendingUpIcon />, path: '/analytics-advanced' },
-  { text: 'Vergleiche', icon: <CompareArrowsIcon />, path: '/comparison' },
-  { text: 'Reports', icon: <AssessmentIcon />, path: '/reports' },
-  { text: 'ESP32 Simulation', icon: <DeveloperBoardIcon />, path: '/simulation' },
-  { text: 'VPD Rechner', icon: <CalculateIcon />, path: '/vpd' },
-  { text: 'GPIO Pins', icon: <MemoryIcon />, path: '/gpio' },
-  { text: 'Geräte', icon: <DevicesIcon />, path: '/devices' },
-  { text: 'Foto-Galerie', icon: <PhotoLibraryIcon />, path: '/gallery' },
   { text: 'Benachrichtigungen', icon: <NotificationsIcon />, path: '/notifications' },
-  { text: 'Alarmierung', icon: <NotificationImportantIcon />, path: '/alerts' },
+  { text: 'Tools', icon: <BuildIcon />, path: '/tools' },
   { text: 'Einstellungen', icon: <SettingsIcon />, path: '/settings' },
 ];
 

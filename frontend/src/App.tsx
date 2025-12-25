@@ -12,30 +12,15 @@ import { CircularProgress, Box } from '@mui/material';
 import { Login } from './pages/Login';
 import { DashboardEnhanced } from './pages/DashboardEnhanced';
 
-// Lazy load other pages for code splitting
-const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
-const Plants = lazy(() => import('./pages/Plants').then(m => ({ default: m.Plants })));
-const Irrigation = lazy(() => import('./pages/Irrigation').then(m => ({ default: m.Irrigation })));
-const Relays = lazy(() => import('./pages/Relays').then(m => ({ default: m.Relays })));
-const Sensors = lazy(() => import('./pages/Sensors').then(m => ({ default: m.Sensors })));
-const SensorGroups = lazy(() => import('./pages/SensorGroups').then(m => ({ default: m.SensorGroups })));
-const VirtualSensors = lazy(() => import('./pages/VirtualSensors').then(m => ({ default: m.VirtualSensors })));
-const Automation = lazy(() => import('./pages/Automation').then(m => ({ default: m.Automation })));
-const Schedules = lazy(() => import('./pages/Schedules').then(m => ({ default: m.Schedules })));
-const Harvests = lazy(() => import('./pages/Harvests').then(m => ({ default: m.Harvests })));
-const Analytics = lazy(() => import('./pages/Analytics').then(m => ({ default: m.Analytics })));
-const AnalyticsAdvanced = lazy(() => import('./pages/AnalyticsAdvanced').then(m => ({ default: m.AnalyticsAdvanced })));
+// Lazy load Hub pages (consolidated)
+const PlantsHub = lazy(() => import('./pages/PlantsHub').then(m => ({ default: m.PlantsHub })));
+const SensorsHub = lazy(() => import('./pages/SensorsHub').then(m => ({ default: m.SensorsHub })));
+const ControlHub = lazy(() => import('./pages/ControlHub').then(m => ({ default: m.ControlHub })));
+const AutomationHub = lazy(() => import('./pages/AutomationHub').then(m => ({ default: m.AutomationHub })));
+const AnalyticsHub = lazy(() => import('./pages/AnalyticsHub').then(m => ({ default: m.AnalyticsHub })));
+const NotificationsHub = lazy(() => import('./pages/NotificationsHub').then(m => ({ default: m.NotificationsHub })));
+const ToolsHub = lazy(() => import('./pages/ToolsHub').then(m => ({ default: m.ToolsHub })));
 const Settings = lazy(() => import('./pages/Settings').then(m => ({ default: m.Settings })));
-const Simulation = lazy(() => import('./pages/Simulation').then(m => ({ default: m.Simulation })));
-const VPDCalculator = lazy(() => import('./pages/VPDCalculator').then(m => ({ default: m.VPDCalculator })));
-const PhotoGallery = lazy(() => import('./pages/PhotoGallery').then(m => ({ default: m.PhotoGallery })));
-const Notifications = lazy(() => import('./pages/Notifications').then(m => ({ default: m.Notifications })));
-const AlertManagement = lazy(() => import('./pages/AlertManagement').then(m => ({ default: m.AlertManagement })));
-const GPIOManager = lazy(() => import('./pages/GPIOManager').then(m => ({ default: m.GPIOManager })));
-const DeviceManagement = lazy(() => import('./pages/DeviceManagement').then(m => ({ default: m.DeviceManagement })));
-const ComparisonAnalytics = lazy(() => import('./pages/ComparisonAnalytics').then(m => ({ default: m.ComparisonAnalytics })));
-const ReportManagement = lazy(() => import('./pages/ReportManagement').then(m => ({ default: m.ReportManagement })));
-const GrowJournal = lazy(() => import('./pages/GrowJournal').then(m => ({ default: m.GrowJournal })));
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -69,6 +54,8 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+
+      {/* Main Dashboard */}
       <Route
         path="/"
         element={
@@ -77,35 +64,13 @@ function AppRoutes() {
           </PrivateRoute>
         }
       />
-      <Route
-        path="/dashboard-classic"
-        element={
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        }
-      />
+
+      {/* Consolidated Hubs */}
       <Route
         path="/plants"
         element={
           <PrivateRoute>
-            <Plants />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/irrigation"
-        element={
-          <PrivateRoute>
-            <Irrigation />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/relays"
-        element={
-          <PrivateRoute>
-            <Relays />
+            <PlantsHub />
           </PrivateRoute>
         }
       />
@@ -113,23 +78,15 @@ function AppRoutes() {
         path="/sensors"
         element={
           <PrivateRoute>
-            <Sensors />
+            <SensorsHub />
           </PrivateRoute>
         }
       />
       <Route
-        path="/sensor-groups"
+        path="/control"
         element={
           <PrivateRoute>
-            <SensorGroups />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/virtual-sensors"
-        element={
-          <PrivateRoute>
-            <VirtualSensors />
+            <ControlHub />
           </PrivateRoute>
         }
       />
@@ -137,23 +94,7 @@ function AppRoutes() {
         path="/automation"
         element={
           <PrivateRoute>
-            <Automation />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/schedules"
-        element={
-          <PrivateRoute>
-            <Schedules />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/harvests"
-        element={
-          <PrivateRoute>
-            <Harvests />
+            <AutomationHub />
           </PrivateRoute>
         }
       />
@@ -161,39 +102,23 @@ function AppRoutes() {
         path="/analytics"
         element={
           <PrivateRoute>
-            <Analytics />
+            <AnalyticsHub />
           </PrivateRoute>
         }
       />
       <Route
-        path="/analytics-advanced"
+        path="/notifications"
         element={
           <PrivateRoute>
-            <AnalyticsAdvanced />
+            <NotificationsHub />
           </PrivateRoute>
         }
       />
       <Route
-        path="/comparison"
+        path="/tools"
         element={
           <PrivateRoute>
-            <ComparisonAnalytics />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/reports"
-        element={
-          <PrivateRoute>
-            <ReportManagement />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/journal"
-        element={
-          <PrivateRoute>
-            <GrowJournal />
+            <ToolsHub />
           </PrivateRoute>
         }
       />
@@ -205,62 +130,24 @@ function AppRoutes() {
           </PrivateRoute>
         }
       />
-      <Route
-        path="/simulation"
-        element={
-          <PrivateRoute>
-            <Simulation />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/vpd"
-        element={
-          <PrivateRoute>
-            <VPDCalculator />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/gallery"
-        element={
-          <PrivateRoute>
-            <PhotoGallery />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/notifications"
-        element={
-          <PrivateRoute>
-            <Notifications />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/alerts"
-        element={
-          <PrivateRoute>
-            <AlertManagement />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/devices"
-        element={
-          <PrivateRoute>
-            <DeviceManagement />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/gpio"
-        element={
-          <PrivateRoute>
-            <GPIOManager />
-          </PrivateRoute>
-        }
-      />
+
+      {/* Redirect old routes to new hubs */}
+      <Route path="/journal" element={<Navigate to="/plants" replace />} />
+      <Route path="/gallery" element={<Navigate to="/plants" replace />} />
+      <Route path="/harvests" element={<Navigate to="/plants" replace />} />
+      <Route path="/relays" element={<Navigate to="/control" replace />} />
+      <Route path="/irrigation" element={<Navigate to="/control" replace />} />
+      <Route path="/gpio" element={<Navigate to="/control" replace />} />
+      <Route path="/devices" element={<Navigate to="/control" replace />} />
+      <Route path="/sensor-groups" element={<Navigate to="/sensors" replace />} />
+      <Route path="/virtual-sensors" element={<Navigate to="/sensors" replace />} />
+      <Route path="/schedules" element={<Navigate to="/automation" replace />} />
+      <Route path="/alerts" element={<Navigate to="/notifications" replace />} />
+      <Route path="/reports" element={<Navigate to="/notifications" replace />} />
+      <Route path="/vpd" element={<Navigate to="/tools" replace />} />
+      <Route path="/simulation" element={<Navigate to="/tools" replace />} />
+      <Route path="/analytics-advanced" element={<Navigate to="/analytics" replace />} />
+      <Route path="/comparison" element={<Navigate to="/analytics" replace />} />
     </Routes>
   );
 }
