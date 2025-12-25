@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.27.0 (Backend + Frontend)
-**Fortschritt gesamt:** 53/140 Features (37.9%)
+**Version:** 2.28.0 (Backend + Frontend)
+**Fortschritt gesamt:** 54/140 Features (38.6%)
 
 ---
 
@@ -683,7 +683,7 @@
 ## 🔗 Integration & Erweiterungen (0/9 - 0%)
 
 ### Priorität: HOCH
-- [x] **API Erweiterungen** ✅ TEILWEISE FERTIG (25.12.2024)
+- [x] **API Erweiterungen** ✅ FERTIG (25.12.2024)
   - [x] GraphQL API ✅ FERTIG (25.12.2024)
   - [x] Comprehensive GraphQL Schema (All Models)
   - [x] GraphQL Resolvers (Queries & Mutations)
@@ -691,14 +691,23 @@
   - [x] JWT Authentication Support
   - [x] Custom Scalar Types (Date, JSON)
   - [x] GraphQL Endpoint (/graphql)
-  - [ ] WebHooks
+  - [x] WebHooks ✅ FERTIG (25.12.2024)
+  - [x] WebHook Model & WebHookLog Model
+  - [x] WebHookService with Retry Logic
+  - [x] HMAC Signature Support
+  - [x] 12 Event Types (plant, sensor, harvest, relay, etc.)
+  - [x] Exponential Backoff Retry (max 3)
+  - [x] Full CRUD API (/api/webhooks)
+  - [x] Test, Reset, Statistics Endpoints
+  - [x] WebHookManagement Frontend Component
+  - [x] Integrated Triggers (Plant, Harvest)
   - [x] Swagger Docs ✅ FERTIG (25.12.2024)
   - [x] OpenAPI 3.0 Configuration
   - [x] Swagger UI Interface (/api-docs)
   - [x] Complete Model Schemas
   - [x] Auth Endpoint Documentation
   - [x] Interactive API Testing
-  - **Aufwand:** 40h | **Sprint:** 5-6+27+28 | **Tatsächlich:** ~4.5h (Swagger + GraphQL)
+  - **Aufwand:** 40h | **Sprint:** 5-6+27+28+29 | **Tatsächlich:** ~7h (Swagger + GraphQL + WebHooks)
 
 - [ ] **Smart Home Integration** 🎯 SPRINT 6
   - [ ] Home Assistant
