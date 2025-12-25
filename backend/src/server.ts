@@ -44,6 +44,7 @@ import sensorBenchmarkRoutes from './routes/sensorBenchmark.routes';
 import sensorHealthRoutes from './routes/sensorHealth.routes';
 import sensorForecastingRoutes from './routes/sensorForecasting.routes';
 import growRecipesRoutes from './routes/growRecipes.routes';
+import pidControllerRoutes from './routes/pidController.routes';
 
 // Load environment variables
 dotenv.config();
@@ -104,6 +105,7 @@ app.use('/api/sensor-benchmark', sensorBenchmarkRoutes);
 app.use('/api/sensor-health', sensorHealthRoutes);
 app.use('/api/sensor-forecasting', sensorForecastingRoutes);
 app.use('/api/grow-recipes', growRecipesRoutes);
+app.use('/api/pid-controller', pidControllerRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
