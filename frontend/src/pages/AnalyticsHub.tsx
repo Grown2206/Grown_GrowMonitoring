@@ -10,6 +10,7 @@ import EuroIcon from '@mui/icons-material/Euro';
 const Analytics = lazy(() => import('./Analytics').then(m => ({ default: m.Analytics })));
 const AnalyticsAdvanced = lazy(() => import('./AnalyticsAdvanced').then(m => ({ default: m.AnalyticsAdvanced })));
 const ComparisonAnalytics = lazy(() => import('./ComparisonAnalytics').then(m => ({ default: m.ComparisonAnalytics })));
+const SensorForecasting = lazy(() => import('./SensorForecasting').then(m => ({ default: m.SensorForecasting })));
 const CostTracking = lazy(() => import('./CostTracking').then(m => ({ default: m.CostTracking })));
 
 interface TabPanelProps {
@@ -70,17 +71,7 @@ export function AnalyticsHub() {
           <ComparisonAnalytics />
         </TabPanel>
         <TabPanel value={activeTab} index={3}>
-          <Box p={3}>
-            <Box sx={{ textAlign: 'center', py: 5 }}>
-              <AssessmentIcon sx={{ fontSize: 60, color: 'text.secondary', mb: 2 }} />
-              <Box sx={{ typography: 'h6', color: 'text.secondary' }}>
-                Sensor Forecasting & Predictions
-              </Box>
-              <Box sx={{ typography: 'body2', color: 'text.secondary', mt: 1 }}>
-                Coming soon - Zeitreihen-Vorhersagen mit 4 Methoden
-              </Box>
-            </Box>
-          </Box>
+          <SensorForecasting />
         </TabPanel>
         <TabPanel value={activeTab} index={4}>
           <CostTracking />
