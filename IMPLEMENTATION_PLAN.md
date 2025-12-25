@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.24.0 (Backend + Frontend)
-**Fortschritt gesamt:** 50/140 Features (35.7%)
+**Version:** 2.25.0 (Backend + Frontend)
+**Fortschritt gesamt:** 51/140 Features (36.4%)
 
 ---
 
@@ -446,14 +446,21 @@
   - [ ] Anomalie-Erkennung
   - **Aufwand:** 80h | **Sprint:** 5-8
 
-- [x] **Erweiterte Automatisierungs-Regeln** ✅ BACKEND FERTIG (25.12.2024)
+- [x] **Erweiterte Automatisierungs-Regeln** ✅ FERTIG (25.12.2024)
   - [x] Complex Condition Groups (AND/OR Logic)
   - [x] Multiple Actions (Sequential Execution)
   - [x] Formula Support (Safe Evaluation)
   - [x] Rule Dependencies (trigger_rule)
   - [x] Validation & Test Endpoints
-  - [ ] Visual Rule Builder (Frontend) - Optional für später
-  - **Aufwand:** 45h | **Sprint:** 11 | **Tatsächlich:** ~4h (Backend)
+  - [x] Visual Rule Builder (Frontend) ✅ FERTIG (25.12.2024)
+  - [x] AdvancedAutomation.tsx Component (900+ Zeilen)
+  - [x] Condition Group Builder (AND/OR UI)
+  - [x] 4 Condition Types (Sensor, Time, Formula, Rule State)
+  - [x] Multiple Actions Interface with Delays
+  - [x] Test & Validate Functionality
+  - [x] Full CRUD with Dialog-based Editing
+  - [x] Integration in AutomationHub (5. Tab)
+  - **Aufwand:** 45h | **Sprint:** 11+26 | **Tatsächlich:** ~6h (Backend+Frontend)
 
 - [x] **Rezept-System** ✅ FERTIG (25.12.2024)
   - [x] GrowRecipe Model (6 Strain Types, 4 Difficulty Levels)
