@@ -1,8 +1,8 @@
-# 🌱 Grow Monitoring System v2.33.0
+# 🌱 Grow Monitoring System v2.34.0
 
 Ein vollständiges IoT-System zur Überwachung und Steuerung von Pflanzenzucht-Anlagen mit ESP32-Hardware, Web-Interface und Echtzeit-Datenübertragung.
 
-![Version](https://img.shields.io/badge/version-2.33.0-green)
+![Version](https://img.shields.io/badge/version-2.34.0-green)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 ## 🎯 Features
