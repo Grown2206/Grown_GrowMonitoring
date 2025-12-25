@@ -6,6 +6,7 @@ import { Note } from '../models/Note';
 import { CalendarEvent } from '../models/CalendarEvent';
 import { authenticateToken } from '../middleware/auth';
 import { queryParser, applyParsedQuery, createPaginationResponse } from '../middleware/queryParser';
+import { webhookService } from '../services/webhookService';
 
 const router = express.Router();
 
@@ -71,6 +72,16 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const plant = await Plant.create(req.body);
+
+    // Trigger webhook
+    webhookService.trigger('plant.created', {
+      plantId: plant.id,
+      name: plant.name,
+      phase: plant.phase,
+      strainId: plant.strainId,
+      plantedDate: plant.plantedDate,
+    });
+
     res.status(201).json(plant);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
@@ -86,6 +97,15 @@ router.put('/:id', async (req, res) => {
     }
 
     await plant.update(req.body);
+
+    // Trigger webhook
+    webhookService.trigger('plant.updated', {
+      plantId: plant.id,
+      name: plant.name,
+      phase: plant.phase,
+      changes: req.body,
+    });
+
     res.json(plant);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
@@ -100,7 +120,17 @@ router.delete('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Plant not found' });
     }
 
+    const plantData = {
+      plantId: plant.id,
+      name: plant.name,
+      phase: plant.phase,
+    };
+
     await plant.destroy();
+
+    // Trigger webhook
+    webhookService.trigger('plant.deleted', plantData);
+
     res.json({ message: 'Plant deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete plant' });

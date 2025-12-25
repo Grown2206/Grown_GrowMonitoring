@@ -2,6 +2,7 @@ import express from 'express';
 import { Harvest } from '../models/Harvest';
 import { Plant } from '../models/Plant';
 import { authenticateToken } from '../middleware/auth';
+import { webhookService } from '../services/webhookService';
 
 const router = express.Router();
 
@@ -22,6 +23,17 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const harvest = await Harvest.create(req.body);
+
+    // Trigger webhook
+    webhookService.trigger('harvest.created', {
+      harvestId: harvest.id,
+      plantId: harvest.plantId,
+      harvestDate: harvest.harvestDate,
+      wetWeight: harvest.wetWeight,
+      dryWeight: harvest.dryWeight,
+      quality: harvest.quality,
+    });
+
     res.status(201).json(harvest);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
