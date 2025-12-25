@@ -5,6 +5,7 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import EuroIcon from '@mui/icons-material/Euro';
+import ScaleIcon from '@mui/icons-material/Scale';
 
 // Lazy load tabs
 const Analytics = lazy(() => import('./Analytics').then(m => ({ default: m.Analytics })));
@@ -12,6 +13,7 @@ const AnalyticsAdvanced = lazy(() => import('./AnalyticsAdvanced').then(m => ({ 
 const ComparisonAnalytics = lazy(() => import('./ComparisonAnalytics').then(m => ({ default: m.ComparisonAnalytics })));
 const SensorForecasting = lazy(() => import('./SensorForecasting').then(m => ({ default: m.SensorForecasting })));
 const CostTracking = lazy(() => import('./CostTracking').then(m => ({ default: m.CostTracking })));
+const YieldPrediction = lazy(() => import('./YieldPrediction').then(m => ({ default: m.YieldPrediction })));
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -51,6 +53,7 @@ export function AnalyticsHub() {
           <Tab icon={<CompareArrowsIcon />} label="Vergleiche" iconPosition="start" />
           <Tab icon={<AssessmentIcon />} label="Prognosen" iconPosition="start" />
           <Tab icon={<EuroIcon />} label="Kosten & ROI" iconPosition="start" />
+          <Tab icon={<ScaleIcon />} label="Ertrags-Prognosen" iconPosition="start" />
         </Tabs>
       </Box>
 
@@ -75,6 +78,9 @@ export function AnalyticsHub() {
         </TabPanel>
         <TabPanel value={activeTab} index={4}>
           <CostTracking />
+        </TabPanel>
+        <TabPanel value={activeTab} index={5}>
+          <YieldPrediction />
         </TabPanel>
       </Suspense>
     </Box>

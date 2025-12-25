@@ -30,6 +30,9 @@ export class Plant extends Model<PlantAttributes, PlantCreationAttributes> imple
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  // Association properties
+  public readonly strain?: any; // Loaded via include
 }
 
 Plant.init(
