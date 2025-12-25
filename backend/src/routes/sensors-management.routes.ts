@@ -1,5 +1,6 @@
 import express from 'express';
 import { Sensor } from '../models/Sensor';
+import CalibrationHistory from '../models/CalibrationHistory';
 import { authenticateToken } from '../middleware/auth';
 
 const router = express.Router();
@@ -53,18 +54,56 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Calibrate sensor
+// Calibrate sensor (enhanced with history tracking)
 router.post('/:id/calibrate', async (req, res) => {
   try {
-    const { offset } = req.body;
+    const { offset, calibratedBy, referenceValue, measuredValue, notes } = req.body;
     const sensor = await Sensor.findByPk(req.params.id);
     if (!sensor) {
       return res.status(404).json({ error: 'Sensor not found' });
     }
+
+    const previousOffset = sensor.calibrationOffset || 0;
+
+    // Create calibration history record
+    await CalibrationHistory.create({
+      sensorId: sensor.id,
+      previousOffset,
+      newOffset: offset,
+      calibratedBy: calibratedBy || 'System',
+      referenceValue,
+      measuredValue,
+      notes,
+    });
+
+    // Update sensor with new calibration offset
     await sensor.update({ calibrationOffset: offset });
-    res.json({ message: 'Sensor calibrated', sensor });
+
+    res.json({ message: 'Sensor calibrated successfully', sensor });
   } catch (error) {
+    console.error('Calibration error:', error);
     res.status(500).json({ error: 'Failed to calibrate sensor' });
+  }
+});
+
+// Get calibration history for a sensor
+router.get('/:id/calibration-history', async (req, res) => {
+  try {
+    const sensor = await Sensor.findByPk(req.params.id);
+    if (!sensor) {
+      return res.status(404).json({ error: 'Sensor not found' });
+    }
+
+    const history = await CalibrationHistory.findAll({
+      where: { sensorId: sensor.id },
+      order: [['createdAt', 'DESC']],
+      limit: 50, // Last 50 calibrations
+    });
+
+    res.json(history);
+  } catch (error) {
+    console.error('Error fetching calibration history:', error);
+    res.status(500).json({ error: 'Failed to fetch calibration history' });
   }
 });
 

@@ -37,6 +37,7 @@ import journalRoutes from './routes/journal.routes';
 import smsRoutes from './routes/sms.routes';
 import mqttRoutes from './routes/mqtt.routes';
 import batchRoutes from './routes/batch.routes';
+import sensorGroupsRoutes from './routes/sensorGroups.routes';
 
 // Load environment variables
 dotenv.config();
@@ -90,6 +91,7 @@ app.use('/api/journal', journalRoutes);
 app.use('/api/sms', smsRoutes);
 app.use('/api/mqtt', mqttRoutes);
 app.use('/api/batch', batchRoutes);
+app.use('/api/sensor-groups', sensorGroupsRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

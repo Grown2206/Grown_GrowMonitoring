@@ -21,6 +21,8 @@ import { ReportSchedule } from './ReportSchedule';
 import { Milestone } from './Milestone';
 import { AlertHistory } from './AlertHistory';
 import { Settings } from './Settings';
+import CalibrationHistory from './CalibrationHistory';
+import SensorGroup from './SensorGroup';
 
 // Define associations
 User.hasMany(ApiKey, { foreignKey: 'userId', as: 'apiKeys' });
@@ -53,6 +55,9 @@ Milestone.belongsTo(Plant, { foreignKey: 'plantId', as: 'plant' });
 Alert.hasMany(AlertHistory, { foreignKey: 'alertId', as: 'history' });
 AlertHistory.belongsTo(Alert, { foreignKey: 'alertId', as: 'alert' });
 
+Sensor.hasMany(CalibrationHistory, { foreignKey: 'sensorId', as: 'calibrationHistory' });
+CalibrationHistory.belongsTo(Sensor, { foreignKey: 'sensorId', as: 'sensor' });
+
 Device.hasMany(Sensor, { foreignKey: 'deviceId', as: 'sensors' });
 Sensor.belongsTo(Device, { foreignKey: 'deviceId', as: 'device' });
 
@@ -83,4 +88,6 @@ export {
   Milestone,
   AlertHistory,
   Settings,
+  CalibrationHistory,
+  SensorGroup,
 };
