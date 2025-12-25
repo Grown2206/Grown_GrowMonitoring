@@ -47,6 +47,7 @@ import growRecipesRoutes from './routes/growRecipes.routes';
 import pidControllerRoutes from './routes/pidController.routes';
 import costTrackingRoutes from './routes/costTracking.routes';
 import yieldPredictionRoutes from './routes/yieldPrediction.routes';
+import anomalyDetectionRoutes from './routes/anomalyDetection.routes';
 
 // Load environment variables
 dotenv.config();
@@ -110,6 +111,7 @@ app.use('/api/grow-recipes', growRecipesRoutes);
 app.use('/api/pid-controller', pidControllerRoutes);
 app.use('/api/cost-tracking', costTrackingRoutes);
 app.use('/api/yield-prediction', yieldPredictionRoutes);
+app.use('/api/anomaly-detection', anomalyDetectionRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -149,7 +151,7 @@ async function start() {
     // Start server
     server.listen(PORT, () => {
       console.log('═══════════════════════════════════════════════');
-      console.log('  🌱 Grow Monitoring System v2.23.0');
+      console.log('  🌱 Grow Monitoring System v2.24.0');
       console.log('═══════════════════════════════════════════════');
       console.log(`  Server: http://localhost:${PORT}`);
       console.log(`  WebSocket: ws://localhost:${PORT}/ws`);
