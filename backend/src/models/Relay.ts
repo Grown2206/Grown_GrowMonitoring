@@ -71,5 +71,25 @@ Relay.init(
   {
     sequelize,
     tableName: 'relays',
+    hooks: {
+      afterUpdate: async (relay: Relay) => {
+        try {
+          const { mqttService } = await import('../services/mqttService');
+          await mqttService.publishRelayState(relay);
+        } catch (error) {
+          // Silently fail - MQTT is not critical
+          console.error('Failed to publish relay state to MQTT:', error);
+        }
+      },
+      afterCreate: async (relay: Relay) => {
+        try {
+          const { mqttService } = await import('../services/mqttService');
+          await mqttService.publishRelayState(relay);
+        } catch (error) {
+          // Silently fail - MQTT is not critical
+          console.error('Failed to publish relay state to MQTT:', error);
+        }
+      },
+    },
   }
 );

@@ -369,3 +369,22 @@ export interface SMSHistoryEntry {
   error?: string;
   timestamp: string;
 }
+
+// MQTT / Smart Home Types
+export interface MQTTSettings {
+  enabled: boolean;
+  brokerUrl: string;
+  username: string;
+  password: string;
+  baseTopic: string;
+  homeAssistantDiscovery: boolean;
+  discoveryPrefix: string;
+}
+
+export interface MQTTStatus {
+  enabled: boolean;
+  connected: boolean;
+  brokerUrl: string;
+  publishedEntities: number;
+  homeAssistantDiscovery: boolean;
+}

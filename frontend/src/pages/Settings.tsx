@@ -22,8 +22,8 @@ import {
   FormControlLabel,
   Divider,
 } from '@mui/material';
-import { settingsAPI, authAPI, activityAPI, relaysAPI, smsAPI } from '../services/api';
-import { User, Relay, ActivityLog, SMSSettings, SMSStatus, SMSStats } from '../types';
+import { settingsAPI, authAPI, activityAPI, relaysAPI, smsAPI, mqttAPI } from '../services/api';
+import { User, Relay, ActivityLog, SMSSettings, SMSStatus, SMSStats, MQTTSettings, MQTTStatus } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -67,6 +67,18 @@ export function Settings() {
   const [smsStats, setSmsStats] = useState<SMSStats | null>(null);
   const [phoneNumberInput, setPhoneNumberInput] = useState('');
 
+  // MQTT Settings
+  const [mqttSettings, setMqttSettings] = useState<MQTTSettings>({
+    enabled: false,
+    brokerUrl: 'mqtt://localhost:1883',
+    username: '',
+    password: '',
+    baseTopic: 'grow_monitoring',
+    homeAssistantDiscovery: true,
+    discoveryPrefix: 'homeassistant',
+  });
+  const [mqttStatus, setMqttStatus] = useState<MQTTStatus | null>(null);
+
   // Check if dev mode is enabled
   const isDevMode = process.env.NODE_ENV === 'development' || process.env.REACT_APP_ENABLE_DEV_TOOLS === 'true';
 
@@ -86,12 +98,14 @@ export function Settings() {
 
   async function loadData() {
     try {
-      const [apiKeysRes, activityRes, relaysRes, smsStatusRes, smsStatsRes] = await Promise.all([
+      const [apiKeysRes, activityRes, relaysRes, smsStatusRes, smsStatsRes, mqttStatusRes, mqttSettingsRes] = await Promise.all([
         authAPI.getApiKeys(),
         activityAPI.getAll({ limit: 50 }),
         relaysAPI.getAll(),
         smsAPI.getStatus(),
         smsAPI.getStats(),
+        mqttAPI.getStatus(),
+        mqttAPI.getSettings(),
       ]);
 
       setApiKeys(apiKeysRes.data);
@@ -99,6 +113,8 @@ export function Settings() {
       setRelays(relaysRes.data);
       setSmsStatus(smsStatusRes.data);
       setSmsStats(smsStatsRes.data);
+      setMqttStatus(mqttStatusRes.data);
+      setMqttSettings(mqttSettingsRes.data);
 
       // Load users if admin
       if (user?.role === 'admin') {
@@ -219,6 +235,30 @@ export function Settings() {
     });
   }
 
+  async function handleSaveMQTTSettings() {
+    try {
+      await mqttAPI.updateSettings(mqttSettings);
+      alert('MQTT Einstellungen gespeichert!');
+      loadData();
+    } catch (error: any) {
+      alert('Fehler: ' + (error.response?.data?.error || error.message));
+    }
+  }
+
+  async function handleTestMQTT() {
+    try {
+      const res = await mqttAPI.testConnection();
+      if (res.data.success) {
+        alert('✓ ' + res.data.message);
+      } else {
+        alert('✗ ' + res.data.message);
+      }
+      loadData();
+    } catch (error: any) {
+      alert('Fehler: ' + (error.response?.data?.error || error.message));
+    }
+  }
+
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
@@ -231,6 +271,7 @@ export function Settings() {
           <Tab label="API-Keys" />
           <Tab label="Hardware" />
           <Tab label="SMS / Benachrichtigungen" />
+          <Tab label="Smart Home / MQTT" />
           {user?.role === 'admin' && <Tab label="Benutzer" />}
           <Tab label="Aktivität" />
           <Tab label="Backup" />
@@ -561,9 +602,174 @@ export function Settings() {
           </Grid>
         </TabPanel>
 
+        {/* Smart Home / MQTT Tab */}
+        <TabPanel value={tab} index={4}>
+          <Grid container spacing={3}>
+            {/* Status Card */}
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    MQTT / Smart Home Status
+                  </Typography>
+                  {mqttStatus && (
+                    <>
+                      <Box display="flex" alignItems="center" gap={1} mb={1}>
+                        <Typography variant="body2">Service:</Typography>
+                        <Chip
+                          label={mqttStatus.enabled ? 'Aktiviert' : 'Deaktiviert'}
+                          color={mqttStatus.enabled ? 'success' : 'default'}
+                          size="small"
+                        />
+                      </Box>
+                      <Box display="flex" alignItems="center" gap={1} mb={1}>
+                        <Typography variant="body2">Verbindung:</Typography>
+                        <Chip
+                          label={mqttStatus.connected ? 'Verbunden' : 'Getrennt'}
+                          color={mqttStatus.connected ? 'success' : 'error'}
+                          size="small"
+                        />
+                      </Box>
+                      <Typography variant="body2">Broker: {mqttStatus.brokerUrl}</Typography>
+                      <Typography variant="body2">Veröffentlichte Entities: {mqttStatus.publishedEntities}</Typography>
+                      <Typography variant="body2">
+                        Home Assistant Discovery: {mqttStatus.homeAssistantDiscovery ? 'Aktiviert' : 'Deaktiviert'}
+                      </Typography>
+                    </>
+                  )}
+                  <Button variant="outlined" onClick={handleTestMQTT} sx={{ mt: 2 }} fullWidth>
+                    Verbindung testen
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Info Card */}
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    Smart Home Integration
+                  </Typography>
+                  <Typography variant="body2" paragraph>
+                    Integrieren Sie Ihr Grow-Monitoring in Ihr Smart Home System über MQTT.
+                  </Typography>
+                  <Typography variant="body2" fontWeight="bold" gutterBottom>
+                    Unterstützte Systeme:
+                  </Typography>
+                  <Typography variant="body2">• Home Assistant (Auto-Discovery)</Typography>
+                  <Typography variant="body2">• openHAB</Typography>
+                  <Typography variant="body2">• Node-RED</Typography>
+                  <Typography variant="body2">• ioBroker</Typography>
+                  <Typography variant="body2">• Alle MQTT-kompatiblen Systeme</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Configuration Card */}
+            <Grid item xs={12}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    MQTT Broker Konfiguration
+                  </Typography>
+
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={mqttSettings.enabled}
+                        onChange={(e) => setMqttSettings({ ...mqttSettings, enabled: e.target.checked })}
+                      />
+                    }
+                    label="MQTT Service aktivieren"
+                  />
+
+                  <Grid container spacing={2} sx={{ mt: 2 }}>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        label="Broker URL"
+                        value={mqttSettings.brokerUrl}
+                        onChange={(e) => setMqttSettings({ ...mqttSettings, brokerUrl: e.target.value })}
+                        placeholder="mqtt://localhost:1883"
+                        helperText="Format: mqtt://host:port oder mqtts://host:port für SSL"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        label="Base Topic"
+                        value={mqttSettings.baseTopic}
+                        onChange={(e) => setMqttSettings({ ...mqttSettings, baseTopic: e.target.value })}
+                        placeholder="grow_monitoring"
+                        helperText="Basis-Topic für alle MQTT Nachrichten"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        label="Username (Optional)"
+                        value={mqttSettings.username}
+                        onChange={(e) => setMqttSettings({ ...mqttSettings, username: e.target.value })}
+                        placeholder="mqtt_user"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        type="password"
+                        label="Password (Optional)"
+                        value={mqttSettings.password}
+                        onChange={(e) => setMqttSettings({ ...mqttSettings, password: e.target.value })}
+                        placeholder="**********"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Divider sx={{ my: 3 }} />
+
+                  <Typography variant="h6" gutterBottom>
+                    Home Assistant Integration
+                  </Typography>
+
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={mqttSettings.homeAssistantDiscovery}
+                        onChange={(e) =>
+                          setMqttSettings({ ...mqttSettings, homeAssistantDiscovery: e.target.checked })
+                        }
+                      />
+                    }
+                    label="Home Assistant Discovery aktivieren"
+                  />
+
+                  <Grid container spacing={2} sx={{ mt: 1 }}>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        label="Discovery Prefix"
+                        value={mqttSettings.discoveryPrefix}
+                        onChange={(e) => setMqttSettings({ ...mqttSettings, discoveryPrefix: e.target.value })}
+                        placeholder="homeassistant"
+                        helperText="Standard: homeassistant"
+                        disabled={!mqttSettings.homeAssistantDiscovery}
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Button variant="contained" onClick={handleSaveMQTTSettings} sx={{ mt: 3 }}>
+                    Einstellungen speichern
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </TabPanel>
+
         {/* Users Tab (Admin only) */}
         {user?.role === 'admin' && (
-          <TabPanel value={tab} index={4}>
+          <TabPanel value={tab} index={5}>
             <Typography variant="h6" gutterBottom>
               Benutzerverwaltung
             </Typography>
@@ -601,7 +807,7 @@ export function Settings() {
         )}
 
         {/* Activity Tab */}
-        <TabPanel value={tab} index={user?.role === 'admin' ? 5 : 4}>
+        <TabPanel value={tab} index={user?.role === 'admin' ? 6 : 5}>
           <Typography variant="h6" gutterBottom>
             Aktivitäts-Log
           </Typography>
@@ -632,7 +838,7 @@ export function Settings() {
         </TabPanel>
 
         {/* Backup Tab */}
-        <TabPanel value={tab} index={user?.role === 'admin' ? 6 : 5}>
+        <TabPanel value={tab} index={user?.role === 'admin' ? 7 : 6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <Card>
@@ -667,7 +873,7 @@ export function Settings() {
 
         {/* Developer Tools Tab */}
         {isDevMode && (
-          <TabPanel value={tab} index={user?.role === 'admin' ? 7 : 6}>
+          <TabPanel value={tab} index={user?.role === 'admin' ? 8 : 7}>
             <DeveloperTools />
           </TabPanel>
         )}

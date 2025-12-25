@@ -236,4 +236,12 @@ export const smsAPI = {
   sendTest: () => api.post('/sms/test'),
 };
 
+// MQTT / Smart Home
+export const mqttAPI = {
+  getStatus: () => api.get('/mqtt/status'),
+  getSettings: () => api.get('/mqtt/settings'),
+  updateSettings: (settings: any) => api.post('/mqtt/settings', settings),
+  testConnection: () => api.post('/mqtt/test'),
+};
+
 export default api;

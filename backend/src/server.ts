@@ -34,6 +34,7 @@ import devRoutes from './routes/dev.routes';
 import milestonesRoutes from './routes/milestones.routes';
 import journalRoutes from './routes/journal.routes';
 import smsRoutes from './routes/sms.routes';
+import mqttRoutes from './routes/mqtt.routes';
 
 // Load environment variables
 dotenv.config();
@@ -84,6 +85,7 @@ app.use('/api/dev', devRoutes);
 app.use('/api/milestones', milestonesRoutes);
 app.use('/api/journal', journalRoutes);
 app.use('/api/sms', smsRoutes);
+app.use('/api/mqtt', mqttRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -115,6 +117,10 @@ async function start() {
     // Initialize SMS service
     const { smsService } = await import('./services/smsService');
     await smsService.initialize();
+
+    // Initialize MQTT service
+    const { mqttService } = await import('./services/mqttService');
+    await mqttService.initialize();
 
     // Start server
     server.listen(PORT, () => {

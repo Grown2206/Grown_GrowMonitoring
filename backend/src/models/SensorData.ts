@@ -126,5 +126,40 @@ SensorData.init(
         fields: ['timestamp'],
       },
     ],
+    hooks: {
+      afterCreate: async (sensorData: SensorData) => {
+        try {
+          const { mqttService } = await import('../services/mqttService');
+
+          // Publish each sensor type that has a value
+          const sensorMappings: Array<{ field: keyof SensorDataAttributes; type: string; unit: string }> = [
+            { field: 'temperature', type: 'temperature', unit: '°C' },
+            { field: 'humidity', type: 'humidity', unit: '%' },
+            { field: 'moistureLevel', type: 'soil_moisture', unit: '%' },
+            { field: 'light', type: 'light', unit: 'lux' },
+            { field: 'ph', type: 'ph', unit: 'pH' },
+            { field: 'ec', type: 'ec', unit: 'mS/cm' },
+            { field: 'co2', type: 'co2', unit: 'ppm' },
+            { field: 'par', type: 'par', unit: 'µmol/m²/s' },
+          ];
+
+          for (const mapping of sensorMappings) {
+            const value = sensorData[mapping.field];
+            if (value !== null && value !== undefined) {
+              await mqttService.publishSensorData({
+                type: mapping.type,
+                value: value as number,
+                unit: mapping.unit,
+                timestamp: sensorData.timestamp,
+                sensorId: sensorData.sensorId,
+              } as any);
+            }
+          }
+        } catch (error) {
+          // Silently fail - MQTT is not critical
+          console.error('Failed to publish sensor data to MQTT:', error);
+        }
+      },
+    },
   }
 );
