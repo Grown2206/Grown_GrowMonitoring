@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.35.0 (Backend + Frontend)
-**Fortschritt gesamt:** 61/140 Features (43.6%)
+**Version:** 2.36.0 (Backend + Frontend)
+**Fortschritt gesamt:** 62/140 Features (44.3%)
 
 ---
 
@@ -768,7 +768,7 @@
 
 ---
 
-## 🎯 Quick Wins (7/10 - 70%)
+## 🎯 Quick Wins (8/10 - 80%)
 
 **Geschätzt: 50h total**
 - [x] **Keyboard Shortcuts** ✅ FERTIG (25.12.2024)
@@ -808,7 +808,16 @@
   - [x] 7 Item Types Support
   - [x] Access Counting & Statistics
   - **Aufwand:** 5h | **Sprint:** 30 | **Tatsächlich:** ~1.5h
-- [ ] Search Enhancements - 8h
+- [x] **Search Enhancements** ✅ FERTIG (25.12.2024)
+  - [x] useSearch Hook (filtering, sorting, debouncing)
+  - [x] useFuzzySearch Hook with ranking
+  - [x] useHighlight Hook
+  - [x] SearchBar Component with autocomplete
+  - [x] useGlobalSearch Hook (cross-entity search)
+  - [x] Keyboard Navigation Support
+  - [x] Recent Searches Tracking
+  - [x] Result Scoring and Ranking
+  - **Aufwand:** 8h | **Sprint:** 37 | **Tatsächlich:** ~2.5h
 - [x] **Drag & Drop Upload** ✅ FERTIG (25.12.2024)
   - [x] useDragDrop Hook
   - [x] DropZone Component
@@ -839,7 +848,7 @@
   - [x] Error Handling
   - **Aufwand:** 6h | **Sprint:** 35 | **Tatsächlich:** ~1.5h
 
-**Quick Wins Fortschritt:** 7/10 (70%)
+**Quick Wins Fortschritt:** 8/10 (80%)
 
 ---
 
