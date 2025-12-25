@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.26.0 (Backend + Frontend)
-**Fortschritt gesamt:** 52/140 Features (37.1%)
+**Version:** 2.27.0 (Backend + Frontend)
+**Fortschritt gesamt:** 53/140 Features (37.9%)
 
 ---
 
@@ -684,7 +684,13 @@
 
 ### Priorität: HOCH
 - [x] **API Erweiterungen** ✅ TEILWEISE FERTIG (25.12.2024)
-  - [ ] GraphQL API
+  - [x] GraphQL API ✅ FERTIG (25.12.2024)
+  - [x] Comprehensive GraphQL Schema (All Models)
+  - [x] GraphQL Resolvers (Queries & Mutations)
+  - [x] Apollo Server v5 Integration
+  - [x] JWT Authentication Support
+  - [x] Custom Scalar Types (Date, JSON)
+  - [x] GraphQL Endpoint (/graphql)
   - [ ] WebHooks
   - [x] Swagger Docs ✅ FERTIG (25.12.2024)
   - [x] OpenAPI 3.0 Configuration
@@ -692,7 +698,7 @@
   - [x] Complete Model Schemas
   - [x] Auth Endpoint Documentation
   - [x] Interactive API Testing
-  - **Aufwand:** 40h | **Sprint:** 5-6+27 | **Tatsächlich:** ~2h (Swagger)
+  - **Aufwand:** 40h | **Sprint:** 5-6+27+28 | **Tatsächlich:** ~4.5h (Swagger + GraphQL)
 
 - [ ] **Smart Home Integration** 🎯 SPRINT 6
   - [ ] Home Assistant
