@@ -389,6 +389,46 @@ export interface MQTTStatus {
   homeAssistantDiscovery: boolean;
 }
 
+// Sprint 9: Sensor Calibration & Groups
+export interface CalibrationHistory {
+  id: number;
+  sensorId: number;
+  previousOffset: number;
+  newOffset: number;
+  calibratedBy?: string;
+  referenceValue?: number;
+  measuredValue?: number;
+  notes?: string;
+  createdAt: string;
+}
+
+export interface SensorGroup {
+  id: number;
+  name: string;
+  description?: string;
+  sensorIds: number[];
+  color?: string;
+  icon?: string;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  sensors?: SensorManagement[];
+}
+
+export interface SensorGroupStats {
+  totalSensors: number;
+  activeSensors: number;
+  inactiveSensors: number;
+  sensors: Array<{
+    id: number;
+    name: string;
+    type: string;
+    isActive: boolean;
+    lastReading?: number;
+    lastReadingAt?: string;
+  }>;
+}
+
 // API Query Types (Sprint 8)
 export interface PaginationMeta {
   total: number;

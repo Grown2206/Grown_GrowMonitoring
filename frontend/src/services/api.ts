@@ -141,8 +141,20 @@ export const sensorsManagementAPI = {
   getOne: (id: number) => api.get(`/sensors-management/${id}`),
   create: (data: any) => api.post('/sensors-management', data),
   update: (id: number, data: any) => api.put(`/sensors-management/${id}`, data),
-  calibrate: (id: number, offset: number) => api.post(`/sensors-management/${id}/calibrate`, { offset }),
+  calibrate: (id: number, data: { offset: number; calibratedBy?: string; referenceValue?: number; measuredValue?: number; notes?: string }) =>
+    api.post(`/sensors-management/${id}/calibrate`, data),
+  getCalibrationHistory: (id: number) => api.get(`/sensors-management/${id}/calibration-history`),
   delete: (id: number) => api.delete(`/sensors-management/${id}`),
+};
+
+// Sensor Groups
+export const sensorGroupsAPI = {
+  getAll: () => api.get('/sensor-groups'),
+  getOne: (id: number) => api.get(`/sensor-groups/${id}`),
+  create: (data: any) => api.post('/sensor-groups', data),
+  update: (id: number, data: any) => api.put(`/sensor-groups/${id}`, data),
+  delete: (id: number) => api.delete(`/sensor-groups/${id}`),
+  getStats: (id: number) => api.get(`/sensor-groups/${id}/stats`),
 };
 
 // Devices

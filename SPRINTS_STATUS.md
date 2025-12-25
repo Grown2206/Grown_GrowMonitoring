@@ -1,8 +1,8 @@
 # 🎯 Grow Monitoring System - Sprint Status
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Aktuelle Version:** 2.7.0
-**Gesamtfortschritt:** Sprint 1-8.5 komplett ✅
+**Aktuelle Version:** 2.8.0
+**Gesamtfortschritt:** Sprint 1-9 komplett ✅
 
 ---
 
@@ -381,6 +381,144 @@ IDs: [10, 11, 12]
 
 ---
 
+### Sprint 9: Sensor Calibration & Groups ✅
+**Datum:** 25. Dezember 2024
+**Commit:** (pending) - feat: Add Sensor Calibration History & Groups (Sprint 9)
+
+**Features:**
+
+**1. Sensor Calibration History (Backend)**
+- ✅ CalibrationHistory Model
+  - Tracks all calibration events with audit trail
+  - Fields: sensorId, previousOffset, newOffset, calibratedBy, referenceValue, measuredValue, notes, createdAt
+  - Foreign key to sensors table
+- ✅ Model Associations
+  - Sensor.hasMany(CalibrationHistory)
+  - CalibrationHistory.belongsTo(Sensor)
+- ✅ Enhanced Calibration Endpoint (POST /api/sensors-management/:id/calibrate)
+  - Accepts: offset, calibratedBy, referenceValue, measuredValue, notes
+  - Creates calibration history record automatically
+  - Updates sensor's calibrationOffset
+- ✅ History Endpoint (GET /api/sensors-management/:id/calibration-history)
+  - Returns last 50 calibration events
+  - Ordered by createdAt DESC
+
+**2. Sensor Groups (Backend)**
+- ✅ SensorGroup Model
+  - Logical grouping of sensors
+  - Fields: name, description, sensorIds (JSON array), color, icon, isActive
+  - Color-coded groups for visual organization
+- ✅ Full CRUD API (/api/sensor-groups)
+  - GET / - List all groups with parsed sensorIds
+  - GET /:id - Get group with full sensor details
+  - POST / - Create group with sensor validation
+  - PUT /:id - Update group with validation
+  - DELETE /:id - Delete group
+  - GET /:id/stats - Group statistics (total, active, inactive sensors)
+- ✅ Sensor ID Validation
+  - Ensures all sensorIds exist before saving
+  - Prevents orphaned references
+
+**3. Frontend Types & API (frontend/src/types/index.ts)**
+- ✅ CalibrationHistory Interface
+  - Full type safety for calibration tracking
+- ✅ SensorGroup Interface
+  - sensorIds as number array (parsed from JSON)
+  - Optional sensors array with full SensorManagement objects
+- ✅ SensorGroupStats Interface
+  - totalSensors, activeSensors, inactiveSensors
+  - Detailed sensor info array
+- ✅ API Client Extensions (services/api.ts)
+  - sensorsManagementAPI.calibrate() - Enhanced with full calibration data
+  - sensorsManagementAPI.getCalibrationHistory(id)
+  - sensorGroupsAPI - Complete CRUD (getAll, getOne, create, update, delete, getStats)
+
+**4. Sensor Groups Page (frontend/src/pages/SensorGroups.tsx)**
+- ✅ Complete Management Interface
+  - Card-based grid layout
+  - Create/Edit/Delete operations
+  - Multi-select sensor assignment with chips
+  - Color picker for group customization
+  - Icon selection support
+  - Sensor count badges
+  - Active/inactive sensor indicators
+- ✅ Group Statistics Display
+  - Total sensor count
+  - Active vs inactive breakdown
+  - Individual sensor details within group
+- ✅ Professional UX
+  - Dialog forms for create/edit
+  - Confirmation dialogs for delete
+  - Loading and error states
+  - Auto-refresh after operations
+
+**5. Enhanced Calibration Dialog (frontend/src/pages/Sensors.tsx)**
+- ✅ Comprehensive Calibration Form
+  - **Offset:** Required calibration offset value
+  - **Calibrated By:** Optional user/technician name
+  - **Reference Value:** Known reference value used
+  - **Measured Value:** Actual sensor reading before calibration
+  - **Notes:** Multiline notes field for calibration context
+- ✅ Grid Layout (2 columns)
+  - Professional spacing and organization
+  - Clear field labels
+  - Validation for required fields
+- ✅ Full Audit Trail
+  - All calibration metadata saved to history
+  - Enables compliance and troubleshooting
+
+**6. Route Integration (frontend/src/App.tsx)**
+- ✅ Lazy-loaded SensorGroups component
+- ✅ Route: /sensor-groups
+- ✅ Protected by PrivateRoute authentication
+
+**Calibration History Example:**
+```json
+{
+  "sensorId": 1,
+  "previousOffset": 0.5,
+  "newOffset": 1.2,
+  "calibratedBy": "John Doe",
+  "referenceValue": 7.0,
+  "measuredValue": 6.3,
+  "notes": "Calibrated against pH 7.0 buffer solution",
+  "createdAt": "2024-12-25T10:30:00Z"
+}
+```
+
+**Sensor Group Example:**
+```json
+{
+  "id": 1,
+  "name": "Tent 1 Climate Sensors",
+  "description": "Temperature, humidity, and CO2 sensors for grow tent 1",
+  "sensorIds": [1, 2, 5],
+  "color": "#4caf50",
+  "icon": "thermostat",
+  "isActive": true
+}
+```
+
+**User Experience Improvements:**
+- Complete audit trail for sensor calibrations (compliance-ready)
+- Logical sensor organization with color-coded groups
+- Professional calibration workflow with reference tracking
+- Visual grouping reduces sensor management complexity
+- Easy identification of sensor relationships
+
+**Performance Impact:**
+- Calibration history: Minimal overhead (1 additional INSERT)
+- Sensor groups: In-memory JSON parsing (very fast)
+- Frontend bundle: +634 bytes for new SensorGroups page
+- No impact on existing sensor read operations
+
+**Data Integrity:**
+- Foreign key constraints prevent orphaned calibration records
+- Sensor validation prevents invalid group assignments
+- Audit trail is immutable (no updates or deletes)
+
+---
+
 ## 📊 Aktueller Status
 
 ### Implementierte Features (Gesamt)
@@ -391,18 +529,21 @@ IDs: [10, 11, 12]
 - ✅ **Sprint 7.5:** Endpoint Optimizations
 - ✅ **Sprint 8:** Frontend Pagination & Filters
 - ✅ **Sprint 8.5:** Batch Operations & More Pagination
+- ✅ **Sprint 9:** Sensor Calibration History & Groups
 
 ### Code Metriken
 - **Backend Files:**
   - +3 Middleware (queryParser, batchOperations, compression)
-  - +4 Routes (batch, mqtt, sms)
+  - +5 Routes (batch, mqtt, sms, sensorGroups)
   - +3 Services (mqttService, smsService)
-  - +2 Models (Settings)
+  - +4 Models (Settings, CalibrationHistory, SensorGroup)
+  - ~Modified routes (sensors-management with calibration history)
 - **Frontend Files:**
   - +2 Components (Pagination.tsx, BatchOperationsDialog.tsx)
-  - +Type Extensions (PaginationMeta, PaginatedResponse, QueryParams, BatchOperation)
-  - ~Modified 5 API clients (plants, sensors, alerts, notes)
-  - ~Modified 2 Pages (Plants.tsx with filters + batch, AlertManagement.tsx with pagination)
+  - +1 Page (SensorGroups.tsx)
+  - +Type Extensions (PaginationMeta, PaginatedResponse, QueryParams, BatchOperation, CalibrationHistory, SensorGroup, SensorGroupStats)
+  - ~Modified 6 API clients (plants, sensors, alerts, notes, sensorsManagement, sensorGroups)
+  - ~Modified 3 Pages (Plants.tsx with filters + batch, AlertManagement.tsx with pagination, Sensors.tsx with enhanced calibration)
 
 ### Performance Improvements
 - **API Response Times:** 70-80% faster
@@ -415,20 +556,27 @@ IDs: [10, 11, 12]
 
 ### Empfohlene Sprints (Priorität)
 
-**Sprint 9: Advanced Analytics & ML (Optional)**
-- React Query für Caching & optimistic updates
+**Sprint 10: Advanced Sensors & Monitoring (In Progress)**
+- Sensor-Fusion (Combining multiple sensor readings)
+- Virtuelle Sensoren (Calculated sensors like VPD)
+- Benchmark-System (Compare sensors against baseline)
+- Sensor Health Monitoring
+- Predicted values based on historical data
+
+**Sprint 11: AI & Automation**
 - ML Predictions (TensorFlow.js)
 - Anomaly Detection
-- Trend Analysis
+- Pattern Recognition
 - Yield Forecasting
+- Auto-tuning für Automation Rules
 
-**Sprint 10: Testing & Quality**
+**Sprint 12: Testing & Quality**
 - Unit Tests (Backend)
 - Integration Tests
 - E2E Tests (Cypress)
 - API Documentation (Swagger/OpenAPI)
 
-**Sprint 11: Cloud & Scaling**
+**Sprint 13: Cloud & Scaling**
 - Cloud Backup (Optional)
 - Multi-Tenant Support
 - Load Balancing
@@ -445,8 +593,9 @@ IDs: [10, 11, 12]
 - Sprint 7.5: 0.5 Tag (Endpoint Optimization)
 - Sprint 8: 0.5 Tag (Frontend Pagination)
 - Sprint 8.5: 0.5 Tag (Batch Ops & More Pagination)
+- Sprint 9: 0.5 Tag (Calibration History & Groups)
 
-**Durchschnitt:** ~0.75 Tage pro Major Sprint
+**Durchschnitt:** ~0.71 Tage pro Major Sprint
 
 ### Code Additions
 - **Sprint 5:** +823 Zeilen
@@ -455,8 +604,9 @@ IDs: [10, 11, 12]
 - **Sprint 7.5:** +87 Zeilen
 - **Sprint 8:** +165 Zeilen (Frontend)
 - **Sprint 8.5:** +230 Zeilen (Frontend)
+- **Sprint 9:** +452 Zeilen (Backend: 272, Frontend: 180)
 
-**Total neue Zeilen:** ~3,132 in 4.5 Tagen
+**Total neue Zeilen:** ~3,584 in 5 Tagen
 
 ---
 

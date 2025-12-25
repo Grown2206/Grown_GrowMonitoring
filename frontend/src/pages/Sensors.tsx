@@ -33,7 +33,13 @@ export function Sensors() {
   const [sensors, setSensors] = useState<SensorManagement[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [calibrateDialog, setCalibrateDialog] = useState<number | null>(null);
-  const [calibrationOffset, setCalibrationOffset] = useState(0);
+  const [calibrationData, setCalibrationData] = useState({
+    offset: 0,
+    calibratedBy: '',
+    referenceValue: undefined as number | undefined,
+    measuredValue: undefined as number | undefined,
+    notes: '',
+  });
   const [editingSensor, setEditingSensor] = useState<SensorManagement | null>(null);
   const [formData, setFormData] = useState({
     sensorId: 1,
@@ -89,9 +95,15 @@ export function Sensors() {
   async function handleCalibrate() {
     if (calibrateDialog) {
       try {
-        await sensorsManagementAPI.calibrate(calibrateDialog, calibrationOffset);
+        await sensorsManagementAPI.calibrate(calibrateDialog, calibrationData);
         setCalibrateDialog(null);
-        setCalibrationOffset(0);
+        setCalibrationData({
+          offset: 0,
+          calibratedBy: '',
+          referenceValue: undefined,
+          measuredValue: undefined,
+          notes: '',
+        });
         loadSensors();
       } catch (error) {
         console.error('Failed to calibrate sensor:', error);
@@ -278,18 +290,62 @@ export function Sensors() {
       </Dialog>
 
       {/* Calibration Dialog */}
-      <Dialog open={calibrateDialog !== null} onClose={() => setCalibrateDialog(null)}>
+      <Dialog open={calibrateDialog !== null} onClose={() => setCalibrateDialog(null)} maxWidth="sm" fullWidth>
         <DialogTitle>Sensor kalibrieren</DialogTitle>
         <DialogContent>
-          <TextField
-            fullWidth
-            type="number"
-            label="Kalibrierungs-Offset"
-            value={calibrationOffset}
-            onChange={(e) => setCalibrationOffset(parseFloat(e.target.value))}
-            helperText="Offset wird zum Sensor-Wert addiert"
-            sx={{ mt: 2 }}
-          />
+          <Grid container spacing={2} sx={{ mt: 0.5 }}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                type="number"
+                label="Kalibrierungs-Offset"
+                value={calibrationData.offset}
+                onChange={(e) => setCalibrationData({ ...calibrationData, offset: parseFloat(e.target.value) })}
+                helperText="Offset wird zum Sensor-Wert addiert"
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Kalibriert von"
+                value={calibrationData.calibratedBy}
+                onChange={(e) => setCalibrationData({ ...calibrationData, calibratedBy: e.target.value })}
+                placeholder="z.B. Ihr Name"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                type="number"
+                label="Referenzwert (optional)"
+                value={calibrationData.referenceValue || ''}
+                onChange={(e) => setCalibrationData({ ...calibrationData, referenceValue: e.target.value ? parseFloat(e.target.value) : undefined })}
+                helperText="Bekannter Sollwert"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                type="number"
+                label="Gemessener Wert (optional)"
+                value={calibrationData.measuredValue || ''}
+                onChange={(e) => setCalibrationData({ ...calibrationData, measuredValue: e.target.value ? parseFloat(e.target.value) : undefined })}
+                helperText="Sensor-Messwert"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Notizen (optional)"
+                value={calibrationData.notes}
+                onChange={(e) => setCalibrationData({ ...calibrationData, notes: e.target.value })}
+                multiline
+                rows={2}
+                placeholder="z.B. Methode, Bedingungen, etc."
+              />
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setCalibrateDialog(null)}>Abbrechen</Button>
