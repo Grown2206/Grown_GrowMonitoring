@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.9.0
-**Fortschritt gesamt:** 35/140 Features (25.0%)
+**Version:** 2.10.0 (Backend)
+**Fortschritt gesamt:** 36/140 Features (25.7%)
 
 ---
 
@@ -358,7 +358,7 @@
 
 ---
 
-## 🤖 Automation & KI (0/11 - 0%)
+## 🤖 Automation & KI (1/11 - 9%)
 
 ### Priorität: HOCH
 - [ ] **Machine Learning Integration** 🎯 SPRINT 5
@@ -368,12 +368,14 @@
   - [ ] Anomalie-Erkennung
   - **Aufwand:** 80h | **Sprint:** 5-8
 
-- [ ] **Erweiterte Automatisierungs-Regeln** 🎯 SPRINT 3
-  - [ ] Visual Rule Builder
-  - [ ] Complex If-Then-Else Logic
-  - [ ] Formula Support
-  - [ ] Rule Dependencies
-  - **Aufwand:** 45h | **Sprint:** 3-4
+- [x] **Erweiterte Automatisierungs-Regeln** ✅ BACKEND FERTIG (25.12.2024)
+  - [x] Complex Condition Groups (AND/OR Logic)
+  - [x] Multiple Actions (Sequential Execution)
+  - [x] Formula Support (Safe Evaluation)
+  - [x] Rule Dependencies (trigger_rule)
+  - [x] Validation & Test Endpoints
+  - [ ] Visual Rule Builder (Frontend) - Optional für später
+  - **Aufwand:** 45h | **Sprint:** 11 | **Tatsächlich:** ~4h (Backend)
 
 - [ ] **Rezept-System** - 50h
 - [ ] **PID-Regler** - 40h
@@ -383,7 +385,7 @@
 - [ ] **Seasonal Adjustments** - 30h
 - [ ] **Simulation & Testing** - 25h
 
-**Gesamt Automation & KI:** 0/11 (330h geschätzt)
+**Gesamt Automation & KI:** 1/11 (285h verbleibend, Frontend optional)
 
 ---
 
