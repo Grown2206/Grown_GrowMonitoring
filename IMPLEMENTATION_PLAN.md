@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.36.0 (Backend + Frontend)
-**Fortschritt gesamt:** 62/140 Features (44.3%)
+**Version:** 2.37.0 (Backend + Frontend)
+**Fortschritt gesamt:** 63/140 Features (45.0%)
 
 ---
 
@@ -768,7 +768,7 @@
 
 ---
 
-## 🎯 Quick Wins (8/10 - 80%)
+## 🎯 Quick Wins (9/10 - 90%)
 
 **Geschätzt: 50h total**
 - [x] **Keyboard Shortcuts** ✅ FERTIG (25.12.2024)
@@ -781,7 +781,16 @@
   - [x] Smart Input Field Detection
   - [x] Category-Based Organization
   - **Aufwand:** 5h | **Sprint:** 32 | **Tatsächlich:** ~2h
-- [ ] Bulk-Aktionen - 8h
+- [x] **Bulk-Aktionen** ✅ FERTIG (25.12.2024)
+  - [x] useBulkActions Hook (multi-select state)
+  - [x] useBulkSelect Hook (Shift+Click range selection)
+  - [x] BulkActionBar Component
+  - [x] SelectableTable Component
+  - [x] SelectAllBar Component
+  - [x] SelectableListItem Component
+  - [x] Confirmation Dialogs
+  - [x] Error Handling
+  - **Aufwand:** 8h | **Sprint:** 38 | **Tatsächlich:** ~2.5h
 - [x] **Quick-Add Buttons** ✅ FERTIG (25.12.2024)
   - [x] QuickAdd.tsx SpeedDial Component
   - [x] 6 Quick-Add Actions (Plant, Sensor, Device, Harvest, Automation, Event)
@@ -848,7 +857,7 @@
   - [x] Error Handling
   - **Aufwand:** 6h | **Sprint:** 35 | **Tatsächlich:** ~1.5h
 
-**Quick Wins Fortschritt:** 8/10 (80%)
+**Quick Wins Fortschritt:** 9/10 (90%)
 
 ---
 
