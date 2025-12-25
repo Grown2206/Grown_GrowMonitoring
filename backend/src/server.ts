@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import compression from 'compression';
 import dotenv from 'dotenv';
 import http from 'http';
 import { initDatabase } from './database/config';
@@ -35,6 +36,7 @@ import milestonesRoutes from './routes/milestones.routes';
 import journalRoutes from './routes/journal.routes';
 import smsRoutes from './routes/sms.routes';
 import mqttRoutes from './routes/mqtt.routes';
+import batchRoutes from './routes/batch.routes';
 
 // Load environment variables
 dotenv.config();
@@ -50,6 +52,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(compression()); // Enable gzip compression
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -86,6 +89,7 @@ app.use('/api/milestones', milestonesRoutes);
 app.use('/api/journal', journalRoutes);
 app.use('/api/sms', smsRoutes);
 app.use('/api/mqtt', mqttRoutes);
+app.use('/api/batch', batchRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

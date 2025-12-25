@@ -5,26 +5,45 @@ import { IrrigationConfig } from '../models/IrrigationConfig';
 import { Note } from '../models/Note';
 import { CalendarEvent } from '../models/CalendarEvent';
 import { authenticateToken } from '../middleware/auth';
+import { queryParser, applyParsedQuery, createPaginationResponse } from '../middleware/queryParser';
 
 const router = express.Router();
 
 router.use(authenticateToken);
 
-// Get all plants
-router.get('/', async (req, res) => {
-  try {
-    const plants = await Plant.findAll({
-      include: [
-        { model: Strain, as: 'strain' },
-        { model: IrrigationConfig, as: 'irrigationConfig' },
-      ],
-      order: [['createdAt', 'DESC']],
-    });
-    res.json(plants);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch plants' });
+// Get all plants with filtering, sorting, and pagination
+router.get(
+  '/',
+  queryParser({
+    maxLimit: 100,
+    defaultLimit: 20,
+    allowedFilters: ['name', 'phase', 'strainId', 'isActive', 'sensorId'],
+    allowedSortFields: ['name', 'phase', 'plantedDate', 'createdAt', 'expectedHarvestDate'],
+    allowedFields: ['id', 'name', 'phase', 'strainId', 'plantedDate', 'harvestDate', 'expectedHarvestDate', 'sensorId', 'description', 'isActive', 'createdAt', 'updatedAt'],
+  }),
+  async (req, res) => {
+    try {
+      const parsedQuery = (req as any).parsedQuery;
+
+      const plants = await Plant.findAndCountAll(
+        applyParsedQuery(parsedQuery, {
+          include: [
+            { model: Strain, as: 'strain' },
+            { model: IrrigationConfig, as: 'irrigationConfig' },
+          ],
+          order: parsedQuery.order.length > 0 ? parsedQuery.order : [['createdAt', 'DESC']],
+        })
+      );
+
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parsedQuery.limit;
+
+      res.json(createPaginationResponse(plants, page, limit));
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch plants' });
+    }
   }
-});
+);
 
 // Get single plant
 router.get('/:id', async (req, res) => {
