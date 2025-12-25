@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.29.0 (Backend + Frontend)
-**Fortschritt gesamt:** 55/140 Features (39.3%)
+**Version:** 2.30.0 (Backend + Frontend)
+**Fortschritt gesamt:** 56/140 Features (40.0%)
 
 ---
 
@@ -768,12 +768,19 @@
 
 ---
 
-## 🎯 Quick Wins (1/10 - 10%)
+## 🎯 Quick Wins (2/10 - 20%)
 
 **Geschätzt: 50h total**
 - [ ] Keyboard Shortcuts - 5h
 - [ ] Bulk-Aktionen - 8h
-- [ ] Quick-Add Buttons - 4h
+- [x] **Quick-Add Buttons** ✅ FERTIG (25.12.2024)
+  - [x] QuickAdd.tsx SpeedDial Component
+  - [x] 6 Quick-Add Actions (Plant, Sensor, Device, Harvest, Automation, Event)
+  - [x] Keyboard Shortcuts (Ctrl+P, Ctrl+S, Ctrl+D, Ctrl+H, Ctrl+A, Ctrl+E)
+  - [x] Context-Specific Dialogs
+  - [x] Success/Error Notifications
+  - [x] Custom Event Dispatching
+  - **Aufwand:** 4h | **Sprint:** 31 | **Tatsächlich:** ~1h
 - [ ] Favoriten/Bookmarks - 6h
 - [x] **Recent Items** ✅ FERTIG (25.12.2024)
   - [x] RecentItem Model mit Auto-Cleanup
@@ -790,7 +797,7 @@
 - [ ] Undo/Redo - 8h
 - [ ] Auto-Save - 6h
 
-**Quick Wins Fortschritt:** 1/10 (10%)
+**Quick Wins Fortschritt:** 2/10 (20%)
 
 ---
 
