@@ -2,6 +2,7 @@ import express from 'express';
 import { AutomationRule } from '../models/AutomationRule';
 import { authenticateToken } from '../middleware/auth';
 import { wsManager } from '../websocket/server';
+import { AutomationService } from '../services/automationService';
 
 const router = express.Router();
 
@@ -66,38 +67,97 @@ router.post('/:id/trigger', async (req, res) => {
       return res.status(400).json({ error: 'Rule is disabled' });
     }
 
-    // Parse action config
-    const actionConfig = JSON.parse(rule.actionConfig);
+    // Use enhanced automation service
+    const success = await AutomationService.executeRule(rule);
 
-    // Execute action based on type
-    switch (rule.actionType) {
-      case 'relay':
-        wsManager.sendToESP32({
-          type: 'relay_control',
-          data: { relayId: actionConfig.relayId, status: actionConfig.status },
-        });
-        break;
-      case 'pump':
-        wsManager.sendToESP32({
-          type: 'pump_control',
-          data: { pumpId: actionConfig.pumpId, action: 'start', duration: actionConfig.duration },
-        });
-        break;
-      case 'notification':
-        // Send notification (could extend with email/webhook)
-        console.log('Notification:', actionConfig.message);
-        break;
+    if (success) {
+      res.json({ message: 'Rule triggered successfully', rule });
+    } else {
+      res.status(400).json({ error: 'Rule execution failed (conditions not met or error)' });
     }
-
-    // Update trigger count and timestamp
-    await rule.update({
-      lastTriggered: new Date(),
-      triggerCount: rule.triggerCount + 1,
-    });
-
-    res.json({ message: 'Rule triggered successfully', rule });
   } catch (error) {
     res.status(500).json({ error: 'Failed to trigger rule' });
+  }
+});
+
+// Validate conditions
+router.post('/validate/conditions', async (req, res) => {
+  try {
+    const { conditionGroup } = req.body;
+
+    if (!conditionGroup) {
+      return res.status(400).json({ error: 'conditionGroup is required' });
+    }
+
+    const validation = AutomationService.validateConditionGroup(conditionGroup);
+
+    res.json(validation);
+  } catch (error: any) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Validate actions
+router.post('/validate/actions', async (req, res) => {
+  try {
+    const { actions } = req.body;
+
+    if (!actions) {
+      return res.status(400).json({ error: 'actions array is required' });
+    }
+
+    const validation = AutomationService.validateActions(actions);
+
+    res.json(validation);
+  } catch (error: any) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Test rule (dry run without executing actions)
+router.post('/:id/test', async (req, res) => {
+  try {
+    const rule = await AutomationRule.findByPk(req.params.id);
+    if (!rule) {
+      return res.status(404).json({ error: 'Rule not found' });
+    }
+
+    // Parse and validate conditions
+    let conditionResult = { met: true, details: 'No conditions defined' };
+
+    if (rule.conditions) {
+      const conditionGroup = JSON.parse(rule.conditions);
+      const validation = AutomationService.validateConditionGroup(conditionGroup);
+
+      if (!validation.valid) {
+        return res.status(400).json({
+          error: 'Invalid conditions',
+          errors: validation.errors,
+        });
+      }
+
+      // Note: We can't actually test condition evaluation here without executing
+      conditionResult = { met: true, details: 'Conditions validated (not evaluated)' };
+    }
+
+    // Parse and validate actions
+    const actionConfig = JSON.parse(rule.actionConfig);
+    let actionsValidation = { valid: true, errors: [] as string[] };
+
+    if (actionConfig.actions && Array.isArray(actionConfig.actions)) {
+      actionsValidation = AutomationService.validateActions(actionConfig.actions);
+    }
+
+    res.json({
+      ruleName: rule.name,
+      enabled: rule.enabled,
+      triggerType: rule.triggerType,
+      conditions: conditionResult,
+      actions: actionsValidation,
+      overallValid: actionsValidation.valid,
+    });
+  } catch (error: any) {
+    res.status(500).json({ error: 'Test failed', message: error.message });
   }
 });
 
