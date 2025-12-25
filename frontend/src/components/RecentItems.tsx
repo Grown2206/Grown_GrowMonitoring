@@ -25,7 +25,7 @@ import {
   Close as CloseIcon,
   AccessTime as TimeIcon,
 } from '@mui/icons-material';
-import { api } from '../services/api';
+import api from '../services/api';
 import { useNavigate } from 'react-router-dom';
 
 interface RecentItem {

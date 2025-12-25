@@ -177,7 +177,7 @@ async function start() {
     // Start server
     server.listen(PORT, () => {
       console.log('═══════════════════════════════════════════════');
-      console.log('  🌱 Grow Monitoring System v2.30.0');
+      console.log('  🌱 Grow Monitoring System v2.31.0');
       console.log('═══════════════════════════════════════════════');
       console.log(`  Server: http://localhost:${PORT}`);
       console.log(`  GraphQL: http://localhost:${PORT}/graphql`);

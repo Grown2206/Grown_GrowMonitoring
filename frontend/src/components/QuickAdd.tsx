@@ -26,7 +26,7 @@ import {
   PlayCircle as AutomationIcon,
   Event as EventIcon,
 } from '@mui/icons-material';
-import { api } from '../services/api';
+import api from '../services/api';
 
 type QuickAddType = 'plant' | 'sensor' | 'device' | 'harvest' | 'automation' | 'event';
 

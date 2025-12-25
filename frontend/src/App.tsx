@@ -3,9 +3,11 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './contexts/ToastContext';
+import { KeyboardShortcutsProvider } from './contexts/KeyboardShortcutsContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Layout } from './components/Layout';
 import { OfflineIndicator } from './components/OfflineIndicator';
+import { ShortcutHelp } from './components/ShortcutHelp';
 import { CircularProgress, Box } from '@mui/material';
 
 // Eager load critical pages
@@ -159,10 +161,13 @@ function App() {
         <ThemeProvider>
           <ToastProvider>
             <AuthProvider>
-              <ErrorBoundary>
-                <OfflineIndicator />
-                <AppRoutes />
-              </ErrorBoundary>
+              <KeyboardShortcutsProvider>
+                <ErrorBoundary>
+                  <OfflineIndicator />
+                  <ShortcutHelp />
+                  <AppRoutes />
+                </ErrorBoundary>
+              </KeyboardShortcutsProvider>
             </AuthProvider>
           </ToastProvider>
         </ThemeProvider>

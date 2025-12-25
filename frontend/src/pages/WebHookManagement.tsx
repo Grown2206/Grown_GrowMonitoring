@@ -37,7 +37,7 @@ import {
   Refresh as RefreshIcon,
   BarChart as StatsIcon,
 } from '@mui/icons-material';
-import { api } from '../services/api';
+import api from '../services/api';
 
 interface WebHook {
   id: number;

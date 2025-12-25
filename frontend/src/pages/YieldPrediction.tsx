@@ -205,7 +205,7 @@ export function YieldPrediction() {
     return 'Niedrig';
   };
 
-  const getProgressColor = (value: number): string => {
+  const getProgressColor = (value: number): 'success' | 'warning' | 'info' => {
     if (value >= 75) return 'success';
     if (value >= 50) return 'warning';
     return 'info';
