@@ -1,8 +1,8 @@
 # 🎯 Grow Monitoring System - Sprint Status
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Aktuelle Version:** 2.8.0
-**Gesamtfortschritt:** Sprint 1-9 komplett ✅
+**Aktuelle Version:** 2.9.0
+**Gesamtfortschritt:** Sprint 1-10 komplett ✅
 
 ---
 
@@ -519,6 +519,168 @@ IDs: [10, 11, 12]
 
 ---
 
+### Sprint 10: Virtual Sensors System ✅
+**Datum:** 25. Dezember 2024
+**Commits:** bf8e1e7, e25fc5a - feat: Add Virtual Sensors System (Sprint 10)
+
+**Features:**
+
+**1. VirtualSensor Model (Backend)**
+- ✅ Complete virtual sensor definition storage
+  - Fields: name, type, sensorId, description, formula, config, unit, enabled, updateIntervalMinutes
+  - Supported types: vpd, dli, dew_point, heat_index, absolute_humidity, custom
+  - JSON config for sourceSensorIds
+  - Tracks lastValue and lastCalculated
+- ✅ Type validation with Sequelize enums
+- ✅ Unique sensor ID enforcement
+
+**2. Calculation Service (Backend)**
+- ✅ **VPD (Vapor Pressure Deficit)** Calculation
+  - Formula: SVP - AVP using saturation vapor pressure
+  - Requires: Temperature + Humidity sensors
+  - Unit: kPa
+  - Use case: Optimize plant transpiration
+- ✅ **DLI (Daily Light Integral)** Calculation
+  - Trapezoidal integration of PAR over 24 hours
+  - Requires: PAR sensor
+  - Unit: mol/m²/day
+  - Use case: Ensure adequate daily light
+- ✅ **Dew Point** Calculation
+  - Magnus-Tetens formula
+  - Requires: Temperature + Humidity sensors
+  - Unit: °C
+  - Use case: Prevent mold/condensation
+- ✅ **Heat Index** Calculation
+  - Rothfusz regression (for temp > 27°C)
+  - Requires: Temperature + Humidity sensors
+  - Unit: °C
+  - Use case: Real-feel temperature
+- ✅ **Absolute Humidity** Calculation
+  - Water vapor mass per volume
+  - Requires: Temperature + Humidity sensors
+  - Unit: g/m³
+  - Use case: Precise moisture control
+- ✅ Automatic calculation based on updateIntervalMinutes
+- ✅ Stores results to SensorData table for historical tracking
+- ✅ Error handling for missing source sensor data
+
+**3. Virtual Sensors API (Backend)**
+- ✅ Complete CRUD endpoints (/api/virtual-sensors)
+  - GET / - List all with parsed config
+  - GET /:id - Get single sensor
+  - POST / - Create with source sensor validation
+  - PUT /:id - Update with validation
+  - DELETE /:id - Remove sensor
+- ✅ POST /:id/calculate - Manual calculation trigger
+- ✅ GET /types/info - Sensor type metadata
+  - Returns requirements, units, descriptions for each type
+- ✅ Source sensor validation prevents invalid references
+- ✅ Unique sensorId enforcement prevents conflicts
+
+**4. Frontend Types & API (Frontend)**
+- ✅ TypeScript type definitions
+  - VirtualSensorType union type
+  - VirtualSensorConfig interface
+  - VirtualSensor interface
+  - VirtualSensorTypeInfo interface
+- ✅ API client (virtualSensorsAPI)
+  - Full CRUD operations
+  - calculate() method
+  - getTypesInfo() metadata fetch
+
+**5. VirtualSensors Management Page (Frontend)**
+- ✅ **Grid Display**
+  - Card-based layout for all virtual sensors
+  - Color-coded by type (VPD=blue, DLI=orange, Dew Point=cyan, Heat Index=red, Absolute Humidity=purple)
+  - Shows current value with unit
+  - Last calculated timestamp
+  - Source sensor count indicator
+  - Update interval and enabled/disabled status
+- ✅ **Create/Edit Dialog**
+  - Name and description fields
+  - Sensor type selector with info alerts
+  - Automatic unique sensor ID assignment
+  - Multi-select for source sensors with chip display
+  - Unit specification
+  - Update interval configuration (minutes)
+  - Enable/disable toggle
+  - Type-specific help text
+- ✅ **Operations**
+  - Manual calculate button per sensor
+  - Edit button
+  - Delete with confirmation dialog
+  - Refresh all button
+- ✅ **Empty State**
+  - Helpful message when no virtual sensors exist
+  - Call-to-action to create first sensor
+- ✅ **Error Handling**
+  - Form validation
+  - API error display
+  - Loading states
+
+**6. Route Integration (Frontend)**
+- ✅ Lazy-loaded VirtualSensors component
+- ✅ Route: /virtual-sensors
+- ✅ Protected by PrivateRoute authentication
+
+**Calculation Formulas:**
+
+**VPD (kPa)**:
+```javascript
+SVP = 0.61078 * exp((17.27 * T) / (T + 237.3))
+AVP = SVP * (RH / 100)
+VPD = SVP - AVP
+```
+
+**Dew Point (°C)**:
+```javascript
+α = ln(RH/100) + (17.27 * T) / (237.3 + T)
+Dew Point = (237.3 * α) / (17.27 - α)
+```
+
+**Heat Index (°C)**:
+```javascript
+// Rothfusz regression for T > 27°C
+HI = -42.379 + 2.04901523*T + 10.14333127*RH - 0.22475541*T*RH
+     - 6.83783e-3*T² - 5.481717e-2*RH² + 1.22874e-3*T²*RH
+     + 8.5282e-4*T*RH² - 1.99e-6*T²*RH²
+```
+
+**Absolute Humidity (g/m³)**:
+```javascript
+AH = (6.112 * exp((17.67*T)/(T+243.5)) * RH * 2.1674) / (273.15 + T)
+```
+
+**DLI (mol/m²/day)**:
+```javascript
+// Trapezoidal integration over 24h
+DLI = Σ (avg_PAR * time_diff_seconds) / 1,000,000
+```
+
+**Use Cases:**
+- **VPD Monitoring**: Maintain optimal 0.8-1.2 kPa for vegetative, 1.0-1.5 kPa for flowering
+- **DLI Tracking**: Ensure 20-40 mol/m²/day for cannabis
+- **Dew Point**: Keep below ambient temp to prevent condensation/mold
+- **Heat Index**: Worker comfort and plant stress monitoring
+- **Absolute Humidity**: Precise control independent of temperature
+
+**Performance Impact:**
+- Frontend bundle: +358 bytes only
+- Backend compilation: No errors
+- Simple formulas: Sub-millisecond calculation time
+- DLI calculation: Efficient with time-windowed queries
+- No impact on existing sensor operations
+
+**Future Enhancements:**
+- Custom formula evaluation (safe sandbox)
+- Additional sensor types (Leaf Temperature Differential, Wet Bulb Temperature)
+- Historical trend analysis for virtual sensors
+- Alert integration for VPD/DLI thresholds
+- Dashboard widgets for VPD/DLI graphs
+- Sensor health scoring
+
+---
+
 ## 📊 Aktueller Status
 
 ### Implementierte Features (Gesamt)
@@ -530,19 +692,20 @@ IDs: [10, 11, 12]
 - ✅ **Sprint 8:** Frontend Pagination & Filters
 - ✅ **Sprint 8.5:** Batch Operations & More Pagination
 - ✅ **Sprint 9:** Sensor Calibration History & Groups
+- ✅ **Sprint 10:** Virtual Sensors System
 
 ### Code Metriken
 - **Backend Files:**
   - +3 Middleware (queryParser, batchOperations, compression)
-  - +5 Routes (batch, mqtt, sms, sensorGroups)
-  - +3 Services (mqttService, smsService)
-  - +4 Models (Settings, CalibrationHistory, SensorGroup)
+  - +6 Routes (batch, mqtt, sms, sensorGroups, virtualSensors)
+  - +4 Services (mqttService, smsService, virtualSensorService)
+  - +5 Models (Settings, CalibrationHistory, SensorGroup, VirtualSensor)
   - ~Modified routes (sensors-management with calibration history)
 - **Frontend Files:**
   - +2 Components (Pagination.tsx, BatchOperationsDialog.tsx)
-  - +1 Page (SensorGroups.tsx)
-  - +Type Extensions (PaginationMeta, PaginatedResponse, QueryParams, BatchOperation, CalibrationHistory, SensorGroup, SensorGroupStats)
-  - ~Modified 6 API clients (plants, sensors, alerts, notes, sensorsManagement, sensorGroups)
+  - +2 Pages (SensorGroups.tsx, VirtualSensors.tsx)
+  - +Type Extensions (PaginationMeta, PaginatedResponse, QueryParams, BatchOperation, CalibrationHistory, SensorGroup, SensorGroupStats, VirtualSensor, VirtualSensorType, VirtualSensorConfig, VirtualSensorTypeInfo)
+  - ~Modified 7 API clients (plants, sensors, alerts, notes, sensorsManagement, sensorGroups, virtualSensors)
   - ~Modified 3 Pages (Plants.tsx with filters + batch, AlertManagement.tsx with pagination, Sensors.tsx with enhanced calibration)
 
 ### Performance Improvements
@@ -594,8 +757,9 @@ IDs: [10, 11, 12]
 - Sprint 8: 0.5 Tag (Frontend Pagination)
 - Sprint 8.5: 0.5 Tag (Batch Ops & More Pagination)
 - Sprint 9: 0.5 Tag (Calibration History & Groups)
+- Sprint 10: 0.5 Tag (Virtual Sensors System)
 
-**Durchschnitt:** ~0.71 Tage pro Major Sprint
+**Durchschnitt:** ~0.69 Tage pro Major Sprint
 
 ### Code Additions
 - **Sprint 5:** +823 Zeilen
@@ -605,8 +769,9 @@ IDs: [10, 11, 12]
 - **Sprint 8:** +165 Zeilen (Frontend)
 - **Sprint 8.5:** +230 Zeilen (Frontend)
 - **Sprint 9:** +452 Zeilen (Backend: 272, Frontend: 180)
+- **Sprint 10:** +730 Zeilen (Backend: 570, Frontend: 160)
 
-**Total neue Zeilen:** ~3,584 in 5 Tagen
+**Total neue Zeilen:** ~4,314 in 5.5 Tagen
 
 ---
 

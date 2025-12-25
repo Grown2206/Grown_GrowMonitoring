@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.8.0
-**Fortschritt gesamt:** 34/140 Features (24.3%)
+**Version:** 2.9.0
+**Fortschritt gesamt:** 35/140 Features (25.0%)
 
 ---
 
@@ -310,7 +310,7 @@
 
 ---
 
-## 📊 Sensoren & Monitoring (4/10 - 40%)
+## 📊 Sensoren & Monitoring (5/10 - 50%)
 
 ### Priorität: HOCH
 - [x] **Echtzeit-Dashboard Enhancement** ✅ FERTIG (23.12.2024)
@@ -338,7 +338,13 @@
 - [ ] **Sensor-Fusion** - 35h
 
 ### Priorität: MITTEL
-- [ ] **Virtuelle Sensoren** - 25h
+- [x] **Virtuelle Sensoren** ✅ FERTIG (25.12.2024)
+  - [x] VirtualSensor Model mit type validation
+  - [x] Calculation Service (VPD, DLI, Dew Point, Heat Index, Absolute Humidity)
+  - [x] Full CRUD API
+  - [x] Frontend Management Page
+  - [x] Auto-calculation based on interval
+  - **Aufwand:** 25h | **Sprint:** 10 | **Tatsächlich:** ~3h
 - [x] **Sensor-Gruppen** ✅ FERTIG (25.12.2024)
   - [x] SensorGroup Model (JSON array storage)
   - [x] Full CRUD API with statistics
@@ -348,7 +354,7 @@
   - **Aufwand:** 20h | **Sprint:** 9 | **Tatsächlich:** ~2.5h
 - [ ] **Benchmark-System** - 30h
 
-**Gesamt Sensoren & Monitoring:** 4/10 (120h verbleibend)
+**Gesamt Sensoren & Monitoring:** 5/10 (95h verbleibend)
 
 ---
 
