@@ -42,6 +42,7 @@ import virtualSensorsRoutes from './routes/virtualSensors.routes';
 import sensorFusionRoutes from './routes/sensorFusion.routes';
 import sensorBenchmarkRoutes from './routes/sensorBenchmark.routes';
 import sensorHealthRoutes from './routes/sensorHealth.routes';
+import sensorForecastingRoutes from './routes/sensorForecasting.routes';
 
 // Load environment variables
 dotenv.config();
@@ -100,6 +101,7 @@ app.use('/api/virtual-sensors', virtualSensorsRoutes);
 app.use('/api/sensor-fusion', sensorFusionRoutes);
 app.use('/api/sensor-benchmark', sensorBenchmarkRoutes);
 app.use('/api/sensor-health', sensorHealthRoutes);
+app.use('/api/sensor-forecasting', sensorForecastingRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
