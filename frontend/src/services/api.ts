@@ -157,6 +157,17 @@ export const sensorGroupsAPI = {
   getStats: (id: number) => api.get(`/sensor-groups/${id}/stats`),
 };
 
+// Virtual Sensors (Sprint 10)
+export const virtualSensorsAPI = {
+  getAll: () => api.get('/virtual-sensors'),
+  getOne: (id: number) => api.get(`/virtual-sensors/${id}`),
+  create: (data: any) => api.post('/virtual-sensors', data),
+  update: (id: number, data: any) => api.put(`/virtual-sensors/${id}`, data),
+  delete: (id: number) => api.delete(`/virtual-sensors/${id}`),
+  calculate: (id: number) => api.post(`/virtual-sensors/${id}/calculate`),
+  getTypesInfo: () => api.get('/virtual-sensors/types/info'),
+};
+
 // Devices
 export const devicesAPI = {
   getAll: () => api.get('/devices'),

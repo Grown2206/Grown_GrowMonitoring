@@ -19,6 +19,7 @@ const Irrigation = lazy(() => import('./pages/Irrigation').then(m => ({ default:
 const Relays = lazy(() => import('./pages/Relays').then(m => ({ default: m.Relays })));
 const Sensors = lazy(() => import('./pages/Sensors').then(m => ({ default: m.Sensors })));
 const SensorGroups = lazy(() => import('./pages/SensorGroups').then(m => ({ default: m.SensorGroups })));
+const VirtualSensors = lazy(() => import('./pages/VirtualSensors').then(m => ({ default: m.VirtualSensors })));
 const Automation = lazy(() => import('./pages/Automation').then(m => ({ default: m.Automation })));
 const Schedules = lazy(() => import('./pages/Schedules').then(m => ({ default: m.Schedules })));
 const Harvests = lazy(() => import('./pages/Harvests').then(m => ({ default: m.Harvests })));
@@ -121,6 +122,14 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <SensorGroups />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/virtual-sensors"
+        element={
+          <PrivateRoute>
+            <VirtualSensors />
           </PrivateRoute>
         }
       />

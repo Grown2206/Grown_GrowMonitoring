@@ -429,6 +429,46 @@ export interface SensorGroupStats {
   }>;
 }
 
+// Sprint 10: Virtual Sensors
+export type VirtualSensorType =
+  | 'vpd'
+  | 'dli'
+  | 'dew_point'
+  | 'heat_index'
+  | 'absolute_humidity'
+  | 'custom';
+
+export interface VirtualSensorConfig {
+  sourceSensorIds: number[];
+  params?: Record<string, any>;
+}
+
+export interface VirtualSensor {
+  id: number;
+  name: string;
+  type: VirtualSensorType;
+  sensorId: number;
+  description?: string;
+  formula?: string;
+  config: VirtualSensorConfig;
+  unit: string;
+  enabled: boolean;
+  updateIntervalMinutes: number;
+  lastCalculated?: string;
+  lastValue?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface VirtualSensorTypeInfo {
+  type: VirtualSensorType;
+  name: string;
+  description: string;
+  unit: string;
+  requiredSensors: number;
+  sensorTypes: string[];
+}
+
 // API Query Types (Sprint 8)
 export interface PaginationMeta {
   total: number;
