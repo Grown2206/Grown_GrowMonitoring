@@ -17,14 +17,18 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Checkbox,
 } from '@mui/material';
 import { plantsAPI, strainsAPI } from '../services/api';
 import { Plant, Strain, PaginationMeta } from '../types';
 import { Pagination } from '../components/Pagination';
+import { BatchOperationsDialog, BatchOperation } from '../components/BatchOperationsDialog';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import axios from 'axios';
 
 export function Plants() {
   const [plants, setPlants] = useState<Plant[]>([]);
@@ -51,6 +55,42 @@ export function Plants() {
   const [filterPhase, setFilterPhase] = useState<string>('all');
   const [filterActive, setFilterActive] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('-createdAt');
+
+  // Batch operations state
+  const [selectedPlants, setSelectedPlants] = useState<number[]>([]);
+  const [batchDialogOpen, setBatchDialogOpen] = useState(false);
+
+  const batchOperations: BatchOperation[] = [
+    {
+      action: 'updatePhase',
+      label: 'Phase ändern',
+      requiresData: true,
+      dataFields: [
+        {
+          name: 'phase',
+          label: 'Neue Phase',
+          type: 'select',
+          options: [
+            { value: 'germination', label: 'Keimung' },
+            { value: 'seedling', label: 'Sämling' },
+            { value: 'vegetative', label: 'Vegetativ' },
+            { value: 'flowering', label: 'Blüte' },
+            { value: 'harvested', label: 'Geerntet' },
+          ],
+        },
+      ],
+    },
+    {
+      action: 'toggleActive',
+      label: 'Status umschalten',
+      requiresData: false,
+    },
+    {
+      action: 'delete',
+      label: 'Löschen',
+      requiresData: false,
+    },
+  ];
 
   useEffect(() => {
     loadData();
@@ -153,17 +193,85 @@ export function Plants() {
     });
   }
 
+  async function handleBatchOperation(action: string, data?: any) {
+    try {
+      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+      const token = localStorage.getItem('token');
+
+      await axios.post(
+        `${API_URL}/api/batch/plants`,
+        {
+          operations: [
+            {
+              action,
+              ids: selectedPlants,
+              data,
+            },
+          ],
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Reset selection and reload
+      setSelectedPlants([]);
+      loadData();
+    } catch (error) {
+      console.error('Batch operation failed:', error);
+      throw error;
+    }
+  }
+
+  function togglePlantSelection(id: number) {
+    setSelectedPlants((prev) =>
+      prev.includes(id) ? prev.filter((plantId) => plantId !== id) : [...prev, id]
+    );
+  }
+
+  function toggleSelectAll() {
+    if (selectedPlants.length === plants.length) {
+      setSelectedPlants([]);
+    } else {
+      setSelectedPlants(plants.map((p) => p.id));
+    }
+  }
+
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4">Pflanzen</Typography>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={() => openDialog()}>
-          Pflanze hinzufügen
-        </Button>
+        <Box display="flex" gap={2}>
+          {selectedPlants.length > 0 && (
+            <Button
+              variant="outlined"
+              startIcon={<PlaylistAddCheckIcon />}
+              onClick={() => setBatchDialogOpen(true)}
+              color="secondary"
+            >
+              Batch ({selectedPlants.length})
+            </Button>
+          )}
+          <Button variant="contained" startIcon={<AddIcon />} onClick={() => openDialog()}>
+            Pflanze hinzufügen
+          </Button>
+        </Box>
       </Box>
 
       {/* Filters and Sorting */}
-      <Box display="flex" gap={2} mb={3}>
+      <Box display="flex" gap={2} mb={3} alignItems="center">
+        {plants.length > 0 && (
+          <Box>
+            <Checkbox
+              checked={selectedPlants.length === plants.length && plants.length > 0}
+              indeterminate={selectedPlants.length > 0 && selectedPlants.length < plants.length}
+              onChange={toggleSelectAll}
+            />
+          </Box>
+        )}
         <FormControl size="small" sx={{ minWidth: 150 }}>
           <InputLabel>Phase</InputLabel>
           <Select
@@ -219,10 +327,20 @@ export function Plants() {
       <Grid container spacing={3}>
         {plants.map((plant) => (
           <Grid item xs={12} sm={6} md={4} key={plant.id}>
-            <Card>
+            <Card
+              sx={{
+                border: selectedPlants.includes(plant.id) ? '2px solid #1976d2' : 'none',
+              }}
+            >
               <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="start" mb={2}>
-                  <Typography variant="h6">{plant.name}</Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Checkbox
+                      checked={selectedPlants.includes(plant.id)}
+                      onChange={() => togglePlantSelection(plant.id)}
+                    />
+                    <Typography variant="h6">{plant.name}</Typography>
+                  </Box>
                   <Box>
                     <IconButton size="small" onClick={() => openDialog(plant)}>
                       <EditIcon />
@@ -265,7 +383,17 @@ export function Plants() {
         />
       )}
 
-      {/* Dialog */}
+      {/* Batch Operations Dialog */}
+      <BatchOperationsDialog
+        open={batchDialogOpen}
+        onClose={() => setBatchDialogOpen(false)}
+        onExecute={handleBatchOperation}
+        selectedIds={selectedPlants}
+        operations={batchOperations}
+        entityName="Pflanzen"
+      />
+
+      {/* Plant Edit/Create Dialog */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>{editingPlant ? 'Pflanze bearbeiten' : 'Neue Pflanze'}</DialogTitle>
         <DialogContent>
