@@ -6,6 +6,7 @@ import FunctionsIcon from '@mui/icons-material/Functions';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import MergeIcon from '@mui/icons-material/Merge';
 
 // Lazy load tabs
 const Sensors = lazy(() => import('./Sensors').then(m => ({ default: m.Sensors })));
@@ -13,6 +14,7 @@ const SensorGroups = lazy(() => import('./SensorGroups').then(m => ({ default: m
 const VirtualSensors = lazy(() => import('./VirtualSensors').then(m => ({ default: m.VirtualSensors })));
 const SensorHealthMonitoring = lazy(() => import('./SensorHealthMonitoring').then(m => ({ default: m.SensorHealthMonitoring })));
 const SensorBenchmark = lazy(() => import('./SensorBenchmark').then(m => ({ default: m.SensorBenchmark })));
+const SensorFusion = lazy(() => import('./SensorFusion').then(m => ({ default: m.SensorFusion })));
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -50,6 +52,7 @@ export function SensorsHub() {
           <Tab icon={<SensorsIcon />} label="Sensoren" iconPosition="start" />
           <Tab icon={<GroupWorkIcon />} label="Sensor Gruppen" iconPosition="start" />
           <Tab icon={<FunctionsIcon />} label="Virtuelle Sensoren" iconPosition="start" />
+          <Tab icon={<MergeIcon />} label="Sensor Fusion" iconPosition="start" />
           <Tab icon={<HealthAndSafetyIcon />} label="Health Monitoring" iconPosition="start" />
           <Tab icon={<AssessmentIcon />} label="Benchmarking" iconPosition="start" />
         </Tabs>
@@ -72,9 +75,12 @@ export function SensorsHub() {
           <VirtualSensors />
         </TabPanel>
         <TabPanel value={activeTab} index={3}>
-          <SensorHealthMonitoring />
+          <SensorFusion />
         </TabPanel>
         <TabPanel value={activeTab} index={4}>
+          <SensorHealthMonitoring />
+        </TabPanel>
+        <TabPanel value={activeTab} index={5}>
           <SensorBenchmark />
         </TabPanel>
       </Suspense>
