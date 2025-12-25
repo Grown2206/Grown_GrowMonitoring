@@ -51,6 +51,7 @@ import costTrackingRoutes from './routes/costTracking.routes';
 import yieldPredictionRoutes from './routes/yieldPrediction.routes';
 import anomalyDetectionRoutes from './routes/anomalyDetection.routes';
 import webhookRoutes from './routes/webhook.routes';
+import recentItemsRoutes from './routes/recentItems.routes';
 import { createApolloServer, graphqlHandler } from './graphql/server';
 import { authenticateToken } from './middleware/auth';
 
@@ -130,6 +131,7 @@ app.use('/api/cost-tracking', costTrackingRoutes);
 app.use('/api/yield-prediction', yieldPredictionRoutes);
 app.use('/api/anomaly-detection', anomalyDetectionRoutes);
 app.use('/api/webhooks', webhookRoutes);
+app.use('/api/recent-items', recentItemsRoutes);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -175,7 +177,7 @@ async function start() {
     // Start server
     server.listen(PORT, () => {
       console.log('═══════════════════════════════════════════════');
-      console.log('  🌱 Grow Monitoring System v2.28.0');
+      console.log('  🌱 Grow Monitoring System v2.29.0');
       console.log('═══════════════════════════════════════════════');
       console.log(`  Server: http://localhost:${PORT}`);
       console.log(`  GraphQL: http://localhost:${PORT}/graphql`);
