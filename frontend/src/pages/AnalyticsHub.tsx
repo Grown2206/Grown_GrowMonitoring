@@ -4,11 +4,13 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import EuroIcon from '@mui/icons-material/Euro';
 
 // Lazy load tabs
 const Analytics = lazy(() => import('./Analytics').then(m => ({ default: m.Analytics })));
 const AnalyticsAdvanced = lazy(() => import('./AnalyticsAdvanced').then(m => ({ default: m.AnalyticsAdvanced })));
 const ComparisonAnalytics = lazy(() => import('./ComparisonAnalytics').then(m => ({ default: m.ComparisonAnalytics })));
+const CostTracking = lazy(() => import('./CostTracking').then(m => ({ default: m.CostTracking })));
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,6 +49,7 @@ export function AnalyticsHub() {
           <Tab icon={<TimelineIcon />} label="Erweiterte Analytics" iconPosition="start" />
           <Tab icon={<CompareArrowsIcon />} label="Vergleiche" iconPosition="start" />
           <Tab icon={<AssessmentIcon />} label="Prognosen" iconPosition="start" />
+          <Tab icon={<EuroIcon />} label="Kosten & ROI" iconPosition="start" />
         </Tabs>
       </Box>
 
@@ -78,6 +81,9 @@ export function AnalyticsHub() {
               </Box>
             </Box>
           </Box>
+        </TabPanel>
+        <TabPanel value={activeTab} index={4}>
+          <CostTracking />
         </TabPanel>
       </Suspense>
     </Box>
