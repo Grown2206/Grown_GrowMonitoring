@@ -38,7 +38,7 @@ export const authAPI = {
 
 // Plants
 export const plantsAPI = {
-  getAll: () => api.get('/plants'),
+  getAll: (params?: any) => api.get('/plants', { params }),
   getOne: (id: number) => api.get(`/plants/${id}`),
   create: (data: any) => api.post('/plants', data),
   update: (id: number, data: any) => api.put(`/plants/${id}`, data),
@@ -55,6 +55,7 @@ export const strainsAPI = {
 
 // Sensors
 export const sensorsAPI = {
+  getAll: (params?: any) => api.get('/sensors', { params }),
   getLatest: (limit?: number) => api.get('/sensors/latest', { params: { limit } }),
   getHistory: (sensorId?: number, hours?: number) => api.get('/sensors/history', { params: { sensorId, hours } }),
   getStatus: () => api.get('/sensors/status'),
@@ -81,7 +82,7 @@ export const irrigationAPI = {
 
 // Alerts
 export const alertsAPI = {
-  getAll: () => api.get('/alerts'),
+  getAll: (params?: any) => api.get('/alerts', { params }),
   create: (data: any) => api.post('/alerts', data),
   update: (id: number, data: any) => api.put(`/alerts/${id}`, data),
   delete: (id: number) => api.delete(`/alerts/${id}`),
@@ -96,7 +97,7 @@ export const alertsAPI = {
 
 // Notes
 export const notesAPI = {
-  getAll: (plantId?: number) => api.get('/notes', { params: { plantId } }),
+  getAll: (params?: any) => api.get('/notes', { params }),
   create: (data: any) => api.post('/notes', data),
   update: (id: number, data: any) => api.put(`/notes/${id}`, data),
   delete: (id: number) => api.delete(`/notes/${id}`),

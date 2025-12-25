@@ -388,3 +388,26 @@ export interface MQTTStatus {
   publishedEntities: number;
   homeAssistantDiscovery: boolean;
 }
+
+// API Query Types (Sprint 8)
+export interface PaginationMeta {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  pagination: PaginationMeta;
+}
+
+export interface QueryParams {
+  page?: number;
+  limit?: number;
+  sort?: string | string[];
+  fields?: string;
+  filter?: Record<string, any>;
+}

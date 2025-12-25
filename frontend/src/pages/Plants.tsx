@@ -14,16 +14,29 @@ import {
   MenuItem,
   Chip,
   IconButton,
+  FormControl,
+  InputLabel,
+  Select,
 } from '@mui/material';
 import { plantsAPI, strainsAPI } from '../services/api';
-import { Plant, Strain } from '../types';
+import { Plant, Strain, PaginationMeta } from '../types';
+import { Pagination } from '../components/Pagination';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 export function Plants() {
   const [plants, setPlants] = useState<Plant[]>([]);
   const [strains, setStrains] = useState<Strain[]>([]);
+  const [pagination, setPagination] = useState<PaginationMeta>({
+    total: 0,
+    page: 1,
+    limit: 12,
+    totalPages: 1,
+    hasNext: false,
+    hasPrev: false,
+  });
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingPlant, setEditingPlant] = useState<Plant | null>(null);
   const [formData, setFormData] = useState({
@@ -34,14 +47,46 @@ export function Plants() {
     plantedDate: '',
   });
 
+  // Filter and sort state
+  const [filterPhase, setFilterPhase] = useState<string>('all');
+  const [filterActive, setFilterActive] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<string>('-createdAt');
+
   useEffect(() => {
     loadData();
-  }, []);
+  }, [pagination.page, pagination.limit, filterPhase, filterActive, sortBy]);
 
   async function loadData() {
     try {
-      const [plantsRes, strainsRes] = await Promise.all([plantsAPI.getAll(), strainsAPI.getAll()]);
-      setPlants(plantsRes.data);
+      // Build query params
+      const params: any = {
+        page: pagination.page,
+        limit: pagination.limit,
+        sort: sortBy,
+      };
+
+      // Add filters
+      if (filterPhase !== 'all') {
+        params['filter[phase]'] = filterPhase;
+      }
+      if (filterActive !== 'all') {
+        params['filter[isActive]'] = filterActive === 'active';
+      }
+
+      const [plantsRes, strainsRes] = await Promise.all([
+        plantsAPI.getAll(params),
+        strainsAPI.getAll(),
+      ]);
+
+      // Check if response has pagination
+      if (plantsRes.data.data && plantsRes.data.pagination) {
+        setPlants(plantsRes.data.data);
+        setPagination(plantsRes.data.pagination);
+      } else {
+        // Fallback for non-paginated response
+        setPlants(Array.isArray(plantsRes.data) ? plantsRes.data : []);
+      }
+
       setStrains(strainsRes.data);
     } catch (error) {
       console.error('Failed to load plants:', error);
@@ -117,6 +162,60 @@ export function Plants() {
         </Button>
       </Box>
 
+      {/* Filters and Sorting */}
+      <Box display="flex" gap={2} mb={3}>
+        <FormControl size="small" sx={{ minWidth: 150 }}>
+          <InputLabel>Phase</InputLabel>
+          <Select
+            value={filterPhase}
+            label="Phase"
+            onChange={(e) => {
+              setFilterPhase(e.target.value);
+              setPagination({ ...pagination, page: 1 });
+            }}
+          >
+            <MenuItem value="all">Alle Phasen</MenuItem>
+            <MenuItem value="germination">Keimung</MenuItem>
+            <MenuItem value="seedling">Sämling</MenuItem>
+            <MenuItem value="vegetative">Vegetativ</MenuItem>
+            <MenuItem value="flowering">Blüte</MenuItem>
+            <MenuItem value="harvested">Geerntet</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl size="small" sx={{ minWidth: 150 }}>
+          <InputLabel>Status</InputLabel>
+          <Select
+            value={filterActive}
+            label="Status"
+            onChange={(e) => {
+              setFilterActive(e.target.value);
+              setPagination({ ...pagination, page: 1 });
+            }}
+          >
+            <MenuItem value="all">Alle</MenuItem>
+            <MenuItem value="active">Aktiv</MenuItem>
+            <MenuItem value="inactive">Inaktiv</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl size="small" sx={{ minWidth: 200 }}>
+          <InputLabel>Sortierung</InputLabel>
+          <Select
+            value={sortBy}
+            label="Sortierung"
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <MenuItem value="-createdAt">Neueste zuerst</MenuItem>
+            <MenuItem value="createdAt">Älteste zuerst</MenuItem>
+            <MenuItem value="name">Name (A-Z)</MenuItem>
+            <MenuItem value="-name">Name (Z-A)</MenuItem>
+            <MenuItem value="phase">Phase</MenuItem>
+            <MenuItem value="-plantedDate">Pflanzdatum (neu-alt)</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
       <Grid container spacing={3}>
         {plants.map((plant) => (
           <Grid item xs={12} sm={6} md={4} key={plant.id}>
@@ -156,6 +255,15 @@ export function Plants() {
           </Grid>
         ))}
       </Grid>
+
+      {/* Pagination */}
+      {pagination.total > 0 && (
+        <Pagination
+          pagination={pagination}
+          onPageChange={(page) => setPagination({ ...pagination, page })}
+          onLimitChange={(limit) => setPagination({ ...pagination, page: 1, limit })}
+        />
+      )}
 
       {/* Dialog */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
