@@ -73,9 +73,10 @@ export const GrowJournal: React.FC = () => {
   const loadPlants = async () => {
     try {
       const response = await plantsAPI.getAll();
-      setPlants(response.data);
-      if (response.data.length > 0 && !selectedPlant) {
-        setSelectedPlant(response.data[0].id);
+      const plantsData = Array.isArray(response.data) ? response.data : [];
+      setPlants(plantsData);
+      if (plantsData.length > 0 && !selectedPlant) {
+        setSelectedPlant(plantsData[0].id);
       }
     } catch (error) {
       console.error('Error loading plants:', error);

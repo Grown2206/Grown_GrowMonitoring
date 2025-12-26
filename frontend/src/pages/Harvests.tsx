@@ -72,8 +72,8 @@ export function Harvests() {
   async function loadData() {
     try {
       const [harvestsRes, plantsRes] = await Promise.all([harvestsAPI.getAll(), plantsAPI.getAll()]);
-      setHarvests(harvestsRes.data);
-      setPlants(plantsRes.data);
+      setHarvests(Array.isArray(harvestsRes.data) ? harvestsRes.data : []);
+      setPlants(Array.isArray(plantsRes.data) ? plantsRes.data : []);
     } catch (err) {
       showError('Fehler beim Laden der Ernten');
     }

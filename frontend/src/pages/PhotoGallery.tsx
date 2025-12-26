@@ -122,7 +122,7 @@ export function PhotoGallery() {
   async function loadData() {
     try {
       const plantsRes = await plantsAPI.getAll();
-      setPlants(plantsRes.data);
+      setPlants(Array.isArray(plantsRes.data) ? plantsRes.data : []);
       // In a real app, fetch photos from API
       setPhotos(demoPhotos);
     } catch (err) {

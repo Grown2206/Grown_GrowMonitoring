@@ -29,9 +29,9 @@ export function Analytics() {
         relaysAPI.getAll(),
       ]);
 
-      setSensorHistory(sensorRes.data);
-      setPlants(plantsRes.data);
-      setRelays(relaysRes.data);
+      setSensorHistory(Array.isArray(sensorRes.data) ? sensorRes.data : []);
+      setPlants(Array.isArray(plantsRes.data) ? plantsRes.data : []);
+      setRelays(Array.isArray(relaysRes.data) ? relaysRes.data : []);
     } catch (error) {
       console.error('Failed to load analytics:', error);
     }
