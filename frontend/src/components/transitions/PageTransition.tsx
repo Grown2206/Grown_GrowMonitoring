@@ -21,6 +21,15 @@ export function PageTransition({
   const [displayLocation, setDisplayLocation] = useState(location);
   const [transitionStage, setTransitionStage] = useState<'enter' | 'exit'>('enter');
 
+  // Always call the hook - Rules of Hooks requirement
+  const animationConfig = {
+    type: (animation === 'none' ? 'fade' : animation) as 'fade' | 'slide-up' | 'scale',
+    duration,
+    autoPlay: transitionStage === 'enter',
+  };
+
+  const { style } = useAnimation(animationConfig);
+
   useEffect(() => {
     if (location !== displayLocation) {
       setTransitionStage('exit');
@@ -38,17 +47,10 @@ export function PageTransition({
     }
   }, [transitionStage, location, duration]);
 
+  // Return early AFTER all hooks are called
   if (animation === 'none') {
     return <>{children}</>;
   }
-
-  const animationConfig = {
-    type: animation as 'fade' | 'slide-up' | 'scale',
-    duration,
-    autoPlay: transitionStage === 'enter',
-  };
-
-  const { style } = useAnimation(animationConfig);
 
   return (
     <Box
