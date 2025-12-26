@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 26. Dezember 2024
-**Version:** 2.45.0 (Backend + Frontend)
-**Fortschritt gesamt:** 71/140 Features (50.7%)
+**Version:** 2.46.0 (Backend + Frontend)
+**Fortschritt gesamt:** 72/140 Features (51.4%)
 
 ---
 
@@ -726,7 +726,7 @@
 
 ---
 
-## 🎨 UI/UX Verbesserungen (7/9 - 77.8%)
+## 🎨 UI/UX Verbesserungen (8/9 - 88.9%)
 
 ### Priorität: HOCH
 - [ ] **Erweiterte Customization** 🎯 SPRINT 3
@@ -860,7 +860,25 @@
   - [x] TypeScript type safety with generics
   - **Aufwand:** 25h | **Sprint:** 46 | **Tatsächlich:** ~2.5h
 
-**Gesamt UI/UX:** 7/9 (75h verbleibend)
+- [x] **Form Builder Components** ✅ FERTIG (26.12.2024)
+  - [x] useForm hook with comprehensive validation (8 rule types)
+  - [x] ValidationRule types (required, email, min, max, minLength, maxLength, pattern, custom)
+  - [x] Form state management (values, errors, touched, isSubmitting)
+  - [x] Field-level and form-level validation
+  - [x] FormBuilder component for schema-driven forms
+  - [x] Dynamic layout support (grid, inline, single column)
+  - [x] FormField unified component (13 field types)
+  - [x] Field types: text, number, email, password, textarea, select, checkbox, radio, switch, slider, autocomplete, date, time, datetime
+  - [x] FormWizard multi-step form component
+  - [x] Step navigation with validation
+  - [x] Progress tracking and visualization
+  - [x] Conditional step rendering
+  - [x] useWizard hook for step management
+  - [x] Predefined validation rule builders
+  - [x] Example form schemas (user registration, plant setup)
+  - **Aufwand:** 25h | **Sprint:** 47 | **Tatsächlich:** ~2.5h
+
+**Gesamt UI/UX:** 8/9 (50h verbleibend)
 
 ---
 
@@ -1000,6 +1018,7 @@
 - Sprint 44: Enhanced User Feedback ✅
 - Sprint 45: Advanced Input Components ✅
 - Sprint 46: Data Table Components ✅
+- Sprint 47: Form Builder Components ✅
 
 ---
 
