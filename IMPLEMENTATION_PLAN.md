@@ -2,9 +2,9 @@
 
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
-**Letzte Aktualisierung:** 25. Dezember 2024
-**Version:** 2.38.0 (Backend + Frontend)
-**Fortschritt gesamt:** 64/140 Features (45.7%)
+**Letzte Aktualisierung:** 26. Dezember 2024
+**Version:** 2.39.0 (Backend + Frontend)
+**Fortschritt gesamt:** 65/140 Features (46.4%)
 
 ---
 
@@ -726,7 +726,7 @@
 
 ---
 
-## 🎨 UI/UX Verbesserungen (0/9 - 0%)
+## 🎨 UI/UX Verbesserungen (1/9 - 11.1%)
 
 ### Priorität: HOCH
 - [ ] **Erweiterte Customization** 🎯 SPRINT 3
@@ -744,11 +744,23 @@
 - [ ] **Dashboard-Builder** - 50h
 
 ### Priorität: MITTEL
-- [ ] **Dark Mode Enhancements** - 20h
+- [x] **Dark Mode Enhancements** ✅ FERTIG (26.12.2024)
+  - [x] Enhanced ThemeContext with Auto mode
+  - [x] System preference detection (prefers-color-scheme)
+  - [x] Smooth theme transitions (configurable)
+  - [x] High contrast mode support
+  - [x] Custom accent colors (8 colors)
+  - [x] ThemeSettings dialog component
+  - [x] Better dark mode shadows and colors
+  - [x] useThemeAwareStyles hook
+  - [x] Theme preferences persistence (LocalStorage)
+  - [x] 3 theme modes (Light, Dark, Auto)
+  - **Aufwand:** 20h | **Sprint:** 40 | **Tatsächlich:** ~2h
+
 - [ ] **Animationen** - 25h
 - [ ] **Barrierefreiheit** - 30h
 
-**Gesamt UI/UX:** 0/9 (200h geschätzt)
+**Gesamt UI/UX:** 1/9 (180h verbleibend)
 
 ---
 
@@ -870,7 +882,7 @@
 
 **Tatsächlicher Aufwand gesamt:** ~18h (statt geschätzte 50h = 64% Zeitersparnis!)
 
-**Sprints 30-39 abgeschlossen:**
+**Sprints 30-40 abgeschlossen:**
 - Sprint 30: Recent Items ✅
 - Sprint 31: Quick-Add Buttons ✅
 - Sprint 32: Keyboard Shortcuts ✅
@@ -881,6 +893,7 @@
 - Sprint 37: Search Enhancements ✅
 - Sprint 38: Bulk-Aktionen ✅
 - Sprint 39: Undo/Redo ✅
+- Sprint 40: Dark Mode Enhancements ✅
 
 ---
 

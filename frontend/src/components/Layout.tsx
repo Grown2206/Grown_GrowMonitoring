@@ -12,6 +12,7 @@ import {
   Toolbar,
   Typography,
   Container,
+  Tooltip,
 } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -30,9 +31,12 @@ import AutoModeIcon from '@mui/icons-material/AutoMode';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import BrightnessAutoIcon from '@mui/icons-material/BrightnessAuto';
+import PaletteIcon from '@mui/icons-material/Palette';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import BuildIcon from '@mui/icons-material/Build';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
+import { ThemeSettings } from './ThemeSettings';
 
 const drawerWidth = 240;
 
@@ -50,10 +54,11 @@ const menuItems = [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [themeSettingsOpen, setThemeSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
-  const { mode, toggleMode } = useThemeMode();
+  const { mode, actualMode, toggleMode } = useThemeMode();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -62,6 +67,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  const getModeIcon = () => {
+    switch (mode) {
+      case 'light':
+        return <Brightness7Icon />;
+      case 'dark':
+        return <Brightness4Icon />;
+      case 'auto':
+        return <BrightnessAutoIcon />;
+      default:
+        return <Brightness4Icon />;
+    }
   };
 
   const drawer = (
@@ -109,9 +127,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
             Grow Monitoring System
           </Typography>
-          <IconButton onClick={toggleMode} color="inherit" sx={{ mr: 2 }}>
-            {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
+          <Tooltip title={`Theme-Modus: ${mode === 'auto' ? `Auto (${actualMode})` : mode}`}>
+            <IconButton onClick={toggleMode} color="inherit">
+              {getModeIcon()}
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Theme-Einstellungen">
+            <IconButton onClick={() => setThemeSettingsOpen(true)} color="inherit" sx={{ mr: 2 }}>
+              <PaletteIcon />
+            </IconButton>
+          </Tooltip>
           <Typography variant="body2">{user?.username}</Typography>
         </Toolbar>
       </AppBar>
@@ -145,6 +170,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Toolbar />
         <Container maxWidth="xl">{children}</Container>
       </Box>
+
+      {/* Theme Settings Dialog */}
+      <ThemeSettings open={themeSettingsOpen} onClose={() => setThemeSettingsOpen(false)} />
     </Box>
   );
 }
