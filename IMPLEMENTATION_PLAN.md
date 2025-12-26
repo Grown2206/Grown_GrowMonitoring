@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 26. Dezember 2024
-**Version:** 2.40.0 (Backend + Frontend)
-**Fortschritt gesamt:** 66/140 Features (47.1%)
+**Version:** 2.41.0 (Backend + Frontend)
+**Fortschritt gesamt:** 67/140 Features (47.9%)
 
 ---
 
@@ -726,7 +726,7 @@
 
 ---
 
-## 🎨 UI/UX Verbesserungen (2/9 - 22.2%)
+## 🎨 UI/UX Verbesserungen (3/9 - 33.3%)
 
 ### Priorität: HOCH
 - [ ] **Erweiterte Customization** 🎯 SPRINT 3
@@ -773,9 +773,26 @@
   - [x] Comprehensive animation utilities
   - **Aufwand:** 25h | **Sprint:** 41 | **Tatsächlich:** ~2.5h
 
-- [ ] **Barrierefreiheit** - 30h
+- [x] **Barrierefreiheit** ✅ FERTIG (26.12.2024)
+  - [x] useFocusTrap hook (modal focus management)
+  - [x] useAnnouncer hook (screen reader announcements)
+  - [x] useKeyboardNav hook (arrow key navigation)
+  - [x] useSkipLink hook (skip navigation)
+  - [x] useAriaAttributes hook (dynamic ARIA)
+  - [x] useReducedMotion hook (motion preferences)
+  - [x] useFocusVisible hook (keyboard vs mouse)
+  - [x] useId hook (unique IDs)
+  - [x] SkipLinks component (keyboard navigation)
+  - [x] VisuallyHidden component (screen reader only)
+  - [x] LiveRegion component (announcements)
+  - [x] FocusIndicator component (global focus rings)
+  - [x] FocusTrap component (trap focus)
+  - [x] AccessibleIconButton component
+  - [x] Integrated into App.tsx
+  - [x] Added IDs for skip links (main-content, main-navigation)
+  - **Aufwand:** 30h | **Sprint:** 42 | **Tatsächlich:** ~3h
 
-**Gesamt UI/UX:** 2/9 (155h verbleibend)
+**Gesamt UI/UX:** 2/9 (125h verbleibend)
 
 ---
 
@@ -910,6 +927,7 @@
 - Sprint 39: Undo/Redo ✅
 - Sprint 40: Dark Mode Enhancements ✅
 - Sprint 41: Animationen ✅
+- Sprint 42: Accessibility ✅
 
 ---
 

@@ -83,7 +83,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   };
 
   const drawer = (
-    <Box>
+    <Box id="main-navigation">
       <Toolbar>
         <Typography variant="h6" noWrap>
           🌱 Grow Monitor
@@ -166,7 +166,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </Drawer>
       </Box>
 
-      <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+      <Box component="main" id="main-content" tabIndex={-1} sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
         <Toolbar />
         <Container maxWidth="xl">{children}</Container>
       </Box>

@@ -8,6 +8,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { Layout } from './components/Layout';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { ShortcutHelp } from './components/ShortcutHelp';
+import { SkipLinks, FocusIndicator } from './components/accessibility';
 import { CircularProgress, Box } from '@mui/material';
 
 // Eager load critical pages
@@ -163,6 +164,8 @@ function App() {
             <AuthProvider>
               <KeyboardShortcutsProvider>
                 <ErrorBoundary>
+                  <SkipLinks />
+                  <FocusIndicator />
                   <OfflineIndicator />
                   <ShortcutHelp />
                   <AppRoutes />
