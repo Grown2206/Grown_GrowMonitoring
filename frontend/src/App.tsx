@@ -9,7 +9,8 @@ import { Layout } from './components/Layout';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { ShortcutHelp } from './components/ShortcutHelp';
 import { SkipLinks, FocusIndicator } from './components/accessibility';
-import { CircularProgress, Box } from '@mui/material';
+import { LoadingState, SuspenseFallback, NavigationProgress } from './components/transitions';
+import { Box } from '@mui/material';
 
 // Eager load critical pages
 import { Login } from './pages/Login';
@@ -31,20 +32,14 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-        <CircularProgress />
+        <LoadingState message="Authenticating..." variant="circular" size="large" />
       </Box>
     );
   }
 
   return user ? (
     <Layout>
-      <Suspense
-        fallback={
-          <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-            <CircularProgress />
-          </Box>
-        }
-      >
+      <Suspense fallback={<SuspenseFallback message="Loading page..." />}>
         {children}
       </Suspense>
     </Layout>
@@ -166,6 +161,7 @@ function App() {
                 <ErrorBoundary>
                   <SkipLinks />
                   <FocusIndicator />
+                  <NavigationProgress />
                   <OfflineIndicator />
                   <ShortcutHelp />
                   <AppRoutes />

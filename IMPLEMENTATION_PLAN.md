@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 26. Dezember 2024
-**Version:** 2.41.0 (Backend + Frontend)
-**Fortschritt gesamt:** 67/140 Features (47.9%)
+**Version:** 2.42.0 (Backend + Frontend)
+**Fortschritt gesamt:** 68/140 Features (48.6%)
 
 ---
 
@@ -928,6 +928,7 @@
 - Sprint 40: Dark Mode Enhancements ✅
 - Sprint 41: Animationen ✅
 - Sprint 42: Accessibility ✅
+- Sprint 43: Page Transitions ✅
 
 ---
 
