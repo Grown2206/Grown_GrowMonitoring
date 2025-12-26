@@ -1,6 +1,6 @@
 {
   "name": "grow-monitoring-backend",
-  "version": "2.44.0",
+  "version": "2.45.0",
   "description": "Backend for Grow Monitoring System",
   "main": "dist/server.js",
   "scripts": {

@@ -3,8 +3,8 @@
 ## 📊 Status: Phase 1 - Foundation Enhancement
 
 **Letzte Aktualisierung:** 26. Dezember 2024
-**Version:** 2.44.0 (Backend + Frontend)
-**Fortschritt gesamt:** 70/140 Features (50.0%)
+**Version:** 2.45.0 (Backend + Frontend)
+**Fortschritt gesamt:** 71/140 Features (50.7%)
 
 ---
 
@@ -726,7 +726,7 @@
 
 ---
 
-## 🎨 UI/UX Verbesserungen (6/9 - 66.7%)
+## 🎨 UI/UX Verbesserungen (7/9 - 77.8%)
 
 ### Priorität: HOCH
 - [ ] **Erweiterte Customization** 🎯 SPRINT 3
@@ -843,7 +843,24 @@
   - [x] Material Design color palette presets
   - **Aufwand:** 30h | **Sprint:** 45 | **Tatsächlich:** ~2.5h
 
-**Gesamt UI/UX:** 6/9 (90h verbleibend)
+- [x] **Data Table Components** ✅ FERTIG (26.12.2024)
+  - [x] useTable hook with sorting, filtering, pagination, and selection
+  - [x] useTableSort for simple table sorting
+  - [x] useTablePagination for pagination management
+  - [x] EnhancedTable with full features (sorting, pagination, selection, search)
+  - [x] SimpleTable for basic data display
+  - [x] DataGrid with column management and inline editing
+  - [x] Column visibility toggle
+  - [x] Inline row editing with save/cancel
+  - [x] Row action menus
+  - [x] Sticky header support
+  - [x] Dense padding option
+  - [x] StatusChip for status display
+  - [x] Table formatting utilities (date, number)
+  - [x] TypeScript type safety with generics
+  - **Aufwand:** 25h | **Sprint:** 46 | **Tatsächlich:** ~2.5h
+
+**Gesamt UI/UX:** 7/9 (75h verbleibend)
 
 ---
 
@@ -982,6 +999,7 @@
 - Sprint 43: Page Transitions ✅
 - Sprint 44: Enhanced User Feedback ✅
 - Sprint 45: Advanced Input Components ✅
+- Sprint 46: Data Table Components ✅
 
 ---
 
