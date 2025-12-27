@@ -49,7 +49,7 @@ export interface QualityCheck {
   overallScore: number;
   passed: boolean;
   notes?: string;
-  corrective Actions?: string;
+  correctiveActions?: string;
 }
 
 export interface QualityCriteria {

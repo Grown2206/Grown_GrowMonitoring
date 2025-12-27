@@ -138,7 +138,7 @@ export function ReportViewer({
         </Typography>
         <Paper sx={{ p: 2 }}>
           <ResponsiveContainer width="100%" height={300}>
-            {chartType === 'line' && (
+            {chartType === 'line' ? (
               <LineChart data={sampleData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
@@ -148,8 +148,7 @@ export function ReportViewer({
                 <Line type="monotone" dataKey="value" stroke="#8884d8" strokeWidth={2} />
                 <Line type="monotone" dataKey="temperature" stroke="#82ca9d" strokeWidth={2} />
               </LineChart>
-            )}
-            {chartType === 'bar' && (
+            ) : chartType === 'bar' ? (
               <BarChart data={sampleData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
@@ -159,8 +158,7 @@ export function ReportViewer({
                 <Bar dataKey="value" fill="#8884d8" />
                 <Bar dataKey="humidity" fill="#82ca9d" />
               </BarChart>
-            )}
-            {chartType === 'pie' && (
+            ) : chartType === 'pie' ? (
               <PieChart>
                 <Pie
                   data={pieData}
@@ -178,7 +176,7 @@ export function ReportViewer({
                 </Pie>
                 <ChartTooltip />
               </PieChart>
-            )}
+            ) : null}
           </ResponsiveContainer>
         </Paper>
       </Box>

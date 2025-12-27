@@ -42,7 +42,7 @@ import {
   ExpandMore as ExpandIcon,
   Security as SecurityIcon,
   People as PeopleIcon,
-  Eco as PlantIcon,
+  LocalFlorist as PlantIcon,
   Sensors as SensorIcon,
   BarChart as ReportIcon,
   Settings as SettingsIcon,
@@ -318,7 +318,7 @@ export function RolePermissions({
                           <IconButton
                             size="small"
                             onClick={() => handleDeleteRole(role)}
-                            disabled={role.userCount && role.userCount > 0}
+                            disabled={!!(role.userCount && role.userCount > 0)}
                           >
                             <DeleteIcon fontSize="small" />
                           </IconButton>

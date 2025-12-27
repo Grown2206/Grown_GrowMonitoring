@@ -218,6 +218,7 @@ export function PerformanceMonitor({
   };
 
   const overallStatus = getOverallStatus();
+  const alertSeverity = overallStatus === 'good' ? 'success' : overallStatus;
 
   return (
     <Box>
@@ -244,7 +245,7 @@ export function PerformanceMonitor({
 
       {/* Overall Status */}
       <Alert
-        severity={overallStatus}
+        severity={alertSeverity as 'success' | 'warning' | 'error'}
         icon={getStatusIcon(overallStatus)}
         sx={{ mb: 3 }}
       >
@@ -415,8 +416,8 @@ export function PerformanceMonitor({
                   title={vital.name}
                   action={
                     <Chip
-                      label={vital.metric.status.toUpperCase()}
-                      color={getStatusColor(vital.metric.status) as any}
+                      label={vital.metric!.status.toUpperCase()}
+                      color={getStatusColor(vital.metric!.status) as any}
                       size="small"
                     />
                   }
@@ -428,17 +429,17 @@ export function PerformanceMonitor({
 
                   <Stack direction="row" alignItems="baseline" spacing={1} sx={{ mb: 2 }}>
                     <Typography variant="h3">
-                      {vital.metric.value.toFixed(vital.metric.unit === 'ms' ? 0 : 2)}
+                      {vital.metric!.value.toFixed(vital.metric!.unit === 'ms' ? 0 : 2)}
                     </Typography>
                     <Typography variant="h6" color="text.secondary">
-                      {vital.metric.unit}
+                      {vital.metric!.unit}
                     </Typography>
                   </Stack>
 
                   <LinearProgress
                     variant="determinate"
-                    value={Math.min((vital.metric.value / vital.metric.threshold) * 100, 100)}
-                    color={getStatusColor(vital.metric.status) as any}
+                    value={Math.min((vital.metric!.value / vital.metric!.threshold) * 100, 100)}
+                    color={getStatusColor(vital.metric!.status) as any}
                     sx={{ height: 8, borderRadius: 1 }}
                   />
 
@@ -447,7 +448,7 @@ export function PerformanceMonitor({
                       Current
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      Threshold: {vital.metric.threshold} {vital.metric.unit}
+                      Threshold: {vital.metric!.threshold} {vital.metric!.unit}
                     </Typography>
                   </Stack>
                 </CardContent>

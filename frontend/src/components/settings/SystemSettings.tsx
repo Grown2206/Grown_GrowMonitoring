@@ -34,7 +34,6 @@ import {
   Backup as BackupIcon,
   Security as SecurityIcon,
   Api as ApiIcon,
-  Database as DatabaseIcon,
   Speed as CacheIcon,
   Article as LogIcon,
   Info as InfoIcon,
@@ -586,7 +585,7 @@ export function SystemSettings({
         <Accordion>
           <AccordionSummary expandIcon={<ExpandIcon />}>
             <Stack direction="row" spacing={2} alignItems="center">
-              <DatabaseIcon />
+              <StorageIcon />
               <Typography variant="h6">Database Configuration</Typography>
             </Stack>
           </AccordionSummary>

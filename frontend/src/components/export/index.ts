@@ -11,7 +11,7 @@
  */
 
 // Data Exporter
-export { DataExporter, exportData, exportToCSV, exportToJSON } from './DataExporter';
+export { DataExporter, exportData } from './DataExporter';
 export type { ExportFormat, ExportOptions, DataExporterProps } from './DataExporter';
 
 // Data Importer

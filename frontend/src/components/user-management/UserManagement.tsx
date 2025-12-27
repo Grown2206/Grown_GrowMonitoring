@@ -149,7 +149,7 @@ export function UserManagement({
 
   const handleStatusToggle = () => {
     if (selectedUser) {
-      const newStatus = selectedUser.status === 'active' ? 'inactive' : 'active';
+      const newStatus: UserStatus = selectedUser.status === 'active' ? 'inactive' : 'active';
       const updatedUsers = users.map((u) =>
         u.id === selectedUser.id ? { ...u, status: newStatus } : u
       );

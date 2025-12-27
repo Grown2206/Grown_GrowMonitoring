@@ -208,7 +208,7 @@ export function IssueTracker({
       case 'improvement':
         return <InfoIcon />;
       case 'task':
-        return <CheckCircle />;
+        return <ResolvedIcon />;
       case 'question':
         return <InfoIcon />;
     }
@@ -642,9 +642,9 @@ function getSampleIssues(): Issue[] {
       updatedAt: new Date('2024-12-20'),
       component: 'Authentication',
       version: '2.70.0',
-      stepsToReproduce: '1. Open app on mobile device
+      stepsToReproduce: `1. Open app on mobile device
 2. Navigate to login page
-3. Observe layout issues',
+3. Observe layout issues`,
     },
     {
       id: 'ISSUE-002',

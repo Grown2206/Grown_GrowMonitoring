@@ -139,8 +139,8 @@ export function BackupManager({
     initialAutoConfig?.location || 'cloud'
   );
   const [retentionDays, setRetentionDays] = useState(initialAutoConfig?.retentionDays || 30);
-  const [autoEncrypt, setAutoEncrypt] = useState(initialAutoConfig?.encrypt || true);
-  const [autoCompress, setAutoCompress] = useState(initialAutoConfig?.compress || true);
+  const [autoEncrypt, setAutoEncrypt] = useState<boolean>(initialAutoConfig?.encrypt ?? true);
+  const [autoCompress, setAutoCompress] = useState<boolean>(initialAutoConfig?.compress ?? true);
 
   const handleCreateBackup = async () => {
     const config: CreateBackupConfig = {

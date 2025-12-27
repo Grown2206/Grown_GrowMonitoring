@@ -65,7 +65,7 @@ export function DataVisualization({
       <Card>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
-            {type === 'bar' && (
+            {type === 'bar' ? (
               <BarChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
@@ -74,8 +74,7 @@ export function DataVisualization({
                 <Legend />
                 <Bar dataKey="value" fill="#8884d8" />
               </BarChart>
-            )}
-            {type === 'line' && (
+            ) : type === 'line' ? (
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
@@ -84,8 +83,7 @@ export function DataVisualization({
                 <Legend />
                 <Line type="monotone" dataKey="value" stroke="#8884d8" />
               </LineChart>
-            )}
-            {type === 'pie' && (
+            ) : type === 'pie' ? (
               <PieChart>
                 <Pie
                   data={data}
@@ -103,8 +101,7 @@ export function DataVisualization({
                 </Pie>
                 <Tooltip />
               </PieChart>
-            )}
-            {type === 'area' && (
+            ) : type === 'area' ? (
               <AreaChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
@@ -113,7 +110,7 @@ export function DataVisualization({
                 <Legend />
                 <Area type="monotone" dataKey="value" stroke="#8884d8" fill="#8884d8" />
               </AreaChart>
-            )}
+            ) : null}
           </ResponsiveContainer>
         </CardContent>
       </Card>

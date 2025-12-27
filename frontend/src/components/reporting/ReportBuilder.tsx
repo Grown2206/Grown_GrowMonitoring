@@ -46,6 +46,7 @@ import {
   Save as SaveIcon,
   Visibility as PreviewIcon,
   BarChart as ChartIcon,
+  BarChart as BarChartIcon,
   TableChart as TableIcon,
   PieChart as PieIcon,
   ShowChart as LineIcon,
@@ -262,7 +263,7 @@ export function ReportBuilder({
   const getChartTypeIcon = (type: ChartType) => {
     switch (type) {
       case 'bar':
-        return <BarChart />;
+        return <BarChartIcon />;
       case 'line':
         return <LineIcon />;
       case 'pie':

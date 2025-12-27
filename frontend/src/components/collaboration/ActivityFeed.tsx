@@ -31,7 +31,7 @@ import {
   ExpandMore as ExpandIcon,
   ExpandLess as CollapseIcon,
   Person as UserIcon,
-  Eco as PlantIcon,
+  LocalFlorist as PlantIcon,
   Sensors as SensorIcon,
   Notifications as AlertIcon,
   Settings as SettingsIcon,
