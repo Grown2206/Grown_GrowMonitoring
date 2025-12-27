@@ -176,7 +176,16 @@ export function ReportViewer({
                 </Pie>
                 <ChartTooltip />
               </PieChart>
-            ) : null}
+            ) : (
+              <LineChart data={sampleData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <ChartTooltip />
+                <Legend />
+                <Line type="monotone" dataKey="value" stroke="#8884d8" strokeWidth={2} />
+              </LineChart>
+            )}
           </ResponsiveContainer>
         </Paper>
       </Box>

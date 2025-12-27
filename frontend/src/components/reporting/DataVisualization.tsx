@@ -110,7 +110,16 @@ export function DataVisualization({
                 <Legend />
                 <Area type="monotone" dataKey="value" stroke="#8884d8" fill="#8884d8" />
               </AreaChart>
-            ) : null}
+            ) : (
+              <BarChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="#8884d8" />
+              </BarChart>
+            )}
           </ResponsiveContainer>
         </CardContent>
       </Card>
