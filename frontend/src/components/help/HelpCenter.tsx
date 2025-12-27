@@ -1,719 +1,597 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Button,
   Card,
   CardContent,
-  CardActions,
   Chip,
   Grid,
-  IconButton,
   InputAdornment,
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
-  Paper,
-  Stack,
+  Tab,
+  Tabs,
   TextField,
   Typography,
-  Breadcrumbs,
-  Link,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Stack,
+  Button,
   Divider,
-  Avatar,
 } from '@mui/material';
 import {
   Search as SearchIcon,
+  ExpandMore as ExpandMoreIcon,
   Article as ArticleIcon,
   VideoLibrary as VideoIcon,
-  MenuBook as GuideIcon,
-  Help as HelpIcon,
-  ArrowBack as BackIcon,
-  ThumbUp as LikeIcon,
-  ThumbDown as DislikeIcon,
-  Share as ShareIcon,
-  Print as PrintIcon,
-  Home as HomeIcon,
-  LocalFlorist as PlantIcon,
-  Sensors as SensorIcon,
-  Dashboard as DashboardIcon,
-  Settings as SettingsIcon,
+  LiveHelp as FaqIcon,
+  ContactSupport as SupportIcon,
 } from '@mui/icons-material';
 
 export interface HelpArticle {
   id: string;
   title: string;
-  category: string;
+  category: HelpCategory;
   content: string;
-  type: 'article' | 'video' | 'guide';
-  tags?: string[];
-  views?: number;
-  helpful?: number;
-  lastUpdated?: Date;
+  tags: string[];
+  views: number;
+  helpful: number;
+  lastUpdated: Date;
 }
 
-export interface HelpCategory {
+export interface FAQ {
   id: string;
-  name: string;
-  icon: React.ReactNode;
-  description: string;
-  articleCount: number;
+  question: string;
+  answer: string;
+  category: string;
+  helpful: number;
 }
+
+export interface VideoTutorial {
+  id: string;
+  title: string;
+  description: string;
+  duration: string;
+  category: string;
+  thumbnail: string;
+  url: string;
+  views: number;
+}
+
+export type HelpCategory =
+  | 'getting-started'
+  | 'plants'
+  | 'monitoring'
+  | 'reports'
+  | 'settings'
+  | 'troubleshooting'
+  | 'integrations'
+  | 'api';
 
 export interface HelpCenterProps {
   articles?: HelpArticle[];
-  categories?: HelpCategory[];
-  onArticleView?: (articleId: string) => void;
-  onArticleFeedback?: (articleId: string, helpful: boolean) => void;
+  faqs?: FAQ[];
+  videos?: VideoTutorial[];
+  onContactSupport?: () => void;
 }
 
-const defaultCategories: HelpCategory[] = [
-  {
-    id: 'getting-started',
-    name: 'Getting Started',
-    icon: <HomeIcon />,
-    description: 'Learn the basics of the Grow Monitoring System',
-    articleCount: 8,
-  },
-  {
-    id: 'plants',
-    name: 'Plant Management',
-    icon: <PlantIcon />,
-    description: 'Managing plants, growth tracking, and health monitoring',
-    articleCount: 12,
-  },
-  {
-    id: 'sensors',
-    name: 'Sensors & Devices',
-    icon: <SensorIcon />,
-    description: 'Setting up and configuring environmental sensors',
-    articleCount: 10,
-  },
-  {
-    id: 'dashboard',
-    name: 'Dashboard & Analytics',
-    icon: <DashboardIcon />,
-    description: 'Customizing dashboards and viewing analytics',
-    articleCount: 15,
-  },
-  {
-    id: 'settings',
-    name: 'Settings & Configuration',
-    icon: <SettingsIcon />,
-    description: 'System settings, preferences, and advanced configuration',
-    articleCount: 9,
-  },
-];
-
-const defaultArticles: HelpArticle[] = [
-  {
-    id: '1',
-    title: 'Welcome to Grow Monitoring System',
-    category: 'getting-started',
-    type: 'guide',
-    tags: ['introduction', 'overview'],
-    views: 1250,
-    helpful: 98,
-    lastUpdated: new Date('2024-01-15'),
-    content: `
-# Welcome to Grow Monitoring System
-
-Thank you for choosing our Grow Monitoring System! This guide will help you get started.
-
-## What is Grow Monitoring System?
-
-The Grow Monitoring System is a comprehensive platform for tracking and managing plant growth. It integrates with environmental sensors to provide real-time monitoring, analytics, and insights.
-
-## Key Features
-
-- **Real-time Monitoring**: Track temperature, humidity, light levels, and more
-- **Growth Analytics**: Visualize growth patterns and trends over time
-- **Smart Alerts**: Get notified when conditions fall outside optimal ranges
-- **Custom Dashboards**: Create personalized views of your data
-- **Automated Reports**: Schedule and receive regular performance reports
-
-## Getting Started
-
-1. Set up your profile and preferences
-2. Connect your sensors and devices
-3. Add your plants to the system
-4. Configure monitoring schedules
-5. Customize your dashboard
-
-## Need Help?
-
-Browse our help articles by category or use the search function to find specific topics.
-    `,
-  },
-  {
-    id: '2',
-    title: 'How to Add a New Plant',
-    category: 'plants',
-    type: 'article',
-    tags: ['plants', 'setup', 'tutorial'],
-    views: 890,
-    helpful: 85,
-    lastUpdated: new Date('2024-01-10'),
-    content: `
-# How to Add a New Plant
-
-Follow these steps to add a new plant to your monitoring system.
-
-## Step 1: Navigate to Plant Management
-
-Click on the "Plants" menu item in the main navigation.
-
-## Step 2: Click "Add Plant"
-
-Look for the "Add Plant" button in the top-right corner.
-
-## Step 3: Enter Plant Information
-
-Fill in the following details:
-- **Plant Name**: A unique identifier for your plant
-- **Species**: Select from the dropdown or add a custom species
-- **Location**: Where the plant is growing
-- **Planting Date**: When the plant was planted
-
-## Step 4: Configure Monitoring
-
-Set optimal ranges for:
-- Temperature
-- Humidity
-- Light levels
-- Soil moisture
-
-## Step 5: Assign Sensors
-
-Link relevant sensors to monitor your plant's environment.
-
-## Step 6: Save
-
-Click "Save" to add the plant to your system.
-
-Your plant is now being monitored! You can view its dashboard from the Plants page.
-    `,
-  },
-  {
-    id: '3',
-    title: 'Connecting Environmental Sensors',
-    category: 'sensors',
-    type: 'guide',
-    tags: ['sensors', 'setup', 'hardware'],
-    views: 654,
-    helpful: 72,
-    lastUpdated: new Date('2024-01-08'),
-    content: `
-# Connecting Environmental Sensors
-
-Learn how to connect and configure your environmental sensors.
-
-## Supported Sensors
-
-Our system supports various sensor types:
-- Temperature sensors
-- Humidity sensors
-- Light/PAR sensors
-- Soil moisture sensors
-- pH sensors
-- CO2 sensors
-
-## Connection Process
-
-### 1. Prepare Your Sensor
-
-Ensure your sensor is powered and functioning correctly.
-
-### 2. Access Sensor Settings
-
-Navigate to Settings > Devices & Integrations
-
-### 3. Add New Device
-
-Click "Add Device" and select your sensor type.
-
-### 4. Configure Connection
-
-Enter connection details:
-- Device name
-- Connection method (WiFi, Bluetooth, USB)
-- Network credentials if needed
-
-### 5. Test Connection
-
-Use the "Test Connection" button to verify sensor connectivity.
-
-### 6. Calibrate
-
-Follow the calibration wizard to ensure accurate readings.
-
-## Troubleshooting
-
-**Sensor not detected?**
-- Check power supply
-- Verify network connection
-- Ensure sensor is within range
-
-**Inaccurate readings?**
-- Recalibrate the sensor
-- Check sensor placement
-- Update sensor firmware
-    `,
-  },
-  {
-    id: '4',
-    title: 'Creating Custom Dashboards',
-    category: 'dashboard',
-    type: 'video',
-    tags: ['dashboard', 'customization', 'widgets'],
-    views: 445,
-    helpful: 67,
-    lastUpdated: new Date('2024-01-05'),
-    content: `
-# Creating Custom Dashboards
-
-Personalize your monitoring experience with custom dashboards.
-
-## Dashboard Basics
-
-Dashboards consist of widgets that display different types of information:
-- Charts and graphs
-- Metric cards
-- Tables
-- Alerts and notifications
-
-## Creating a Dashboard
-
-### Step 1: Open Dashboard Manager
-
-Click on "Dashboards" in the main menu.
-
-### Step 2: Create New Dashboard
-
-Click "New Dashboard" and give it a name.
-
-### Step 3: Add Widgets
-
-Click "Add Widget" and choose from:
-- Temperature Chart
-- Humidity Graph
-- Growth Metrics
-- Alert Summary
-- Recent Activity
-
-### Step 4: Arrange Layout
-
-Drag and drop widgets to arrange them. Resize by dragging corners.
-
-### Step 5: Configure Widgets
-
-Click the settings icon on each widget to customize:
-- Data source
-- Time range
-- Display options
-- Refresh interval
-
-### Step 6: Save Dashboard
-
-Click "Save" to keep your configuration.
-
-## Dashboard Templates
-
-Use pre-built templates for common scenarios:
-- Overview Dashboard
-- Sensor Monitoring
-- Growth Analytics
-- System Status
-
-## Sharing Dashboards
-
-Share your dashboard with team members by clicking the share icon.
-    `,
-  },
-];
-
-/**
- * Comprehensive help center with articles, search, and navigation
- */
 export function HelpCenter({
-  articles: customArticles,
-  categories: customCategories,
-  onArticleView,
-  onArticleFeedback,
+  articles: initialArticles,
+  faqs: initialFaqs,
+  videos: initialVideos,
+  onContactSupport,
 }: HelpCenterProps) {
-  const articles = customArticles || defaultArticles;
-  const categories = customCategories || defaultCategories;
+  const [articles] = useState<HelpArticle[]>(initialArticles || getSampleArticles());
+  const [faqs] = useState<FAQ[]>(initialFaqs || getSampleFAQs());
+  const [videos] = useState<VideoTutorial[]>(initialVideos || getSampleVideos());
 
-  const [view, setView] = useState<'home' | 'category' | 'article'>('home');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedArticle, setSelectedArticle] = useState<HelpArticle | null>(null);
+  const [activeTab, setActiveTab] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const [userFeedback, setUserFeedback] = useState<Record<string, boolean | null>>({});
+  const [selectedCategory, setSelectedCategory] = useState<HelpCategory | 'all'>('all');
+  const [selectedArticle, setSelectedArticle] = useState<HelpArticle | null>(null);
 
-  const handleCategoryClick = (categoryId: string) => {
-    setSelectedCategory(categoryId);
-    setView('category');
-  };
-
-  const handleArticleClick = (article: HelpArticle) => {
-    setSelectedArticle(article);
-    setView('article');
-    if (onArticleView) {
-      onArticleView(article.id);
-    }
-  };
-
-  const handleBackToHome = () => {
-    setView('home');
-    setSelectedCategory(null);
-    setSelectedArticle(null);
-  };
-
-  const handleBackToCategory = () => {
-    setView('category');
-    setSelectedArticle(null);
-  };
-
-  const handleFeedback = (helpful: boolean) => {
-    if (!selectedArticle) return;
-    setUserFeedback({ ...userFeedback, [selectedArticle.id]: helpful });
-    if (onArticleFeedback) {
-      onArticleFeedback(selectedArticle.id, helpful);
-    }
-  };
+  const categories: { value: HelpCategory | 'all'; label: string }[] = [
+    { value: 'all', label: 'All Topics' },
+    { value: 'getting-started', label: 'Getting Started' },
+    { value: 'plants', label: 'Plant Management' },
+    { value: 'monitoring', label: 'Monitoring' },
+    { value: 'reports', label: 'Reports & Analytics' },
+    { value: 'settings', label: 'Settings' },
+    { value: 'troubleshooting', label: 'Troubleshooting' },
+    { value: 'integrations', label: 'Integrations' },
+    { value: 'api', label: 'API Documentation' },
+  ];
 
   const filteredArticles = articles.filter((article) => {
-    const matchesSearch =
-      searchQuery === '' ||
-      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       article.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      article.tags?.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-
-    const matchesCategory = !selectedCategory || article.category === selectedCategory;
-
+      article.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesCategory = selectedCategory === 'all' || article.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
-  const getArticleIcon = (type: HelpArticle['type']) => {
-    switch (type) {
-      case 'video':
-        return <VideoIcon />;
-      case 'guide':
-        return <GuideIcon />;
-      default:
-        return <ArticleIcon />;
-    }
-  };
+  const filteredFAQs = faqs.filter((faq) => {
+    const matchesSearch = faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || faq.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
-  const renderBreadcrumbs = () => {
-    return (
-      <Breadcrumbs sx={{ mb: 2 }}>
-        <Link
-          component="button"
-          variant="body2"
-          onClick={handleBackToHome}
-          sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+  const filteredVideos = videos.filter((video) => {
+    const matchesSearch = video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      video.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || video.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  return (
+    <Box>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+        <Box>
+          <Typography variant="h5">Help Center</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Find answers, tutorials, and documentation
+          </Typography>
+        </Box>
+        <Button
+          variant="outlined"
+          startIcon={<SupportIcon />}
+          onClick={onContactSupport}
         >
-          <HomeIcon fontSize="small" />
-          Help Center
-        </Link>
-        {selectedCategory && (
-          <Link component="button" variant="body2" onClick={handleBackToCategory}>
-            {categories.find((c) => c.id === selectedCategory)?.name}
-          </Link>
-        )}
-        {selectedArticle && <Typography color="text.primary">{selectedArticle.title}</Typography>}
-      </Breadcrumbs>
-    );
-  };
+          Contact Support
+        </Button>
+      </Stack>
 
-  const renderHome = () => (
-    <Stack spacing={4}>
-      {/* Search */}
-      <Paper sx={{ p: 4, textAlign: 'center', bgcolor: 'primary.main', color: 'primary.contrastText' }}>
-        <Typography variant="h4" gutterBottom>
-          How can we help you?
-        </Typography>
-        <TextField
-          placeholder="Search for help articles..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          fullWidth
-          sx={{ maxWidth: 600, mx: 'auto', mt: 2, bgcolor: 'background.paper' }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Paper>
+      <Card sx={{ mb: 3 }}>
+        <CardContent>
+          <TextField
+            fullWidth
+            placeholder="Search for help articles, FAQs, tutorials..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{ mb: 2 }}
+          />
+          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+            {categories.map((category) => (
+              <Chip
+                key={category.value}
+                label={category.label}
+                onClick={() => setSelectedCategory(category.value)}
+                color={selectedCategory === category.value ? 'primary' : 'default'}
+                variant={selectedCategory === category.value ? 'filled' : 'outlined'}
+              />
+            ))}
+          </Stack>
+        </CardContent>
+      </Card>
 
-      {/* Categories */}
-      <Box>
-        <Typography variant="h5" gutterBottom>
-          Browse by Category
-        </Typography>
+      <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)} sx={{ mb: 3 }}>
+        <Tab icon={<ArticleIcon />} label="Articles" iconPosition="start" />
+        <Tab icon={<FaqIcon />} label="FAQs" iconPosition="start" />
+        <Tab icon={<VideoIcon />} label="Video Tutorials" iconPosition="start" />
+      </Tabs>
+
+      {activeTab === 0 && (
         <Grid container spacing={3}>
-          {categories.map((category) => (
-            <Grid item xs={12} sm={6} md={4} key={category.id}>
-              <Card
-                sx={{
-                  cursor: 'pointer',
-                  height: '100%',
-                  '&:hover': { boxShadow: 4 },
-                }}
-                onClick={() => handleCategoryClick(category.id)}
-              >
+          <Grid item xs={12} md={selectedArticle ? 4 : 12}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Help Articles ({filteredArticles.length})
+                </Typography>
+                <List>
+                  {filteredArticles.map((article) => (
+                    <ListItem key={article.id} disablePadding>
+                      <ListItemButton
+                        selected={selectedArticle?.id === article.id}
+                        onClick={() => setSelectedArticle(article)}
+                      >
+                        <ListItemText
+                          primary={article.title}
+                          secondary={
+                            <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 0.5 }}>
+                              <Typography variant="caption" color="text.secondary">
+                                {article.views} views
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary">
+                                •
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary">
+                                {article.lastUpdated.toLocaleDateString()}
+                              </Typography>
+                            </Stack>
+                          }
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                  {filteredArticles.length === 0 && (
+                    <ListItem>
+                      <ListItemText
+                        primary="No articles found"
+                        secondary="Try adjusting your search or category filter"
+                      />
+                    </ListItem>
+                  )}
+                </List>
+              </CardContent>
+            </Card>
+          </Grid>
+          {selectedArticle && (
+            <Grid item xs={12} md={8}>
+              <Card>
                 <CardContent>
                   <Stack spacing={2}>
-                    <Avatar sx={{ bgcolor: 'primary.main', width: 56, height: 56 }}>
-                      {category.icon}
-                    </Avatar>
-                    <Typography variant="h6">{category.name}</Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {category.description}
+                    <Box>
+                      <Typography variant="h5" gutterBottom>
+                        {selectedArticle.title}
+                      </Typography>
+                      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                        {selectedArticle.tags.map((tag) => (
+                          <Chip key={tag} label={tag} size="small" />
+                        ))}
+                      </Stack>
+                    </Box>
+                    <Divider />
+                    <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
+                      {selectedArticle.content}
                     </Typography>
-                    <Chip label={`${category.articleCount} articles`} size="small" />
+                    <Divider />
+                    <Stack direction="row" justifyContent="space-between" alignItems="center">
+                      <Typography variant="body2" color="text.secondary">
+                        Last updated: {selectedArticle.lastUpdated.toLocaleDateString()}
+                      </Typography>
+                      <Stack direction="row" spacing={1}>
+                        <Button size="small">Was this helpful?</Button>
+                        <Button size="small" variant="outlined">
+                          {selectedArticle.helpful} found helpful
+                        </Button>
+                      </Stack>
+                    </Stack>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+          )}
+        </Grid>
+      )}
+
+      {activeTab === 1 && (
+        <Card>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Frequently Asked Questions ({filteredFAQs.length})
+            </Typography>
+            {filteredFAQs.map((faq) => (
+              <Accordion key={faq.id}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>{faq.question}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Stack spacing={2}>
+                    <Typography variant="body2" sx={{ whiteSpace: 'pre-line' }}>
+                      {faq.answer}
+                    </Typography>
+                    <Stack direction="row" justifyContent="flex-end">
+                      <Button size="small">
+                        {faq.helpful} found this helpful
+                      </Button>
+                    </Stack>
+                  </Stack>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+            {filteredFAQs.length === 0 && (
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                No FAQs found. Try adjusting your search or category filter.
+              </Typography>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {activeTab === 2 && (
+        <Grid container spacing={3}>
+          {filteredVideos.map((video) => (
+            <Grid item xs={12} md={6} lg={4} key={video.id}>
+              <Card>
+                <Box
+                  sx={{
+                    height: 200,
+                    bgcolor: 'grey.200',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <VideoIcon sx={{ fontSize: 60, color: 'grey.400' }} />
+                </Box>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    {video.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" paragraph>
+                    {video.description}
+                  </Typography>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <Typography variant="caption" color="text.secondary">
+                      {video.duration} • {video.views} views
+                    </Typography>
+                    <Button size="small" variant="outlined">
+                      Watch
+                    </Button>
                   </Stack>
                 </CardContent>
               </Card>
             </Grid>
           ))}
-        </Grid>
-      </Box>
-
-      {/* Popular Articles */}
-      {searchQuery === '' && (
-        <Box>
-          <Typography variant="h5" gutterBottom>
-            Popular Articles
-          </Typography>
-          <Grid container spacing={2}>
-            {articles
-              .sort((a, b) => (b.views || 0) - (a.views || 0))
-              .slice(0, 6)
-              .map((article) => (
-                <Grid item xs={12} sm={6} key={article.id}>
-                  <Card
-                    sx={{ cursor: 'pointer', '&:hover': { boxShadow: 2 } }}
-                    onClick={() => handleArticleClick(article)}
-                  >
-                    <CardContent>
-                      <Stack direction="row" spacing={2} alignItems="center">
-                        <Avatar>{getArticleIcon(article.type)}</Avatar>
-                        <Box sx={{ flex: 1, minWidth: 0 }}>
-                          <Typography variant="subtitle1" noWrap>
-                            {article.title}
-                          </Typography>
-                          <Stack direction="row" spacing={1} alignItems="center">
-                            <Typography variant="caption" color="text.secondary">
-                              {article.views} views
-                            </Typography>
-                            <Chip label={article.type} size="small" />
-                          </Stack>
-                        </Box>
-                      </Stack>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-          </Grid>
-        </Box>
-      )}
-
-      {/* Search Results */}
-      {searchQuery !== '' && (
-        <Box>
-          <Typography variant="h5" gutterBottom>
-            Search Results ({filteredArticles.length})
-          </Typography>
-          <Stack spacing={1}>
-            {filteredArticles.map((article) => (
-              <Card
-                key={article.id}
-                sx={{ cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}
-                onClick={() => handleArticleClick(article)}
-              >
+          {filteredVideos.length === 0 && (
+            <Grid item xs={12}>
+              <Card>
                 <CardContent>
-                  <Stack direction="row" spacing={2} alignItems="center">
-                    {getArticleIcon(article.type)}
-                    <Box sx={{ flex: 1 }}>
-                      <Typography variant="subtitle1">{article.title}</Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {categories.find((c) => c.id === article.category)?.name}
-                      </Typography>
-                    </Box>
-                  </Stack>
+                  <Typography variant="body2" color="text.secondary">
+                    No video tutorials found. Try adjusting your search or category filter.
+                  </Typography>
                 </CardContent>
               </Card>
-            ))}
-          </Stack>
-        </Box>
-      )}
-    </Stack>
-  );
-
-  const renderCategory = () => {
-    const category = categories.find((c) => c.id === selectedCategory);
-    if (!category) return null;
-
-    return (
-      <Stack spacing={3}>
-        <Paper sx={{ p: 3 }}>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Avatar sx={{ bgcolor: 'primary.main', width: 64, height: 64 }}>
-              {category.icon}
-            </Avatar>
-            <Box>
-              <Typography variant="h4">{category.name}</Typography>
-              <Typography variant="body1" color="text.secondary">
-                {category.description}
-              </Typography>
-            </Box>
-          </Stack>
-        </Paper>
-
-        <Typography variant="h6">
-          {filteredArticles.length} {filteredArticles.length === 1 ? 'Article' : 'Articles'}
-        </Typography>
-
-        <List>
-          {filteredArticles.map((article) => (
-            <ListItem key={article.id} disablePadding>
-              <ListItemButton onClick={() => handleArticleClick(article)}>
-                <ListItemIcon>{getArticleIcon(article.type)}</ListItemIcon>
-                <ListItemText
-                  primary={article.title}
-                  secondary={
-                    <Stack direction="row" spacing={1} sx={{ mt: 0.5 }}>
-                      <Chip label={article.type} size="small" />
-                      <Typography variant="caption">{article.views} views</Typography>
-                    </Stack>
-                  }
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Stack>
-    );
-  };
-
-  const renderArticle = () => {
-    if (!selectedArticle) return null;
-
-    const feedback = userFeedback[selectedArticle.id];
-
-    return (
-      <Stack spacing={3}>
-        <Paper sx={{ p: 3 }}>
-          <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 2 }}>
-            <Box>
-              <Typography variant="h4" gutterBottom>
-                {selectedArticle.title}
-              </Typography>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <Chip label={selectedArticle.type} size="small" color="primary" />
-                <Typography variant="caption" color="text.secondary">
-                  {selectedArticle.views} views
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  • Updated {selectedArticle.lastUpdated?.toLocaleDateString()}
-                </Typography>
-              </Stack>
-            </Box>
-            <Stack direction="row" spacing={1}>
-              <IconButton size="small">
-                <ShareIcon />
-              </IconButton>
-              <IconButton size="small">
-                <PrintIcon />
-              </IconButton>
-            </Stack>
-          </Stack>
-
-          <Divider sx={{ my: 2 }} />
-
-          <Box sx={{ '& h1': { fontSize: '2rem', mt: 3, mb: 2 }, '& h2': { fontSize: '1.5rem', mt: 2, mb: 1 }, '& h3': { fontSize: '1.25rem', mt: 2, mb: 1 }, '& p': { mb: 1 }, '& ul, & ol': { pl: 3, mb: 2 } }}>
-            <Typography component="div" sx={{ whiteSpace: 'pre-wrap' }}>
-              {selectedArticle.content}
-            </Typography>
-          </Box>
-        </Paper>
-
-        {/* Feedback */}
-        <Paper sx={{ p: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            Was this article helpful?
-          </Typography>
-          {feedback === null || feedback === undefined ? (
-            <Stack direction="row" spacing={2}>
-              <Button
-                variant="outlined"
-                startIcon={<LikeIcon />}
-                onClick={() => handleFeedback(true)}
-              >
-                Yes
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<DislikeIcon />}
-                onClick={() => handleFeedback(false)}
-              >
-                No
-              </Button>
-            </Stack>
-          ) : (
-            <Typography variant="body1" color="success.main">
-              Thank you for your feedback!
-            </Typography>
+            </Grid>
           )}
-        </Paper>
-
-        {/* Related Articles */}
-        <Box>
-          <Typography variant="h6" gutterBottom>
-            Related Articles
-          </Typography>
-          <Grid container spacing={2}>
-            {articles
-              .filter(
-                (a) =>
-                  a.id !== selectedArticle.id &&
-                  a.category === selectedArticle.category
-              )
-              .slice(0, 3)
-              .map((article) => (
-                <Grid item xs={12} sm={4} key={article.id}>
-                  <Card
-                    sx={{ cursor: 'pointer', height: '100%', '&:hover': { boxShadow: 2 } }}
-                    onClick={() => handleArticleClick(article)}
-                  >
-                    <CardContent>
-                      <Stack spacing={1}>
-                        <Avatar>{getArticleIcon(article.type)}</Avatar>
-                        <Typography variant="subtitle2">{article.title}</Typography>
-                        <Chip label={article.type} size="small" />
-                      </Stack>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-          </Grid>
-        </Box>
-      </Stack>
-    );
-  };
-
-  return (
-    <Box>
-      {view !== 'home' && renderBreadcrumbs()}
-      {view === 'home' && renderHome()}
-      {view === 'category' && renderCategory()}
-      {view === 'article' && renderArticle()}
+        </Grid>
+      )}
     </Box>
   );
+}
+
+function getSampleArticles(): HelpArticle[] {
+  return [
+    {
+      id: '1',
+      title: 'Getting Started with Grow Monitoring',
+      category: 'getting-started',
+      content: `Welcome to the Grow Monitoring System!
+
+This guide will help you get started with monitoring your plants and tracking their growth.
+
+Step 1: Add Your First Plant
+Navigate to the Plants section and click "Add Plant". Fill in the basic information including species, strain, and planting date.
+
+Step 2: Set Up Monitoring
+Configure sensors and monitoring schedules for your plants. You can track temperature, humidity, pH levels, and more.
+
+Step 3: View Dashboard
+Check your dashboard regularly to monitor plant health, growth progress, and environmental conditions.
+
+Step 4: Generate Reports
+Use the reporting tools to analyze growth patterns and optimize your cultivation process.`,
+      tags: ['basics', 'setup', 'introduction'],
+      views: 1250,
+      helpful: 98,
+      lastUpdated: new Date('2024-12-01'),
+    },
+    {
+      id: '2',
+      title: 'Understanding Sensor Data',
+      category: 'monitoring',
+      content: `Learn how to interpret sensor readings and optimize growing conditions.
+
+Temperature Readings:
+- Optimal range: 20-28°C (68-82°F)
+- Monitor daily fluctuations
+- Adjust climate control as needed
+
+Humidity Levels:
+- Vegetative stage: 60-70%
+- Flowering stage: 40-50%
+- Use dehumidifiers or humidifiers to maintain levels
+
+pH Monitoring:
+- Soil: 6.0-7.0
+- Hydroponic: 5.5-6.5
+- Regular calibration is essential`,
+      tags: ['sensors', 'data', 'monitoring', 'environmental'],
+      views: 890,
+      helpful: 75,
+      lastUpdated: new Date('2024-12-10'),
+    },
+    {
+      id: '3',
+      title: 'Creating Custom Reports',
+      category: 'reports',
+      content: `Generate detailed reports to track and analyze plant growth.
+
+Report Types:
+1. Growth Reports - Track plant development over time
+2. Environmental Reports - Monitor conditions and trends
+3. Harvest Reports - Document yields and quality metrics
+4. Compliance Reports - Maintain regulatory documentation
+
+Customization Options:
+- Select date ranges
+- Choose specific plants or batches
+- Filter by growth stage
+- Export to PDF or Excel`,
+      tags: ['reports', 'analytics', 'data-export'],
+      views: 654,
+      helpful: 62,
+      lastUpdated: new Date('2024-12-15'),
+    },
+    {
+      id: '4',
+      title: 'Troubleshooting Common Issues',
+      category: 'troubleshooting',
+      content: `Solutions to common problems you may encounter.
+
+Issue: Sensor Not Responding
+- Check power connection
+- Verify network connectivity
+- Restart the sensor
+- Contact support if issue persists
+
+Issue: Inaccurate Readings
+- Calibrate sensors regularly
+- Check sensor placement
+- Clean sensor components
+- Replace if necessary
+
+Issue: Missing Data
+- Check data connection
+- Verify backup systems
+- Review system logs
+- Restore from backup if needed`,
+      tags: ['troubleshooting', 'sensors', 'support'],
+      views: 432,
+      helpful: 45,
+      lastUpdated: new Date('2024-12-18'),
+    },
+  ];
+}
+
+function getSampleFAQs(): FAQ[] {
+  return [
+    {
+      id: '1',
+      question: 'How often should I calibrate my sensors?',
+      answer: `Sensor calibration frequency depends on the type of sensor:
+
+pH Sensors: Weekly calibration recommended
+Temperature Sensors: Monthly calibration
+Humidity Sensors: Bi-weekly calibration
+EC/TDS Sensors: Weekly calibration
+
+Always calibrate before critical measurements and after any maintenance.`,
+      category: 'monitoring',
+      helpful: 156,
+    },
+    {
+      id: '2',
+      question: 'Can I export my data to other systems?',
+      answer: `Yes! The system supports multiple export formats:
+
+- CSV for spreadsheet applications
+- JSON for API integration
+- PDF for reports and documentation
+- Excel for advanced analysis
+
+You can also use our REST API to integrate with third-party systems.`,
+      category: 'integrations',
+      helpful: 142,
+    },
+    {
+      id: '3',
+      question: 'How do I set up automated alerts?',
+      answer: `To configure automated alerts:
+
+1. Navigate to Settings > Notifications
+2. Click "Add Alert Rule"
+3. Select the condition (e.g., temperature threshold)
+4. Set the trigger value
+5. Choose notification method (email, SMS, in-app)
+6. Save the rule
+
+Alerts will be sent when conditions are met.`,
+      category: 'settings',
+      helpful: 128,
+    },
+    {
+      id: '4',
+      question: 'What is the recommended backup schedule?',
+      answer: `We recommend the following backup schedule:
+
+Daily: Incremental backups of current data
+Weekly: Full system backup
+Monthly: Archive to long-term storage
+
+Enable automatic backups in Settings > Backup Configuration.
+Always test restore procedures regularly.`,
+      category: 'settings',
+      helpful: 95,
+    },
+    {
+      id: '5',
+      question: 'How many plants can I monitor simultaneously?',
+      answer: `The number of plants depends on your subscription plan:
+
+Basic: Up to 50 plants
+Professional: Up to 500 plants
+Enterprise: Unlimited plants
+
+Contact sales for custom enterprise solutions.`,
+      category: 'getting-started',
+      helpful: 203,
+    },
+  ];
+}
+
+function getSampleVideos(): VideoTutorial[] {
+  return [
+    {
+      id: '1',
+      title: 'Quick Start Guide',
+      description: 'Learn the basics of the Grow Monitoring System in under 5 minutes',
+      duration: '4:32',
+      category: 'getting-started',
+      thumbnail: '/videos/quick-start.jpg',
+      url: '/videos/quick-start.mp4',
+      views: 2340,
+    },
+    {
+      id: '2',
+      title: 'Setting Up Sensors',
+      description: 'Complete guide to installing and configuring environmental sensors',
+      duration: '12:15',
+      category: 'monitoring',
+      thumbnail: '/videos/sensor-setup.jpg',
+      url: '/videos/sensor-setup.mp4',
+      views: 1876,
+    },
+    {
+      id: '3',
+      title: 'Advanced Reporting Techniques',
+      description: 'Master the report builder and create custom analytics dashboards',
+      duration: '18:45',
+      category: 'reports',
+      thumbnail: '/videos/advanced-reports.jpg',
+      url: '/videos/advanced-reports.mp4',
+      views: 1234,
+    },
+    {
+      id: '4',
+      title: 'Mobile App Tutorial',
+      description: 'Access your grow monitoring system from anywhere with the mobile app',
+      duration: '8:20',
+      category: 'getting-started',
+      thumbnail: '/videos/mobile-app.jpg',
+      url: '/videos/mobile-app.mp4',
+      views: 1567,
+    },
+    {
+      id: '5',
+      title: 'API Integration Guide',
+      description: 'Connect external systems using our REST API',
+      duration: '22:10',
+      category: 'integrations',
+      thumbnail: '/videos/api-integration.jpg',
+      url: '/videos/api-integration.mp4',
+      views: 892,
+    },
+    {
+      id: '6',
+      title: 'Troubleshooting Common Issues',
+      description: 'Solutions to frequently encountered problems and error messages',
+      duration: '15:30',
+      category: 'troubleshooting',
+      thumbnail: '/videos/troubleshooting.jpg',
+      url: '/videos/troubleshooting.mp4',
+      views: 1045,
+    },
+  ];
 }

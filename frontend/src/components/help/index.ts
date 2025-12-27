@@ -1,27 +1,43 @@
 /**
- * Help & Documentation Components
+ * Help & Documentation System (Sprint 72)
  *
  * Features:
- * - Comprehensive help center with articles and categories
- * - Interactive tutorial wizard with step highlighting
- * - Contextual help and tooltips
- * - FAQ section with search and feedback
- * - Video and article references
- * - User feedback collection
+ * - Comprehensive help center with articles, FAQs, and videos
+ * - Interactive documentation viewer with navigation
+ * - Step-by-step tutorial guides with progress tracking
+ * - Search and filtering capabilities
+ * - Category-based organization
+ * - Print and download documentation
+ * - Tutorial completion tracking
+ * - Learning outcomes and difficulty levels
  */
 
 // Help Center
 export { HelpCenter } from './HelpCenter';
-export type { HelpCenterProps, HelpArticle, HelpCategory } from './HelpCenter';
+export type {
+  HelpCenterProps,
+  HelpArticle,
+  FAQ,
+  VideoTutorial,
+  HelpCategory,
+} from './HelpCenter';
 
-// Tutorial Wizard
-export { TutorialWizard } from './TutorialWizard';
-export type { TutorialWizardProps, Tutorial, TutorialStep } from './TutorialWizard';
+// Documentation Viewer
+export { DocumentationViewer } from './DocumentationViewer';
+export type {
+  DocumentationViewerProps,
+  Documentation,
+  DocSection,
+  DocCategory,
+} from './DocumentationViewer';
 
-// Contextual Help
-export { ContextualHelp, HelpTooltip } from './ContextualHelp';
-export type { ContextualHelpProps, HelpTooltipProps } from './ContextualHelp';
-
-// FAQ Section
-export { FAQSection } from './FAQSection';
-export type { FAQSectionProps, FAQItem } from './FAQSection';
+// Tutorial Guide
+export { TutorialGuide } from './TutorialGuide';
+export type {
+  TutorialGuideProps,
+  Tutorial,
+  TutorialStep,
+  TutorialDifficulty,
+  TutorialCategory,
+  UserProgress,
+} from './TutorialGuide';
