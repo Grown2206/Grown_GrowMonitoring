@@ -1,0 +1,102 @@
+version: '3.8'
+
+###############################################################################
+# Grow Monitoring System - Docker Compose
+#
+# Startet das komplette System mit einem Befehl:
+#   docker-compose up -d
+#
+# Services:
+#   - mosquitto: MQTT Broker
+#   - backend: Node.js Backend Server
+#   - frontend: React Frontend (Development)
+#
+# Hinweis: Für Production sollte Frontend mit 'npm run build' gebaut werden
+###############################################################################
+
+services:
+  # MQTT Broker
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: grow-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"   # MQTT
+      - "9001:9001"   # WebSocket
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    networks:
+      - grow-network
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-h", "localhost", "-t", "$$SYS/#", "-C", "1", "-i", "healthcheck", "-W", "3"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Backend (Node.js)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: grow-backend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - MQTT_BROKER_URL=mqtt://mosquitto:1883
+      - MQTT_ENABLED=true
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./backend/data:/app/data
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    networks:
+      - grow-network
+    command: npm run dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Frontend (React Development Server)
+  # Für Production: Build separat und serve mit nginx
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: grow-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:3001
+      - REACT_APP_WS_URL=ws://localhost:3001
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - grow-network
+    stdin_open: true
+    tty: true
+
+networks:
+  grow-network:
+    driver: bridge
+
+volumes:
+  mosquitto-data:
+  mosquitto-log:
+  backend-data:

@@ -1,0 +1,18 @@
+# Grow Monitoring System - Frontend Dockerfile (Development)
+
+FROM node:18-alpine
+
+# Arbeitsverzeichnis
+WORKDIR /app
+
+# Dependencies installieren
+COPY package*.json ./
+RUN npm ci
+
+# Source-Code wird via Volume gemountet
+
+# Port freigeben
+EXPOSE 3000
+
+# Development Server
+CMD ["npm", "start"]
